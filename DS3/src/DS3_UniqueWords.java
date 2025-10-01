@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class DS3_UniqueWords {
     public static void main(String[] args) throws Exception {
         Scanner k = new Scanner(System.in);
-        MySet<String> unique = new MySet<>();
+        DS3_Set<String> unique = new DS3_Set<>();
 
         System.out.print("Enter the file name: ");
         File file = new File(k.nextLine());

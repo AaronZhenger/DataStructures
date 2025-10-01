@@ -7,7 +7,7 @@ public class SetMain
         Scanner keyboard= new Scanner(System.in);
 
         int choice;
-        MySet<Integer> set= new MySet<Integer>();
+        DS3_Set<Integer> set= new DS3_Set<Integer>();
 
         do
         {

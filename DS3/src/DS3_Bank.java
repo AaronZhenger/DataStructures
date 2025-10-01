@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class DS3_Bank {
     public static void main(String[] args) throws Exception {
-        MyMap<String, Double> data = new MyMap<>();
+        DS3_Map<String, Double> data = new DS3_Map<>();
         Scanner k = new Scanner(System.in);
 
         System.out.print("Enter the file name: ");

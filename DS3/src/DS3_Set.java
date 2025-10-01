@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class MySet<E> implements SetInterface<E> {
+public class DS3_Set<E> implements SetInterface<E> {
     ArrayList<E> set = new ArrayList<>();
 
     @Override

@@ -8,7 +8,7 @@ public interface MapInterface<K,V>
     public boolean containsKey(K key); //
     public boolean containsValue(V value); //
 
-    public MySet<MapEnt<K,V>> entrySet();
+    public DS3_Set<MapEnt<K,V>> entrySet();
 
     public V get(K o);//
 
@@ -18,7 +18,7 @@ public interface MapInterface<K,V>
 
     public int size();//
 
-    public MySet<K> keySet();
+    public DS3_Set<K> keySet();
 
     public ArrayList<V> values();
 

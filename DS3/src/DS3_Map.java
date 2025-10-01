@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class MyMap<K, V> implements MapInterface<K, V> {
+public class DS3_Map<K, V> implements MapInterface<K, V> {
     ArrayList<MapEnt<K, V>> map = new ArrayList<>();
 
     @Override
@@ -25,8 +25,8 @@ public class MyMap<K, V> implements MapInterface<K, V> {
     }
 
     @Override
-    public MySet<MapEnt<K, V>> entrySet() {
-        MySet<MapEnt<K, V>> set = new MySet<>();
+    public DS3_Set<MapEnt<K, V>> entrySet() {
+        DS3_Set<MapEnt<K, V>> set = new DS3_Set<>();
         for (MapEnt<K, V> i : map)
             set.add(i);
         return set;
@@ -64,8 +64,8 @@ public class MyMap<K, V> implements MapInterface<K, V> {
     }
 
     @Override
-    public MySet<K> keySet() {
-        MySet<K> keySet = new MySet<>();
+    public DS3_Set<K> keySet() {
+        DS3_Set<K> keySet = new DS3_Set<>();
         for (MapEnt<K, V> i : map)
             keySet.add(i.getKey());
         return keySet;

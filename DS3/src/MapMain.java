@@ -7,7 +7,7 @@ public class MapMain
         Scanner keyboard= new Scanner(System.in);
 
         int choice;
-        MyMap<Integer,String> map= new MyMap<Integer,String>();
+        DS3_Map<Integer,String> map= new DS3_Map<Integer,String>();
 
         do
         {

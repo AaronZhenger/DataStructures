@@ -4,8 +4,8 @@ import java.util.*;
 public class DS3_SetJoins {
     public static void main(String[] args) throws Exception {
         Scanner k = new Scanner(System.in);
-        MySet<Integer> setA = new MySet<>();
-        MySet<Integer> setB = new MySet<>();
+        DS3_Set<Integer> setA = new DS3_Set<>();
+        DS3_Set<Integer> setB = new DS3_Set<>();
 
         System.out.print("Enter the file name: ");
         File file = new File(k.nextLine());
@@ -27,7 +27,7 @@ public class DS3_SetJoins {
         System.out.println("\nSet A: "+setA);
         System.out.println("Set B: "+setB);
 
-        MySet<Integer> union = new MySet<>();
+        DS3_Set<Integer> union = new DS3_Set<>();
         Iterator<Integer> iteratorA = setA.iterator();
         ArrayList<Integer> arrA = new ArrayList<>();
         while (iteratorA.hasNext()) {
@@ -50,15 +50,15 @@ public class DS3_SetJoins {
 
         System.out.println("\nUnion: "+unionArr);
 
-        MySet<Integer> inter = new MySet<>();
+        DS3_Set<Integer> inter = new DS3_Set<>();
         for (int i : arrA)
             for (int j : arrB)
                 if (i == j)
                     inter.add(i);
         System.out.println("Intersection: "+inter);
 
-        MySet<Integer> subA = new MySet<>();
-        MySet<Integer> subB = new MySet<>();
+        DS3_Set<Integer> subA = new DS3_Set<>();
+        DS3_Set<Integer> subB = new DS3_Set<>();
         for (int i : arrA) if (!inter.contains(i)) subA.add(i);
         for (int i : arrB) if (!inter.contains(i)) subB.add(i);
         System.out.println("A - B (Elements in A not in B): "+subA);
