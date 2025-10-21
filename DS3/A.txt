@@ -1,6 +1,3 @@
-OPEN 123456789
-DEPOSIT 123456789 250
-OPEN 987654321
-DEPOSIT 987654321 400
-WITHDRAW 123456789 100
-CLOSE 987654321
+The sun rises in the east and sets in the 
+west. Every morning, birds sing and the world wakes 
+up. Nature is beautiful.

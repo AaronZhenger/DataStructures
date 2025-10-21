@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
-public class MySet_Tests {
+public class DS3_Set_Tests {
 
 
     public String generateClassName(String name)
@@ -31,7 +31,7 @@ public class MySet_Tests {
 
     @Test(timeout = 250)
     public void checkImports() throws Exception{
-        String className = "MySet";
+        String className = "DS3_Set";
         String fileName = "src/"+generateClassName(className).replaceAll("\\.","/")+".java";
         boolean allowedOnly = true;
         ArrayList<String> invalidImport = new ArrayList<>();
@@ -72,7 +72,7 @@ public class MySet_Tests {
     // add
     @Test(timeout = 250)
     public void test1() throws Exception {
-        Class<?> classRef = Class.forName(generateClassName("MySet"));
+        Class<?> classRef = Class.forName(generateClassName("DS3_Set"));
         SetInterface<String> set = (SetInterface<String>) classRef.getConstructor().newInstance();
 
         try
@@ -92,7 +92,7 @@ public class MySet_Tests {
 
     @Test(timeout = 250)
     public void test2() throws Exception {
-        Class<?> classRef = Class.forName(generateClassName("MySet"));
+        Class<?> classRef = Class.forName(generateClassName("DS3_Set"));
         SetInterface<Integer> set = (SetInterface<Integer>) classRef.getConstructor().newInstance();
 
         try
@@ -114,7 +114,7 @@ public class MySet_Tests {
     // contains
     @Test(timeout = 250)
     public void test3() throws Exception {
-        Class<?> classRef = Class.forName(generateClassName("MySet"));
+        Class<?> classRef = Class.forName(generateClassName("DS3_Set"));
         SetInterface<String> set = (SetInterface<String>) classRef.getConstructor().newInstance();
 
         try
@@ -136,7 +136,7 @@ public class MySet_Tests {
 
     @Test(timeout = 250)
     public void test4() throws Exception {
-        Class<?> classRef = Class.forName(generateClassName("MySet"));
+        Class<?> classRef = Class.forName(generateClassName("DS3_Set"));
         SetInterface<Integer> set = (SetInterface<Integer>) classRef.getConstructor().newInstance();
 
         try
@@ -161,7 +161,7 @@ public class MySet_Tests {
     // size
     @Test(timeout = 250)
     public void test5() throws Exception {
-        Class<?> classRef = Class.forName(generateClassName("MySet"));
+        Class<?> classRef = Class.forName(generateClassName("DS3_Set"));
         SetInterface<String> set = (SetInterface<String>) classRef.getConstructor().newInstance();
 
         try
@@ -184,7 +184,7 @@ public class MySet_Tests {
 
     @Test(timeout = 250)
     public void test6() throws Exception {
-        Class<?> classRef = Class.forName(generateClassName("MySet"));
+        Class<?> classRef = Class.forName(generateClassName("DS3_Set"));
         SetInterface<Integer> set = (SetInterface<Integer>) classRef.getConstructor().newInstance();
 
         try
@@ -212,7 +212,7 @@ public class MySet_Tests {
     // isEmpty
     @Test(timeout = 250)
     public void test7() throws Exception {
-        Class<?> classRef = Class.forName(generateClassName("MySet"));
+        Class<?> classRef = Class.forName(generateClassName("DS3_Set"));
         SetInterface<String> set = (SetInterface<String>) classRef.getConstructor().newInstance();
 
         try
@@ -237,7 +237,7 @@ public class MySet_Tests {
 
     @Test(timeout = 250)
     public void test8() throws Exception {
-        Class<?> classRef = Class.forName(generateClassName("MySet"));
+        Class<?> classRef = Class.forName(generateClassName("DS3_Set"));
         SetInterface<Integer> set = (SetInterface<Integer>) classRef.getConstructor().newInstance();
 
         try
@@ -261,7 +261,7 @@ public class MySet_Tests {
     // isEmpty
     @Test(timeout = 250)
     public void test9() throws Exception {
-        Class<?> classRef = Class.forName(generateClassName("MySet"));
+        Class<?> classRef = Class.forName(generateClassName("DS3_Set"));
         SetInterface<String> set = (SetInterface<String>) classRef.getConstructor().newInstance();
 
         try
@@ -289,7 +289,7 @@ public class MySet_Tests {
     // isEmpty
     @Test(timeout = 250)
     public void test10() throws Exception {
-        Class<?> classRef = Class.forName(generateClassName("MySet"));
+        Class<?> classRef = Class.forName(generateClassName("DS3_Set"));
         SetInterface<String> set = (SetInterface<String>) classRef.getConstructor().newInstance();
 
         try
@@ -311,7 +311,7 @@ public class MySet_Tests {
 
     @Test(timeout = 250)
     public void test11() throws Exception {
-        Class<?> classRef = Class.forName(generateClassName("MySet"));
+        Class<?> classRef = Class.forName(generateClassName("DS3_Set"));
         SetInterface<Integer> set = (SetInterface<Integer>) classRef.getConstructor().newInstance();
 
         try
@@ -338,7 +338,7 @@ public class MySet_Tests {
     // size
     @Test(timeout = 250)
     public void test12() throws Exception {
-        Class<?> classRef = Class.forName(generateClassName("MySet"));
+        Class<?> classRef = Class.forName(generateClassName("DS3_Set"));
         SetInterface<String> set = (SetInterface<String>) classRef.getConstructor().newInstance();
 
         String[] arr_results = {"Ted", "Jane","Fred"};
@@ -375,7 +375,7 @@ public class MySet_Tests {
 
     @Test(timeout = 250)
     public void test13() throws Exception {
-        Class<?> classRef = Class.forName(generateClassName("MySet"));
+        Class<?> classRef = Class.forName(generateClassName("DS3_Set"));
         SetInterface<Integer> set = (SetInterface<Integer>) classRef.getConstructor().newInstance();
 
         int[] arr_results = {1,2,5,6,7,9};

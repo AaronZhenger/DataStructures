@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 
-public class Bank_Tests {
+public class DS3_Bank_Tests {
     public TestingOutputStream testingOutputStream = new TestingOutputStream();
 
     public String generateClassName(String name)
