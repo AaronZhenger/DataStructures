@@ -1477,6 +1477,7 @@ public class DS4_Doubly_Circular_LinkedList_Tests {
                 cur = (Object)getNext.invoke(cur);
             }
             Assert.assertTrue(cur==first);
+
             
             //Backwards Checks
             cur = last;

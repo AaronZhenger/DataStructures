@@ -123,8 +123,21 @@ public class DS4_LinkedList<E> implements DS4_LinkedList_Interface<E> {
     @Override
     public void add(int x, E data) {
         DS4_LinkedList_Node<E> node = new DS4_LinkedList_Node<>(data);
-        node.setNext(getNode(x));
-        getNode(x-1).setNext(node);
+        if (x==0) {
+            node.setNext(getNode(x));
+            first = node;
+            if (size()==1)
+                last = first;
+        }
+        else if (x==size()) {
+            getNode(x-1).setNext(node);
+            node.setNext(null);
+            last = node;
+        }
+        else {
+            node.setNext(getNode(x));
+            getNode(x-1).setNext(node);
+        }
     }
 
     @Override
@@ -155,14 +168,12 @@ public class DS4_LinkedList<E> implements DS4_LinkedList_Interface<E> {
     }
 
     private DS4_LinkedList_Node<E> getNode(int x) {
-        DS4_LinkedList_Node<E> oldFirst = new DS4_LinkedList_Node<>(first.getData());
-        oldFirst.setNext(first.getNext());
         DS4_LinkedList_Node<E> index = first;
-        for (int i = 0; i < x; i++) {
+        if (x==0) return first;
+        for (int i = 0; i < x-1; i++) {
             index = index.getNext();
         }
-        first = oldFirst;
-        return index;
+        return index.getNext();
     }
 
     @Override
