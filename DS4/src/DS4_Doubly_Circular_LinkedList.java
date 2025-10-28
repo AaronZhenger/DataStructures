@@ -47,9 +47,14 @@ public class DS4_Doubly_Circular_LinkedList<E> implements DS4_Doubly_Circular_Li
     @Override
     public E removeLast() {
         E removedData = last.getData();
-        last = last.getPrev();
-        last.setNext(first);
-        first.setPrev(last);
+        if (size() == 1) {
+            first = null;
+            last = null;
+        } else {
+            last = last.getPrev();
+            last.setNext(first);
+            first.setPrev(last);
+        }
         return removedData;
     }
 
@@ -75,9 +80,7 @@ public class DS4_Doubly_Circular_LinkedList<E> implements DS4_Doubly_Circular_Li
             last.setNext(first);
             first.setPrev(last);
         }
-        System.out.println(this);
-        System.out.println(last);
-        System.out.println(last.getNext());
+        System.out.println(this+"\nLast:        "+last+"\nLast.next:   "+ last.getNext());
     }
 
     @Override
