@@ -1470,8 +1470,6 @@ public class DS4_Doubly_Circular_LinkedList_Tests {
             Method getPrev = lln.getMethod("getPrev");
             
             Object cur = first;
-            //delete line later
-            System.out.println("test object: "+first);
 
             for(int x=0; x<correct.size(); x++) {
                 Assert.assertEquals(correct.get(x), getData.invoke(cur));
