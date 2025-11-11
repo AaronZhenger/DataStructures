@@ -1,8 +1,3 @@
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Objects;
-
 public interface DS4_HashTable_Interface<K, V> {
 
     public void clear();

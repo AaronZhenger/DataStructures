@@ -5,7 +5,7 @@ public class DS4_HashTable<K, V> implements DS4_HashTable_Interface<K, V>, Itera
     private ArrayList<ArrayList<DS4_Entry<K, V>>> table;
     private ArrayList<K> keys;
     private Iterator<K> iterator;
-    private int bucketCapacity;
+    private final int bucketCapacity;
     private int loadFactor;
     private int tableSize;
     private int size;
