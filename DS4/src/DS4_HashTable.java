@@ -137,9 +137,7 @@ public class DS4_HashTable<K, V> implements DS4_HashTable_Interface<K, V>, Itera
         size = 0;
         keys = new ArrayList<>();
         for (DS4_Entry<K, V> entry : toAdd) {
-            System.out.println("Adding "+entry.key);
             insert(entry.key, entry.value);
-            System.out.println(keys.size());
         }
     }
 
