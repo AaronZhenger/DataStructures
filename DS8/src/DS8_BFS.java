@@ -1,9 +1,7 @@
 import java.awt.Point;
-import java.util.Arrays;
 
 public class DS8_BFS {
     public static int breadthFirstSearch_Portals(char[][] maze) {
-        System.out.println();
         boolean[][] visited = new boolean[maze.length][maze[0].length];
         Point location = new Point();
         Point end = new Point();
@@ -20,8 +18,6 @@ public class DS8_BFS {
         queue.offer(new Point[]{location});
         while (!queue.isEmpty()) {
             Point[] path = queue.poll();
-            System.out.println(queue);
-            System.out.println(Arrays.toString(path));
             location = path[path.length-1];
             if (location.equals(end)) return path.length-1;
             Point[] newPath = new Point[path.length+1];
@@ -35,7 +31,6 @@ public class DS8_BFS {
             if (location.y>0 && maze[location.x][location.y-1]!='W' && !visited[location.x][location.y-1]) {
                 newPath[newPath.length-1] = new Point(location.x, location.y-1);
                 queue.offer(newPath.clone());
-                System.out.println("Tried to go left");
                 visited[location.x][location.y-1]=true;
             }
             if (location.x< maze.length-1 && maze[location.x+1][location.y]!='W' && !visited[location.x+1][location.y]) {
@@ -46,7 +41,6 @@ public class DS8_BFS {
             if (location.y<maze[0].length-1 && maze[location.x][location.y+1]!='W' && !visited[location.x][location.y+1]) {
                 newPath[newPath.length-1] = new Point(location.x, location.y+1);
                 queue.offer(newPath.clone());
-                System.out.println("Tried to go right");
                 visited[location.x][location.y+1]=true;
             }
             newPath[newPath.length - 1] = location;
@@ -173,6 +167,41 @@ public class DS8_BFS {
                 }
         }
 
+    }
+
+    public static String breadthFirstSearch_Unweighted(String[] edges, String vertices, char start, char end) {
+        boolean[] visited = new boolean[vertices.length()];
+        DS8_Queue<char[]> queue = new DS8_Queue<>();
+        queue.offer(new char[]{start});
+        visited[vertices.indexOf(start)] = true;
+        while (!queue.isEmpty()) {
+            char[] path = queue.poll();
+            char location = path[path.length-1];
+            visited[vertices.indexOf(location)] = true;
+            String formatted = "";
+            for (char c : path)
+                formatted+=c;
+            if (visited[vertices.indexOf(end)]) return formatted;
+            char[] newPath = new char[path.length+1];
+            for (int i = 0; i<path.length; i++)
+                newPath[i] = path[i];
+            DS8_Queue<String> possiblePathways = new DS8_Queue<>();
+            for (String edge : edges)
+                if (edge.contains(String.valueOf(location)))
+                    possiblePathways.offer(edge);
+            while (!possiblePathways.isEmpty()) {
+                String edge = possiblePathways.poll();
+                char connect = 0;
+                for (char c : edge.toCharArray())
+                    if (c!=location)
+                        connect = c;
+                if (!visited[vertices.indexOf(connect)]) {
+                    newPath[newPath.length - 1] = connect;
+                    queue.offer(newPath.clone());
+                }
+            }
+        }
+        return null;
     }
 }
 
