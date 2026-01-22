@@ -23,7 +23,7 @@ public class DS8_BFS {
             System.out.println(queue);
             System.out.println(Arrays.toString(path));
             location = path[path.length-1];
-            if (visited[end.x][end.y] && location.equals(end)) return path.length-1;
+            if (location.equals(end)) return path.length-1;
             Point[] newPath = new Point[path.length+1];
             for (int i = 0; i<path.length; i++)
                 newPath[i] = path[i];
@@ -31,28 +31,26 @@ public class DS8_BFS {
                 newPath[newPath.length-1] = new Point(location.x-1, location.y);
                 queue.offer(newPath.clone());
                 visited[location.x-1][location.y]=true;
-                portalSearch(visited, maze,location.x-1 ,location.y , queue, newPath);
             }
             if (location.y>0 && maze[location.x][location.y-1]!='W' && !visited[location.x][location.y-1]) {
                 newPath[newPath.length-1] = new Point(location.x, location.y-1);
                 queue.offer(newPath.clone());
                 System.out.println("Tried to go left");
                 visited[location.x][location.y-1]=true;
-                portalSearch(visited, maze,location.x ,location.y-1 , queue, newPath);
             }
             if (location.x< maze.length-1 && maze[location.x+1][location.y]!='W' && !visited[location.x+1][location.y]) {
                 newPath[newPath.length-1] = new Point(location.x+1, location.y);
                 queue.offer(newPath.clone());
                 visited[location.x+1][location.y]=true;
-                portalSearch(visited, maze,location.x+1 ,location.y , queue, newPath);
             }
             if (location.y<maze[0].length-1 && maze[location.x][location.y+1]!='W' && !visited[location.x][location.y+1]) {
                 newPath[newPath.length-1] = new Point(location.x, location.y+1);
                 queue.offer(newPath.clone());
                 System.out.println("Tried to go right");
                 visited[location.x][location.y+1]=true;
-                portalSearch(visited, maze,location.x ,location.y+1 , queue, newPath);
             }
+            newPath[newPath.length - 1] = location;
+            portalSearch(visited, maze,location.x ,location.y , queue, newPath);
         }
         return -1;
     }
@@ -61,12 +59,17 @@ public class DS8_BFS {
             for(int i = 0; i < maze.length; i++)
                 for(int j = 0; j < maze[0].length; j++) {
                     if (maze[i][j] == 'a') {
-                        Point[] newNewPath = new Point[newPath.length+1];
-                        for (int v = 0; v<newPath.length; v++)
-                            newNewPath[v] = newPath[v];
-                        newNewPath[newNewPath.length-1] = new Point(i, j);
-                        queue.offer(newNewPath);
-                        visited[i][j] = true;
+//                        Point[] newNewPath = new Point[newPath.length+1];
+//                        for (int v = 0; v<newPath.length; v++)
+//                            newNewPath[v] = newPath[v];
+//                        newNewPath[newNewPath.length-1] = new Point(i, j);
+                        newPath[newPath.length-1] = new Point(i,j);
+                        if (!visited[i][j]) {
+                            visited[i][j] = true;
+                            newPath[newPath.length - 1] = new Point(i, j);
+                            queue.offer(newPath.clone());
+                        }
+
                     }
                 }
         }
@@ -74,12 +77,13 @@ public class DS8_BFS {
             for(int i = 0; i < maze.length; i++)
                 for(int j = 0; j < maze[0].length; j++) {
                     if (maze[i][j] == 'b') {
-                        Point[] newNewPath = new Point[newPath.length+1];
-                        for (int v = 0; v<newPath.length; v++)
-                            newNewPath[v] = newPath[v];
-                        newNewPath[newNewPath.length-1] = new Point(i, j);
-                        queue.offer(newNewPath);
-                        visited[i][j] = true;
+                        newPath[newPath.length-1] = new Point(i,j);
+                        if (!visited[i][j]) {
+                            visited[i][j] = true;
+                            newPath[newPath.length - 1] = new Point(i, j);
+                            queue.offer(newPath.clone());
+                        }
+
                     }
                 }
         }
@@ -87,12 +91,13 @@ public class DS8_BFS {
             for(int i = 0; i < maze.length; i++)
                 for(int j = 0; j < maze[0].length; j++) {
                     if (maze[i][j] == 'c') {
-                        Point[] newNewPath = new Point[newPath.length+1];
-                        for (int v = 0; v<newPath.length; v++)
-                            newNewPath[v] = newPath[v];
-                        newNewPath[newNewPath.length-1] = new Point(i, j);
-                        queue.offer(newNewPath);
-                        visited[i][j] = true;
+                        newPath[newPath.length-1] = new Point(i,j);
+                        if (!visited[i][j]) {
+                            visited[i][j] = true;
+                            newPath[newPath.length - 1] = new Point(i, j);
+                            queue.offer(newPath.clone());
+                        }
+
                     }
                 }
         }
@@ -100,12 +105,13 @@ public class DS8_BFS {
             for(int i = 0; i < maze.length; i++)
                 for(int j = 0; j < maze[0].length; j++) {
                     if (maze[i][j] == 'd') {
-                        Point[] newNewPath = new Point[newPath.length+1];
-                        for (int v = 0; v<newPath.length; v++)
-                            newNewPath[v] = newPath[v];
-                        newNewPath[newNewPath.length-1] = new Point(i, j);
-                        queue.offer(newNewPath);
-                        visited[i][j] = true;
+                        newPath[newPath.length-1] = new Point(i,j);
+                        if (!visited[i][j]) {
+                            visited[i][j] = true;
+                            newPath[newPath.length - 1] = new Point(i, j);
+                            queue.offer(newPath.clone());
+                        }
+
                     }
                 }
         }
@@ -113,12 +119,13 @@ public class DS8_BFS {
             for(int i = 0; i < maze.length; i++)
                 for(int j = 0; j < maze[0].length; j++) {
                     if (maze[i][j] == 'A') {
-                        Point[] newNewPath = new Point[newPath.length+1];
-                        for (int v = 0; v<newPath.length; v++)
-                            newNewPath[v] = newPath[v];
-                        newNewPath[newNewPath.length-1] = new Point(i, j);
-                        queue.offer(newNewPath);
-                        visited[i][j] = true;
+                        newPath[newPath.length-1] = new Point(i,j);
+                        if (!visited[i][j]) {
+                            visited[i][j] = true;
+                            newPath[newPath.length - 1] = new Point(i, j);
+                            queue.offer(newPath.clone());
+                        }
+
                     }
                 }
         }
@@ -126,12 +133,13 @@ public class DS8_BFS {
             for(int i = 0; i < maze.length; i++)
                 for(int j = 0; j < maze[0].length; j++) {
                     if (maze[i][j] == 'B') {
-                        Point[] newNewPath = new Point[newPath.length+1];
-                        for (int v = 0; v<newPath.length; v++)
-                            newNewPath[v] = newPath[v];
-                        newNewPath[newNewPath.length-1] = new Point(i, j);
-                        queue.offer(newNewPath);
-                        visited[i][j] = true;
+                        newPath[newPath.length-1] = new Point(i,j);
+                        if (!visited[i][j]) {
+                            visited[i][j] = true;
+                            newPath[newPath.length - 1] = new Point(i, j);
+                            queue.offer(newPath.clone());
+                        }
+
                     }
                 }
         }
@@ -139,12 +147,13 @@ public class DS8_BFS {
             for(int i = 0; i < maze.length; i++)
                 for(int j = 0; j < maze[0].length; j++) {
                     if (maze[i][j] == 'C') {
-                        Point[] newNewPath = new Point[newPath.length+1];
-                        for (int v = 0; v<newPath.length; v++)
-                            newNewPath[v] = newPath[v];
-                        newNewPath[newNewPath.length-1] = new Point(i, j);
-                        queue.offer(newNewPath);
-                        visited[i][j] = true;
+                        newPath[newPath.length-1] = new Point(i,j);
+                        if (!visited[i][j]) {
+                            visited[i][j] = true;
+                            newPath[newPath.length - 1] = new Point(i, j);
+                            queue.offer(newPath.clone());
+                        }
+
                     }
                 }
         }
@@ -152,12 +161,14 @@ public class DS8_BFS {
             for(int i = 0; i < maze.length; i++)
                 for(int j = 0; j < maze[0].length; j++) {
                     if (maze[i][j] == 'D') {
-                        Point[] newNewPath = new Point[newPath.length+1];
-                        for (int v = 0; v<newPath.length; v++)
-                            newNewPath[v] = newPath[v];
-                        newNewPath[newNewPath.length-1] = new Point(i, j);
-                        queue.offer(newNewPath);
-                        visited[i][j] = true;
+                        newPath[newPath.length-1] = new Point(i,j);
+                        if (!visited[i][j]) {
+                            visited[i][j] = true;
+                            newPath[newPath.length - 1] = new Point(i, j);
+                            queue.offer(newPath.clone());
+                        }
+
+
                     }
                 }
         }
