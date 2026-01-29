@@ -25,7 +25,7 @@ public class DS8_Dijkstras_Topographical_Tests
                             {'G','S','M','F','G'},
                             {'G','G','F','F','G'}},
 
-                    {{'G','M','M','G','G'},
+                           {{'G','M','M','G','G'},
                             {'G','I','I','M','G'},
                             {'G','I','M','F','F'},
                             {'G','I','M','F','G'},
