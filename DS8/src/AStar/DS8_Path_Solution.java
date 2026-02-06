@@ -1,3 +1,4 @@
+package AStar;
 
 import java.util.ArrayList;
 

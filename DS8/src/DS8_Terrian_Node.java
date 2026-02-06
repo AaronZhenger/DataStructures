@@ -1,5 +1,3 @@
-
-
 import java.awt.*;
 
 public class DS8_Terrian_Node implements Comparable

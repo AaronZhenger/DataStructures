@@ -1,4 +1,3 @@
-
 public class DS8_TerrainCost {
     private int cost;
     private char type;

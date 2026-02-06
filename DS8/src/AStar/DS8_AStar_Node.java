@@ -1,3 +1,4 @@
+package AStar;
 
 public class DS8_AStar_Node<L> implements Comparable<DS8_AStar_Node<L>>{
     private L location;

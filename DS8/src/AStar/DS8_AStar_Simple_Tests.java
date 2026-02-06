@@ -1,3 +1,4 @@
+package AStar;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -108,7 +109,7 @@ public class DS8_AStar_Simple_Tests
 
     @Test(timeout = 250)
     public void checkImports() throws Exception{
-        String className = "DS8_AStar";
+        String className = "AStar.DS8_AStar";
         String fileName = "src/"+generateClassName(className).replaceAll("\\.","/")+".java";
         boolean allowedOnly = true;
         ArrayList<String> invalidImport = new ArrayList<>();
@@ -150,7 +151,7 @@ public class DS8_AStar_Simple_Tests
     public void test1() throws Exception {
         try
         {
-            Class<?> aStar = Class.forName(generateClassName("DS8_AStar"));
+            Class<?> aStar = Class.forName(generateClassName("AStar.DS8_AStar"));
             Method simple = aStar.getMethod("aStar_Simple", char[][].class);
             for(int x=0; x<testGraphs1.length; x++)
             {
@@ -176,7 +177,7 @@ public class DS8_AStar_Simple_Tests
     public void test2() throws Exception {
         try
         {
-            Class<?> aStar = Class.forName(generateClassName("DS8_AStar"));
+            Class<?> aStar = Class.forName(generateClassName("AStar.DS8_AStar"));
             Method simple = aStar.getMethod("aStar_Simple", char[][].class);
             for(int x=0; x<testGraphs2.length; x++)
             {
@@ -198,10 +199,10 @@ public class DS8_AStar_Simple_Tests
         }
     }
 
-    public void checkSolution(char[][] grid, Integer steps,DS8_Path_Solution student)
+    public void checkSolution(char[][] grid, Integer steps, DS8_Path_Solution student)
     {
-        assertEquals("aStar("+Arrays.deepToString(grid)+") failed to produce the correct steps.",steps.intValue(),student.getDistance());
-        assertEquals("aStar("+Arrays.deepToString(grid)+") failed to produce a path of the correct length.",steps.intValue()+1,student.getPath().size());
+        Assert.assertEquals("aStar("+Arrays.deepToString(grid)+") failed to produce the correct steps.",steps.intValue(),student.getDistance());
+        Assert.assertEquals("aStar("+Arrays.deepToString(grid)+") failed to produce a path of the correct length.",steps.intValue()+1,student.getPath().size());
 
         ArrayList<Point> points = student.getPath();
         assertEquals("aStar("+Arrays.deepToString(grid)+") failed to produce a path of that begins at the start location.",""+'S',""+grid[points.get(0).y][points.get(0).x]);

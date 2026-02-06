@@ -1,3 +1,4 @@
+package AStar;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -92,7 +93,7 @@ public class DS8_AStar_JetPack_Tests {
 
     @Test(timeout = 250)
     public void checkImports() throws Exception{
-        String className = "DS8_AStar";
+        String className = "AStar.DS8_AStar";
         String fileName = "src/"+generateClassName(className).replaceAll("\\.","/")+".java";
         boolean allowedOnly = true;
         ArrayList<String> invalidImport = new ArrayList<>();
@@ -134,7 +135,7 @@ public class DS8_AStar_JetPack_Tests {
     public void test1() throws Exception {
         try
         {
-            Class<?> aStar = Class.forName(generateClassName("DS8_AStar"));
+            Class<?> aStar = Class.forName(generateClassName("AStar.DS8_AStar"));
             Method jetPack = aStar.getMethod("aStar_JetPack", char[][].class);
             for(int x=0; x<testGraphs1.length; x++)
             {
@@ -154,7 +155,7 @@ public class DS8_AStar_JetPack_Tests {
     public void test2() throws Exception {
         try
         {
-            Class<?> aStar = Class.forName(generateClassName("DS8_AStar"));
+            Class<?> aStar = Class.forName(generateClassName("AStar.DS8_AStar"));
             Method jetPack = aStar.getMethod("aStar_JetPack", char[][].class);
             for(int x=0; x<testGraphs2.length; x++)
             {
