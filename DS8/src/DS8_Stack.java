@@ -1,5 +1,3 @@
-package Tools;
-
 import java.util.ArrayList;
 
 public class DS8_Stack<E>
