@@ -133,10 +133,9 @@ public class CalcFrame extends JFrame {
         sign.setText("-/+");
         sign.setFont(new Font("Serif", Font.PLAIN, 9));
         sign.addActionListener(e -> {
-            if (!input.getText().isBlank())
-                if (input.getText().charAt(0)=='-')
-                    input.setText(input.getText().substring(1));
-                else input.setText("-" + input.getText());
+            if (input.getText().charAt(0)=='-')
+                input.setText(input.getText().substring(1));
+            else input.setText("-" + input.getText());
         });
         add(sign);
 
@@ -306,7 +305,12 @@ public class CalcFrame extends JFrame {
         equals.setBounds(20, 320, 265, 45);
         equals.setText("=");
         equals.addActionListener(e -> {
-            if (!operand1.getText().isBlank() && !operator.getText().isBlank() && !input.getText().isBlank()) {
+            if (input.getText().equals("0")) {
+                input.setText("Infinity");
+                operand1.setText("");
+                operator.setText("");
+            }
+            if (!operand1.getText().isBlank() && !operator.getText().isBlank() && !input.getText().isBlank() && input.getText().equals("-")) {
                 double first = Double.parseDouble(operand1.getText());
                 double second = Double.parseDouble(input.getText());
 
