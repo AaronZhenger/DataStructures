@@ -51,70 +51,88 @@ public class CalcFrame extends JFrame {
         one.setBounds(20, 155, 45, 45);
         one.setText("1");
         one.addActionListener(e -> {
-            input.setText(input.getText()+"1");
+            if (!input.getText().contains("E"))
+                input.setText(input.getText()+"1");
+            else input.setText("1");
         });
         add(one);
 
         two.setBounds(75, 155, 45, 45);
         two.setText("2");
         two.addActionListener(e -> {
-            input.setText(input.getText()+"2");
-        });
+            if (!input.getText().contains("E"))
+                input.setText(input.getText()+"2");
+            else input.setText("2");        });
         add(two);
 
         three.setBounds(130, 155, 45, 45);
         three.setText("3");
         three.addActionListener(e -> {
-            input.setText(input.getText()+"3");
-        });
+            if (!input.getText().contains("E"))
+                input.setText(input.getText()+"3");
+            else input.setText("3");        });
         add(three);
 
         four.setBounds(20, 210, 45, 45);
         four.setText("4");
         four.addActionListener(e -> {
-            input.setText(input.getText()+"4");
+            if (!input.getText().contains("E"))
+                input.setText(input.getText()+"4");
+            else input.setText("4");
         });
         add(four);
 
         five.setBounds(75, 210, 45, 45);
         five.setText("5");
         five.addActionListener(e -> {
-            input.setText(input.getText()+"5");
+            if (!input.getText().contains("E"))
+                input.setText(input.getText()+"5");
+            else input.setText("5");
         });
         add(five);
 
         six.setBounds(130, 210, 45, 45);
         six.setText("6");
         six.addActionListener(e -> {
-            input.setText(input.getText()+"6");
+            if (!input.getText().contains("E"))
+                input.setText(input.getText()+"6");
+            else input.setText("6");
         });
         add(six);
 
         seven.setBounds(20, 265, 45, 45);
         seven.setText("7");
         seven.addActionListener(e -> {
-            input.setText(input.getText()+"7");
+            if (!input.getText().contains("E"))
+                input.setText(input.getText()+"7");
+            else input.setText("7");
         });
         add(seven);
 
         eight.setBounds(75, 265, 45, 45);
         eight.setText("8");
         eight.addActionListener(e -> {
-            input.setText(input.getText()+"8");
+            if (!input.getText().contains("E"))
+                input.setText(input.getText()+"8");
+            else input.setText("8");
         });
         add(eight);
 
         nine.setBounds(130, 265, 45, 45);
         nine.setText("9");
         nine.addActionListener(e -> {
-            input.setText(input.getText()+"9");
+            if (!input.getText().contains("E"))
+                input.setText(input.getText()+"9");
+            else input.setText("9");
         });
         add(nine);
 
         zero.setBounds(185, 155, 45, 155);
         zero.setText("0");
         zero.addActionListener(e -> {
-            input.setText(input.getText()+"0");
+            if (!input.getText().contains("E"))
+                input.setText(input.getText()+"0");
+            else input.setText("0");
         });
         add(zero);
 
@@ -122,8 +140,8 @@ public class CalcFrame extends JFrame {
         decimal.setText(".");
         decimal.addActionListener(e -> {
             if (!input.getText().contains("."))
-                if (input.getText().isBlank())
-                    input.setText(input.getText()+"0.");
+                if (input.getText().isBlank() || input.getText().contains("E"))
+                    input.setText("0.");
                 else
                     input.setText(input.getText()+".");
         });
@@ -133,8 +151,10 @@ public class CalcFrame extends JFrame {
         sign.setText("-/+");
         sign.setFont(new Font("Serif", Font.PLAIN, 9));
         sign.addActionListener(e -> {
-            if (input.getText().charAt(0)=='-')
+            if (input.getText().contains("-"))
                 input.setText(input.getText().substring(1));
+            else if (input.getText().contains("E") || input.getText().isBlank())
+                input.setText("");
             else input.setText("-" + input.getText());
         });
         add(sign);
@@ -151,7 +171,7 @@ public class CalcFrame extends JFrame {
         add.setBounds(240, 100, 45, 45);
         add.setText("+");
         add.addActionListener(e -> {
-            if (!operand1.getText().isBlank() && !operator.getText().isBlank() && !input.getText().isBlank()) {
+            if (!operand1.getText().isBlank() && !operator.getText().isBlank() && !input.getText().isBlank() && !input.getText().contains("E")) {
                 double first = Double.parseDouble(operand1.getText());
                 double second = Double.parseDouble(input.getText());
 
@@ -172,17 +192,23 @@ public class CalcFrame extends JFrame {
                         operator.setText("+");
                     }
                     case "/" -> {
-                        operand1.setText(""+(first/second));
-                        input.setText("");
-                        operator.setText("+");
+                        if (Double.parseDouble(input.getText())==0) {
+                            input.setText("Error");
+                            operand1.setText("");
+                            operator.setText("");
+                        } else {
+                            operand1.setText("" + (first + second));
+                            input.setText("");
+                            operator.setText("/");
+                        }
                     }
                 }
             }
-            if (operator.getText()=="") {
+            if (operator.getText()=="" && !input.getText().equals("Error")) {
                 operand1.setText(input.getText());
                 input.setText("");
             }
-            if (!operand1.getText().isBlank())
+            if (!operand1.getText().isBlank() && !input.getText().equals("Error"))
                 operator.setText("+");
         });
         add(add);
@@ -190,7 +216,7 @@ public class CalcFrame extends JFrame {
         subtract.setBounds(240, 155, 45, 45);
         subtract.setText("-");
         subtract.addActionListener(e -> {
-            if (!operand1.getText().isBlank() && !operator.getText().isBlank() && !input.getText().isBlank()) {
+            if (!operand1.getText().isBlank() && !operator.getText().isBlank() && !input.getText().isBlank() && !input.getText().contains("E")) {
                 double first = Double.parseDouble(operand1.getText());
                 double second = Double.parseDouble(input.getText());
 
@@ -211,24 +237,30 @@ public class CalcFrame extends JFrame {
                         operator.setText("-");
                     }
                     case "/" -> {
-                        operand1.setText(""+(first/second));
-                        input.setText("");
-                        operator.setText("-");
+                        if (Double.parseDouble(input.getText())==0) {
+                            input.setText("Error");
+                            operand1.setText("");
+                            operator.setText("");
+                        } else {
+                            operand1.setText("" + (first / second));
+                            input.setText("");
+                            operator.setText("-");
+                        }
                     }
                 }
             }
-            if (operator.getText()=="") {
+            if (operator.getText()=="" && !input.getText().equals("Error")) {
                 operand1.setText(input.getText());
                 input.setText("");
             }
-            if (!operand1.getText().isBlank()) operator.setText("-");
+            if (!operand1.getText().isBlank() && !input.getText().equals("Error")) operator.setText("-");
         });
         add(subtract);
 
         multiply.setBounds(240, 210, 45, 45);
         multiply.setText("*");
         multiply.addActionListener(e -> {
-            if (!operand1.getText().isBlank() && !operator.getText().isBlank() && !input.getText().isBlank()) {
+            if (!operand1.getText().isBlank() && !operator.getText().isBlank() && !input.getText().isBlank() && !input.getText().contains("E")) {
                 double first = Double.parseDouble(operand1.getText());
                 double second = Double.parseDouble(input.getText());
 
@@ -249,25 +281,31 @@ public class CalcFrame extends JFrame {
                         operator.setText("*");
                     }
                     case "/" -> {
-                        operand1.setText(""+(first/second));
-                        input.setText("");
-                        operator.setText("*");
+                        if (Double.parseDouble(input.getText())==0) {
+                            input.setText("Error");
+                            operand1.setText("");
+                            operator.setText("");
+                        } else {
+                            operand1.setText("" + (first / second));
+                            input.setText("");
+                            operator.setText("*");
+                        }
                     }
                 }
             }
-            if (operator.getText()=="") {
+            if (operator.getText()=="" && !input.getText().equals("Error")) {
                 operand1.setText(input.getText());
                 input.setText("");
                 System.out.println("d1");
             }
-            if (!operand1.getText().isBlank()) operator.setText("*");
+            if (!operand1.getText().isBlank() && !input.getText().equals("Error")) operator.setText("*");
         });
         add(multiply);
 
         divide.setBounds(240, 265, 45, 45);
         divide.setText("/");
         divide.addActionListener(e -> {
-            if (!operand1.getText().isBlank() && !operator.getText().isBlank() && !input.getText().isBlank()) {
+            if (!operand1.getText().isBlank() && !operator.getText().isBlank() && !input.getText().isBlank() && !input.getText().contains("E")) {
                 double first = Double.parseDouble(operand1.getText());
                 double second = Double.parseDouble(input.getText());
 
@@ -288,29 +326,36 @@ public class CalcFrame extends JFrame {
                         operator.setText("/");
                     }
                     case "/" -> {
-                        operand1.setText(""+(first/second));
-                        input.setText("");
-                        operator.setText("/");
+                        if (Double.parseDouble(input.getText())==0) {
+                            input.setText("Error");
+                            operand1.setText("");
+                            operator.setText("");
+                        } else {
+                            operand1.setText("" + (first / second));
+                            input.setText("");
+                            operator.setText("/");
+                        }
                     }
                 }
             }
-            if (operator.getText()=="") {
+            if (operator.getText()=="" && !input.getText().equals("Error")) {
                 operand1.setText(input.getText());
                 input.setText("");
             }
-            if (!operand1.getText().isBlank()) operator.setText("/");
+            if (!operand1.getText().isBlank() && !input.getText().equals("Error")) operator.setText("/");
         });
         add(divide);
 
         equals.setBounds(20, 320, 265, 45);
         equals.setText("=");
         equals.addActionListener(e -> {
-            if (input.getText().equals("0")) {
-                input.setText("Infinity");
+            if (input.getText().equals("-")) {
                 operand1.setText("");
                 operator.setText("");
+                input.setText("Error");
             }
-            if (!operand1.getText().isBlank() && !operator.getText().isBlank() && !input.getText().isBlank() && input.getText().equals("-")) {
+
+            if (!operand1.getText().isBlank() && !operator.getText().isBlank() && !input.getText().isBlank()) {
                 double first = Double.parseDouble(operand1.getText());
                 double second = Double.parseDouble(input.getText());
 
@@ -331,7 +376,12 @@ public class CalcFrame extends JFrame {
                         operator.setText("");
                     }
                     case "/" -> {
-                        input.setText(""+(first/second));
+                        if (Double.parseDouble(input.getText())==0) {
+                            input.setText("Error");
+                        }
+                        else {
+                            input.setText(""+(first/second));
+                        }
                         operand1.setText("");
                         operator.setText("");
                     }
