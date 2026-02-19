@@ -3,6 +3,8 @@ import java.awt.*;
 
 public class CalcFrame extends JFrame {
 
+    public static boolean isAnswer = false;
+
     public CalcFrame() {
         super("Calculator");
 
@@ -51,94 +53,130 @@ public class CalcFrame extends JFrame {
         one.setBounds(20, 155, 45, 45);
         one.setText("1");
         one.addActionListener(e -> {
-            if (!input.getText().contains("E"))
+            if (!input.getText().contains("E") && !isAnswer)
                 input.setText(input.getText()+"1");
-            else input.setText("1");
+            else {
+                input.setText("1");
+                isAnswer = false;
+            }
         });
         add(one);
 
         two.setBounds(75, 155, 45, 45);
         two.setText("2");
         two.addActionListener(e -> {
-            if (!input.getText().contains("E"))
+            if (!input.getText().contains("E") && !isAnswer)
                 input.setText(input.getText()+"2");
-            else input.setText("2");        });
+            else {
+                input.setText("2");
+                isAnswer = false;
+            }
+        });
         add(two);
 
         three.setBounds(130, 155, 45, 45);
         three.setText("3");
         three.addActionListener(e -> {
-            if (!input.getText().contains("E"))
+            if (!input.getText().contains("E") && !isAnswer)
                 input.setText(input.getText()+"3");
-            else input.setText("3");        });
+            else {
+                input.setText("3");
+                isAnswer = false;
+            }
+        });
         add(three);
 
         four.setBounds(20, 210, 45, 45);
         four.setText("4");
         four.addActionListener(e -> {
-            if (!input.getText().contains("E"))
+            if (!input.getText().contains("E") && !isAnswer)
                 input.setText(input.getText()+"4");
-            else input.setText("4");
+            else {
+                input.setText("4");
+                isAnswer = false;
+            }
         });
         add(four);
 
         five.setBounds(75, 210, 45, 45);
         five.setText("5");
         five.addActionListener(e -> {
-            if (!input.getText().contains("E"))
+            if (!input.getText().contains("E") && !isAnswer)
                 input.setText(input.getText()+"5");
-            else input.setText("5");
+            else {
+                input.setText("5");
+                isAnswer = false;
+            }
         });
         add(five);
 
         six.setBounds(130, 210, 45, 45);
         six.setText("6");
         six.addActionListener(e -> {
-            if (!input.getText().contains("E"))
+            if (!input.getText().contains("E") && !isAnswer)
                 input.setText(input.getText()+"6");
-            else input.setText("6");
+            else {
+                input.setText("6");
+                isAnswer = false;
+            }
         });
         add(six);
 
         seven.setBounds(20, 265, 45, 45);
         seven.setText("7");
         seven.addActionListener(e -> {
-            if (!input.getText().contains("E"))
+            if (!input.getText().contains("E") && !isAnswer)
                 input.setText(input.getText()+"7");
-            else input.setText("7");
+            else {
+                input.setText("7");
+                isAnswer = false;
+            }
         });
         add(seven);
 
         eight.setBounds(75, 265, 45, 45);
         eight.setText("8");
         eight.addActionListener(e -> {
-            if (!input.getText().contains("E"))
+            if (!input.getText().contains("E") && !isAnswer)
                 input.setText(input.getText()+"8");
-            else input.setText("8");
+            else {
+                input.setText("8");
+                isAnswer = false;
+            }
         });
         add(eight);
 
         nine.setBounds(130, 265, 45, 45);
         nine.setText("9");
         nine.addActionListener(e -> {
-            if (!input.getText().contains("E"))
+            if (!input.getText().contains("E") && !isAnswer)
                 input.setText(input.getText()+"9");
-            else input.setText("9");
+            else {
+                input.setText("9");
+                isAnswer = false;
+            }
         });
         add(nine);
 
         zero.setBounds(185, 155, 45, 155);
         zero.setText("0");
         zero.addActionListener(e -> {
-            if (!input.getText().contains("E"))
+            if (!input.getText().contains("E") && !isAnswer)
                 input.setText(input.getText()+"0");
-            else input.setText("0");
+            else {
+                input.setText("0");
+                isAnswer = false;
+            }
         });
         add(zero);
 
         decimal.setBounds(75, 100, 45, 45);
         decimal.setText(".");
         decimal.addActionListener(e -> {
+            if (isAnswer) {
+                input.setText("0.");
+                isAnswer = false;
+            }
             if (!input.getText().contains("."))
                 if (input.getText().isBlank() || input.getText().contains("E"))
                     input.setText("0.");
@@ -155,6 +193,7 @@ public class CalcFrame extends JFrame {
                 input.setText(input.getText().substring(1));
             else if (input.getText().contains("E") || input.getText().isBlank())
                 input.setText("");
+            else if (Double.parseDouble(input.getText())==0) {}
             else input.setText("-" + input.getText());
         });
         add(sign);
@@ -386,6 +425,8 @@ public class CalcFrame extends JFrame {
                         operator.setText("");
                     }
                 }
+
+                isAnswer = true;
             }
         });
         add(equals);

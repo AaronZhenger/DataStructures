@@ -1,7 +1,6 @@
 import javax.swing.*;
-import javax.swing.text.NumberFormatter;
 import java.awt.*;
-import java.text.NumberFormat;
+import java.awt.event.*;
 
 public class FinalCalcFrame extends JFrame {
     public FinalCalcFrame() {
@@ -11,48 +10,68 @@ public class FinalCalcFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Font font = new Font("Dialog", Font.BOLD, 24);
-        NumberFormatter formatter = new NumberFormatter(NumberFormat.getIntegerInstance());
-        formatter.setValueClass(Integer.class);
-        formatter.setAllowsInvalid(false);
-        formatter.setCommitsOnValidEdit(true);
-        formatter.setMinimum(0);
-        formatter.setMaximum(100);
 
         JLabel termWeight = new JLabel();
         JLabel finalWeight = new JLabel();
         JLabel gradeWanted = new JLabel();
         JLabel terms = new JLabel();
-        JFormattedTextField textTermWeight = new JFormattedTextField(formatter);
-        JFormattedTextField textFinalWeight = new JFormattedTextField(formatter);
-        JFormattedTextField textGradeWanted = new JFormattedTextField(formatter);
-        JComboBox<Integer> comboTerms = new JComboBox<>();
+        JLabel term1 = new JLabel();
+        JLabel term2 = new JLabel();
+        JLabel term3 = new JLabel();
+        JLabel term4 = new JLabel();
+        JLabel term5 = new JLabel();
+        JTextField textTermWeight = new JTextField();
+        JTextField textFinalWeight = new JTextField();
+        JTextField textGradeWanted = new JTextField();
+        JTextField textTerm1 = new JTextField();
+        JTextField textTerm2 = new JTextField();
+        JTextField textTerm3 = new JTextField();
+        JTextField textTerm4 = new JTextField();
+        JTextField textTerm5 = new JTextField();
+        JComboBox<Integer> comboTerms;
 
         {
-            termWeight.setBounds(30, 30, 269, 40);
+            termWeight.setBounds(30, 30, 270, 40);
             termWeight.setText("Total Term Weight:");
             termWeight.setFont(font);
             add(termWeight);
 
             textTermWeight.setBounds(300, 30, 270, 40);
+            textTermWeight.setText("85");
+            textTermWeight.addKeyListener(new KeyAdapter() {
+                public void keyTyped(KeyEvent e) {
+                    if (!Character.isDigit(e.getKeyChar()) || (textTermWeight.getText().length()>1 && !textTermWeight.getText().contains("10") && !(e.getKeyChar() =='0'))) {
+                        e.consume();
+                    }
+                }
+            });
             textTermWeight.setEditable(true);
             textTermWeight.setFont(font);
             add(textTermWeight);
         } //Term Weight
 
         {
-            finalWeight.setBounds(30, 90, 269, 40);
+            finalWeight.setBounds(30, 90, 270, 40);
             finalWeight.setText("Final Weight:");
             finalWeight.setFont(font);
             add(finalWeight);
 
             textFinalWeight.setBounds(300, 90, 270, 40);
+            textFinalWeight.setText("15");
+            textFinalWeight.addKeyListener(new KeyAdapter() {
+                public void keyTyped(KeyEvent e) {
+                    if (!Character.isDigit(e.getKeyChar()) || textFinalWeight.getText().length()>1) {
+                        e.consume();
+                    }
+                }
+            });
             textFinalWeight.setEditable(true);
             textFinalWeight.setFont(font);
             add(textFinalWeight);
         } //Final Weight
 
         {
-            terms.setBounds(30, 150, 269, 40);
+            terms.setBounds(30, 150, 270, 40);
             terms.setText("Number of Terms:");
             terms.setFont(font);
             add(terms);
@@ -65,7 +84,99 @@ public class FinalCalcFrame extends JFrame {
             comboTerms.addActionListener(e -> {
                 switch (((Integer) finalComboTerms.getSelectedItem())) {
                     case 1 -> {
-                        System.out.println("Hi people");
+                        term1.setEnabled(true);
+                        textTerm1.setEditable(true);
+                        textTerm1.setEnabled(true);
+                        term2.setEnabled(false);
+                        textTerm2.setText("");
+                        textTerm2.setEditable(false);
+                        textTerm2.setEnabled(false);
+                        term3.setEnabled(false);
+                        textTerm3.setText("");
+                        textTerm3.setEditable(false);
+                        textTerm3.setEnabled(false);
+                        term4.setEnabled(false);
+                        textTerm4.setText("");
+                        textTerm4.setEditable(false);
+                        textTerm4.setEnabled(false);
+                        term5.setEnabled(false);
+                        textTerm5.setText("");
+                        textTerm5.setEditable(false);
+                        textTerm5.setEnabled(false);
+                    }
+                    case 2 -> {
+                        term1.setEnabled(true);
+                        textTerm1.setEditable(true);
+                        textTerm1.setEnabled(true);
+                        term2.setEnabled(true);
+                        textTerm2.setEditable(true);
+                        textTerm2.setEnabled(true);
+                        term3.setEnabled(false);
+                        textTerm3.setText("");
+                        textTerm3.setEditable(false);
+                        textTerm3.setEnabled(false);
+                        term4.setEnabled(false);
+                        textTerm4.setText("");
+                        textTerm4.setEditable(false);
+                        textTerm4.setEnabled(false);
+                        term5.setEnabled(false);
+                        textTerm5.setText("");
+                        textTerm5.setEditable(false);
+                        textTerm5.setEnabled(false);
+                    }
+                    case 3 -> {
+                        term1.setEnabled(true);
+                        textTerm1.setEditable(true);
+                        textTerm1.setEnabled(true);
+                        term2.setEnabled(true);
+                        textTerm2.setEditable(true);
+                        textTerm2.setEnabled(true);
+                        term3.setEnabled(true);
+                        textTerm3.setEditable(true);
+                        textTerm3.setEnabled(true);
+                        term4.setEnabled(false);
+                        textTerm4.setText("");
+                        textTerm4.setEditable(false);
+                        textTerm4.setEnabled(false);
+                        term5.setEnabled(false);
+                        textTerm5.setText("");
+                        textTerm5.setEditable(false);
+                        textTerm5.setEnabled(false);
+                    }
+                    case 4 -> {
+                        term1.setEnabled(true);
+                        textTerm1.setEditable(true);
+                        textTerm1.setEnabled(true);
+                        term2.setEnabled(true);
+                        textTerm2.setEditable(true);
+                        textTerm2.setEnabled(true);
+                        term3.setEnabled(true);
+                        textTerm3.setEditable(true);
+                        textTerm3.setEnabled(true);
+                        term4.setEnabled(true);
+                        textTerm4.setEditable(true);
+                        textTerm4.setEnabled(true);
+                        term5.setEnabled(false);
+                        textTerm5.setText("");
+                        textTerm5.setEditable(false);
+                        textTerm5.setEnabled(false);
+                    }
+                    case 5 -> {
+                        term1.setEnabled(true);
+                        textTerm1.setEditable(true);
+                        textTerm1.setEnabled(true);
+                        term2.setEnabled(true);
+                        textTerm2.setEditable(true);
+                        textTerm2.setEnabled(true);
+                        term3.setEnabled(true);
+                        textTerm3.setEditable(true);
+                        textTerm3.setEnabled(true);
+                        term4.setEnabled(true);
+                        textTerm4.setEditable(true);
+                        textTerm4.setEnabled(true);
+                        term5.setEnabled(true);
+                        textTerm5.setEditable(true);
+                        textTerm5.setEnabled(true);
                     }
                 }
             });
@@ -74,16 +185,127 @@ public class FinalCalcFrame extends JFrame {
         } //Terms
 
         {
-            gradeWanted.setBounds(30, 210, 269, 40);
+            gradeWanted.setBounds(30, 210, 270, 40);
             gradeWanted.setText("Grade Wanted:");
             gradeWanted.setFont(font);
             add(gradeWanted);
 
             textGradeWanted.setBounds(300, 210, 270, 40);
+            textGradeWanted.setText("90");
+            textGradeWanted.addKeyListener(new KeyAdapter() {
+                public void keyTyped(KeyEvent e) {
+                    if (!Character.isDigit(e.getKeyChar()) || textGradeWanted.getText().length()>1) {
+                        e.consume();
+                    }
+                }
+            });
             textGradeWanted.setEditable(true);
             textGradeWanted.setFont(font);
             add(textGradeWanted);
         } //Grade Wanted
+
+        {
+            term1.setBounds(30, 310, 270, 40);
+            term1.setText("Term 1 Grade:");
+            term1.setFont(font);
+            add(term1);
+
+            textTerm1.setBounds(300, 310, 270, 40);
+            textTerm1.addKeyListener(new KeyAdapter() {
+                public void keyTyped(KeyEvent e) {
+                    if (!Character.isDigit(e.getKeyChar()) || textTerm1.getText().length()>1) {
+                        e.consume();
+                    }
+                }
+            });
+            textTerm1.setEditable(true);
+            textTerm1.setFont(font);
+            add(textTerm1);
+        } //Term 1
+
+        {
+            term2.setBounds(30, 370, 270, 40);
+            term2.setText("Term 2 Grade:");
+            term2.setFont(font);
+            term2.setEnabled(false);
+            add(term2);
+
+            textTerm2.setBounds(300, 370, 270, 40);
+            textTerm2.addKeyListener(new KeyAdapter() {
+                public void keyTyped(KeyEvent e) {
+                    if (!Character.isDigit(e.getKeyChar()) || textTerm2.getText().length()>1) {
+                        e.consume();
+                    }
+                }
+            });
+            textTerm2.setEditable(false);
+            textTerm2.setEnabled(false);
+            textTerm2.setFont(font);
+            add(textTerm2);
+        } //Term 2
+
+        {
+            term3.setBounds(30, 430, 270, 40);
+            term3.setText("Term 3 Grade:");
+            term3.setFont(font);
+            term3.setEnabled(false);
+            add(term3);
+
+            textTerm3.setBounds(300, 430, 270, 40);
+            textTerm3.addKeyListener(new KeyAdapter() {
+                public void keyTyped(KeyEvent e) {
+                    if (!Character.isDigit(e.getKeyChar()) || textTerm3.getText().length()>1) {
+                        e.consume();
+                    }
+                }
+            });
+            textTerm3.setEditable(false);
+            textTerm3.setEnabled(false);
+            textTerm3.setFont(font);
+            add(textTerm3);
+        } //Term 3
+
+        {
+            term4.setBounds(30, 490, 270, 40);
+            term4.setText("Term 4 Grade:");
+            term4.setFont(font);
+            term4.setEnabled(false);
+            add(term4);
+
+            textTerm4.setBounds(300, 490, 270, 40);
+            textTerm4.addKeyListener(new KeyAdapter() {
+                public void keyTyped(KeyEvent e) {
+                    if (!Character.isDigit(e.getKeyChar()) || textTerm4.getText().length()>1) {
+                        e.consume();
+                    }
+                }
+            });
+            textTerm4.setEditable(false);
+            textTerm4.setEnabled(false);
+            textTerm4.setFont(font);
+            add(textTerm4);
+        } //Term 4
+
+        {
+            term5.setBounds(30, 550, 270, 40);
+            term5.setText("Term 5 Grade:");
+            term5.setFont(font);
+            term5.setEnabled(false);
+            add(term5);
+
+            textTerm5.setBounds(300, 550, 270, 40);
+            textTerm5.addKeyListener(new KeyAdapter() {
+                public void keyTyped(KeyEvent e) {
+                    if (!Character.isDigit(e.getKeyChar()) || textTerm5.getText().length()>1) {
+                        e.consume();
+                    }
+                }
+            });
+            textTerm5.setEditable(false);
+            textTerm5.setEnabled(false);
+            textTerm5.setFont(font);
+            add(textTerm5);
+        } //Term 5
 
         setVisible(true);
     }
