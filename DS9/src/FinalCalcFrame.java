@@ -6,11 +6,12 @@ public class FinalCalcFrame extends JFrame {
     public FinalCalcFrame() {
         super("Final Calculator");
         setLayout(null);
-        setSize(600, 800);
+        setSize(600, 880);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Font font = new Font("Dialog", Font.BOLD, 24);
-
+        Font endFont = new Font("Dialog", Font.BOLD, 16);
+        {
         JLabel termWeight = new JLabel();
         JLabel finalWeight = new JLabel();
         JLabel gradeWanted = new JLabel();
@@ -20,6 +21,8 @@ public class FinalCalcFrame extends JFrame {
         JLabel term3 = new JLabel();
         JLabel term4 = new JLabel();
         JLabel term5 = new JLabel();
+        JLabel info = new JLabel();
+        JLabel finalGrade = new JLabel();
         JTextField textTermWeight = new JTextField();
         JTextField textFinalWeight = new JTextField();
         JTextField textGradeWanted = new JTextField();
@@ -28,7 +31,10 @@ public class FinalCalcFrame extends JFrame {
         JTextField textTerm3 = new JTextField();
         JTextField textTerm4 = new JTextField();
         JTextField textTerm5 = new JTextField();
+        JButton calc = new JButton();
+        JButton clear = new JButton();
         JComboBox<Integer> comboTerms;
+
 
         {
             termWeight.setBounds(30, 30, 270, 40);
@@ -40,7 +46,7 @@ public class FinalCalcFrame extends JFrame {
             textTermWeight.setText("85");
             textTermWeight.addKeyListener(new KeyAdapter() {
                 public void keyTyped(KeyEvent e) {
-                    if (!Character.isDigit(e.getKeyChar()) || (textTermWeight.getText().length()>1 && !textTermWeight.getText().contains("10") && !(e.getKeyChar() =='0'))) {
+                    if (!Character.isDigit(e.getKeyChar()) || Integer.parseInt(textTermWeight.getText()+e.getKeyChar())>100) {
                         e.consume();
                     }
                 }
@@ -60,7 +66,7 @@ public class FinalCalcFrame extends JFrame {
             textFinalWeight.setText("15");
             textFinalWeight.addKeyListener(new KeyAdapter() {
                 public void keyTyped(KeyEvent e) {
-                    if (!Character.isDigit(e.getKeyChar()) || textFinalWeight.getText().length()>1) {
+                    if (!Character.isDigit(e.getKeyChar()) || Integer.parseInt(textFinalWeight.getText()+e.getKeyChar())>100) {
                         e.consume();
                     }
                 }
@@ -84,9 +90,6 @@ public class FinalCalcFrame extends JFrame {
             comboTerms.addActionListener(e -> {
                 switch (((Integer) finalComboTerms.getSelectedItem())) {
                     case 1 -> {
-                        term1.setEnabled(true);
-                        textTerm1.setEditable(true);
-                        textTerm1.setEnabled(true);
                         term2.setEnabled(false);
                         textTerm2.setText("");
                         textTerm2.setEditable(false);
@@ -105,9 +108,6 @@ public class FinalCalcFrame extends JFrame {
                         textTerm5.setEnabled(false);
                     }
                     case 2 -> {
-                        term1.setEnabled(true);
-                        textTerm1.setEditable(true);
-                        textTerm1.setEnabled(true);
                         term2.setEnabled(true);
                         textTerm2.setEditable(true);
                         textTerm2.setEnabled(true);
@@ -125,9 +125,6 @@ public class FinalCalcFrame extends JFrame {
                         textTerm5.setEnabled(false);
                     }
                     case 3 -> {
-                        term1.setEnabled(true);
-                        textTerm1.setEditable(true);
-                        textTerm1.setEnabled(true);
                         term2.setEnabled(true);
                         textTerm2.setEditable(true);
                         textTerm2.setEnabled(true);
@@ -144,9 +141,6 @@ public class FinalCalcFrame extends JFrame {
                         textTerm5.setEnabled(false);
                     }
                     case 4 -> {
-                        term1.setEnabled(true);
-                        textTerm1.setEditable(true);
-                        textTerm1.setEnabled(true);
                         term2.setEnabled(true);
                         textTerm2.setEditable(true);
                         textTerm2.setEnabled(true);
@@ -162,9 +156,6 @@ public class FinalCalcFrame extends JFrame {
                         textTerm5.setEnabled(false);
                     }
                     case 5 -> {
-                        term1.setEnabled(true);
-                        textTerm1.setEditable(true);
-                        textTerm1.setEnabled(true);
                         term2.setEnabled(true);
                         textTerm2.setEditable(true);
                         textTerm2.setEnabled(true);
@@ -194,7 +185,7 @@ public class FinalCalcFrame extends JFrame {
             textGradeWanted.setText("90");
             textGradeWanted.addKeyListener(new KeyAdapter() {
                 public void keyTyped(KeyEvent e) {
-                    if (!Character.isDigit(e.getKeyChar()) || textGradeWanted.getText().length()>1) {
+                    if (!Character.isDigit(e.getKeyChar()) || Integer.parseInt(textGradeWanted.getText()+e.getKeyChar())>100) {
                         e.consume();
                     }
                 }
@@ -213,7 +204,7 @@ public class FinalCalcFrame extends JFrame {
             textTerm1.setBounds(300, 310, 270, 40);
             textTerm1.addKeyListener(new KeyAdapter() {
                 public void keyTyped(KeyEvent e) {
-                    if (!Character.isDigit(e.getKeyChar()) || textTerm1.getText().length()>1) {
+                    if (!Character.isDigit(e.getKeyChar()) || Integer.parseInt(textTerm1.getText()+e.getKeyChar())>100) {
                         e.consume();
                     }
                 }
@@ -233,7 +224,7 @@ public class FinalCalcFrame extends JFrame {
             textTerm2.setBounds(300, 370, 270, 40);
             textTerm2.addKeyListener(new KeyAdapter() {
                 public void keyTyped(KeyEvent e) {
-                    if (!Character.isDigit(e.getKeyChar()) || textTerm2.getText().length()>1) {
+                    if (!Character.isDigit(e.getKeyChar()) || Integer.parseInt(textTerm2.getText()+e.getKeyChar())>100) {
                         e.consume();
                     }
                 }
@@ -254,7 +245,7 @@ public class FinalCalcFrame extends JFrame {
             textTerm3.setBounds(300, 430, 270, 40);
             textTerm3.addKeyListener(new KeyAdapter() {
                 public void keyTyped(KeyEvent e) {
-                    if (!Character.isDigit(e.getKeyChar()) || textTerm3.getText().length()>1) {
+                    if (!Character.isDigit(e.getKeyChar()) || Integer.parseInt(textTerm3.getText()+e.getKeyChar())>100) {
                         e.consume();
                     }
                 }
@@ -275,7 +266,7 @@ public class FinalCalcFrame extends JFrame {
             textTerm4.setBounds(300, 490, 270, 40);
             textTerm4.addKeyListener(new KeyAdapter() {
                 public void keyTyped(KeyEvent e) {
-                    if (!Character.isDigit(e.getKeyChar()) || textTerm4.getText().length()>1) {
+                    if (!Character.isDigit(e.getKeyChar()) || Integer.parseInt(textTerm4.getText()+e.getKeyChar())>100) {
                         e.consume();
                     }
                 }
@@ -296,7 +287,7 @@ public class FinalCalcFrame extends JFrame {
             textTerm5.setBounds(300, 550, 270, 40);
             textTerm5.addKeyListener(new KeyAdapter() {
                 public void keyTyped(KeyEvent e) {
-                    if (!Character.isDigit(e.getKeyChar()) || textTerm5.getText().length()>1) {
+                    if (!Character.isDigit(e.getKeyChar()) || Integer.parseInt(textTerm5.getText()+e.getKeyChar())>100) {
                         e.consume();
                     }
                 }
@@ -307,6 +298,105 @@ public class FinalCalcFrame extends JFrame {
             add(textTerm5);
         } //Term 5
 
+        {
+            calc.setText("Calculate");
+            calc.setBounds(30, 610, 540, 40);
+            calc.setFont(font);
+            calc.addActionListener(e -> {
+                int avg = 0;
+                if (Integer.parseInt(textTermWeight.getText())+Integer.parseInt(textFinalWeight.getText())!=100)
+                    finalGrade.setText("");
+                switch ((int)comboTerms.getSelectedItem()) {
+                    case 1 -> {
+                        if (textTerm1.getText().isBlank()) finalGrade.setText("");
+                        avg += Integer.parseInt(textTerm1.getText());
+                        avg/=1.0;
+                        finalGrade.setText(""+
+                                (Integer.parseInt(textGradeWanted.getText())
+                                        -((Integer.parseInt(textTermWeight.getText()))/100.0)*avg)
+                                / (Integer.parseInt(textFinalWeight.getText())/100.0)
+                        );
+                    }
+                    case 2 -> {
+                        if (textTerm1.getText().isBlank() || textTerm2.getText().isBlank()) finalGrade.setText("");
+                        avg += Integer.parseInt(textTerm1.getText()) + Integer.parseInt(textTerm2.getText());
+                        avg/=2.0;
+                        finalGrade.setText(""+
+                                (Integer.parseInt(textGradeWanted.getText())
+                                        -((Integer.parseInt(textTermWeight.getText()))/100.0)*avg)
+                                        / (Integer.parseInt(textFinalWeight.getText())/100.0)
+                        );
+                    }
+                    case 3 -> {
+                        if (textTerm1.getText().isBlank() || textTerm2.getText().isBlank() || textTerm3.getText().isBlank()) finalGrade.setText("");
+                        avg += Integer.parseInt(textTerm1.getText()) + Integer.parseInt(textTerm2.getText()) + Integer.parseInt(textTerm3.getText());
+                        avg/=3.0;
+                        finalGrade.setText(""+
+                                (Integer.parseInt(textGradeWanted.getText())
+                                        -((Integer.parseInt(textTermWeight.getText()))/100.0)*avg)
+                                        / (Integer.parseInt(textFinalWeight.getText())/100.0)
+                        );
+                    }
+                    case 4 -> {
+                        if (textTerm1.getText().isBlank() || textTerm2.getText().isBlank() || textTerm3.getText().isBlank() || textTerm4.getText().isBlank()) finalGrade.setText("");
+                        avg += Integer.parseInt(textTerm1.getText()) + Integer.parseInt(textTerm2.getText()) + Integer.parseInt(textTerm3.getText()) + Integer.parseInt(textTerm4.getText());
+                        avg/=4.0;
+                        finalGrade.setText(""+
+                                (Integer.parseInt(textGradeWanted.getText())
+                                        -((Integer.parseInt(textTermWeight.getText()))/100.0)*avg)
+                                        / (Integer.parseInt(textFinalWeight.getText())/100.0)
+                        );
+                    }
+                    case 5 -> {
+                        if (textTerm1.getText().isBlank() || textTerm2.getText().isBlank() || textTerm3.getText().isBlank() || textTerm4.getText().isBlank() || textTerm5.getText().isBlank()) finalGrade.setText("");
+                        avg += Integer.parseInt(textTerm1.getText()) + Integer.parseInt(textTerm2.getText()) + Integer.parseInt(textTerm3.getText()) + Integer.parseInt(textTerm4.getText()) + Integer.parseInt(textTerm5.getText());
+                        avg/=5.0;
+                        System.out.println(avg);
+                        finalGrade.setText(""+
+                                (Integer.parseInt(textGradeWanted.getText())
+                                        -((Integer.parseInt(textTermWeight.getText()))/100.0)*avg)
+                                        / (Integer.parseInt(textFinalWeight.getText())/100.0)
+                        );
+                    }
+                }
+            });
+            add(calc);
+        } //Calculate
+
+        {
+            clear.setBounds(30, 670, 540, 40);
+            clear.setText("Clear");
+            clear.setFont(font);
+            clear.addActionListener(e -> {
+                term1.setText("");
+                term2.setText("");
+                term3.setText("");
+                term4.setText("");
+                term5.setText("");
+            });
+            clear.setHorizontalAlignment(JLabel.CENTER);
+            add(info);
+        } //Clear
+
+        {
+            info.setBounds(30, 710, 540, 40);
+            info.setText("Calculate Grade Required On Final");
+            info.setFont(endFont);
+            info.setHorizontalAlignment(JLabel.CENTER);
+            add(info);
+        } //Info
+
+        {
+            finalGrade.setBounds(30, 750, 540, 40);
+            finalGrade.setText("");
+            finalGrade.setFont(endFont);
+            finalGrade.setHorizontalAlignment(JLabel.CENTER);
+            add(finalGrade);
+        } //Final Grade
+
+
+
         setVisible(true);
     }
+}
 }
