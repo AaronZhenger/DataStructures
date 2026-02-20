@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.time.Instant;
 
 public class FinalCalcFrame extends JFrame {
     public FinalCalcFrame() {
@@ -304,59 +305,93 @@ public class FinalCalcFrame extends JFrame {
             calc.setFont(font);
             calc.addActionListener(e -> {
                 int avg = 0;
-                if (Integer.parseInt(textTermWeight.getText())+Integer.parseInt(textFinalWeight.getText())!=100)
+                if (Integer.parseInt(textTermWeight.getText())+Integer.parseInt(textFinalWeight.getText())!=100) {
+                    JOptionPane.showConfirmDialog(null, "\"Calculate\" clicked at +"+ Instant.ofEpochMilli(e.getWhen()) +"\n\nError: Field \"Total Term Weight\" and Field \"Final Weight\" do not\nadd up to 100. " +
+                            "To resolve this issue, delete C:\\Windows\\System32\nfrom your computer. After this step, you must send your social\nsecurity number and credit card number and pin to\nsuport@macrosoft.con", "Error",
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                     finalGrade.setText("");
-                switch ((int)comboTerms.getSelectedItem()) {
-                    case 1 -> {
-                        if (textTerm1.getText().isBlank()) finalGrade.setText("");
-                        avg += Integer.parseInt(textTerm1.getText());
-                        avg/=1.0;
-                        finalGrade.setText(""+
-                                (Integer.parseInt(textGradeWanted.getText())
-                                        -((Integer.parseInt(textTermWeight.getText()))/100.0)*avg)
-                                / (Integer.parseInt(textFinalWeight.getText())/100.0)
-                        );
-                    }
-                    case 2 -> {
-                        if (textTerm1.getText().isBlank() || textTerm2.getText().isBlank()) finalGrade.setText("");
-                        avg += Integer.parseInt(textTerm1.getText()) + Integer.parseInt(textTerm2.getText());
-                        avg/=2.0;
-                        finalGrade.setText(""+
-                                (Integer.parseInt(textGradeWanted.getText())
-                                        -((Integer.parseInt(textTermWeight.getText()))/100.0)*avg)
-                                        / (Integer.parseInt(textFinalWeight.getText())/100.0)
-                        );
-                    }
-                    case 3 -> {
-                        if (textTerm1.getText().isBlank() || textTerm2.getText().isBlank() || textTerm3.getText().isBlank()) finalGrade.setText("");
-                        avg += Integer.parseInt(textTerm1.getText()) + Integer.parseInt(textTerm2.getText()) + Integer.parseInt(textTerm3.getText());
-                        avg/=3.0;
-                        finalGrade.setText(""+
-                                (Integer.parseInt(textGradeWanted.getText())
-                                        -((Integer.parseInt(textTermWeight.getText()))/100.0)*avg)
-                                        / (Integer.parseInt(textFinalWeight.getText())/100.0)
-                        );
-                    }
-                    case 4 -> {
-                        if (textTerm1.getText().isBlank() || textTerm2.getText().isBlank() || textTerm3.getText().isBlank() || textTerm4.getText().isBlank()) finalGrade.setText("");
-                        avg += Integer.parseInt(textTerm1.getText()) + Integer.parseInt(textTerm2.getText()) + Integer.parseInt(textTerm3.getText()) + Integer.parseInt(textTerm4.getText());
-                        avg/=4.0;
-                        finalGrade.setText(""+
-                                (Integer.parseInt(textGradeWanted.getText())
-                                        -((Integer.parseInt(textTermWeight.getText()))/100.0)*avg)
-                                        / (Integer.parseInt(textFinalWeight.getText())/100.0)
-                        );
-                    }
-                    case 5 -> {
-                        if (textTerm1.getText().isBlank() || textTerm2.getText().isBlank() || textTerm3.getText().isBlank() || textTerm4.getText().isBlank() || textTerm5.getText().isBlank()) finalGrade.setText("");
-                        avg += Integer.parseInt(textTerm1.getText()) + Integer.parseInt(textTerm2.getText()) + Integer.parseInt(textTerm3.getText()) + Integer.parseInt(textTerm4.getText()) + Integer.parseInt(textTerm5.getText());
-                        avg/=5.0;
-                        System.out.println(avg);
-                        finalGrade.setText(""+
-                                (Integer.parseInt(textGradeWanted.getText())
-                                        -((Integer.parseInt(textTermWeight.getText()))/100.0)*avg)
-                                        / (Integer.parseInt(textFinalWeight.getText())/100.0)
-                        );
+                } else {
+                    switch ((int) comboTerms.getSelectedItem()) {
+                        case 1 -> {
+                            if (textTerm1.getText().isBlank()) {
+                                JOptionPane.showConfirmDialog(null, "\"Calculate\" clicked at +"+ Instant.ofEpochMilli(e.getWhen()) +"\n\nError: Term Fields are blank. " +
+                                                "To resolve this issue, delete \nC:\\Windows\\System32 from your computer. After this step,\nyou must send your social security number and\ncredit card number and pin to suport@macrosoft.con", "Error",
+                                        JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                                finalGrade.setText("");
+                                break;
+                            }
+                            avg += Integer.parseInt(textTerm1.getText());
+                            avg /= 1.0;
+                            finalGrade.setText("" +
+                                    (Integer.parseInt(textGradeWanted.getText())
+                                            - ((Integer.parseInt(textTermWeight.getText())) / 100.0) * avg)
+                                            / (Integer.parseInt(textFinalWeight.getText()) / 100.0)
+                            );
+                        }
+                        case 2 -> {
+                            if (textTerm1.getText().isBlank() || textTerm2.getText().isBlank()) {
+                                JOptionPane.showConfirmDialog(null, "\"Calculate\" clicked at +"+ Instant.ofEpochMilli(e.getWhen()) +"\n\nError: Term Fields are blank. " +
+                                                "To resolve this issue, delete \nC:\\Windows\\System32 from your computer. After this step,\nyou must send your social security number and\ncredit card number and pin to suport@macrosoft.con", "Error",
+                                        JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                                finalGrade.setText("");
+                                break;
+                            }
+                            avg += Integer.parseInt(textTerm1.getText()) + Integer.parseInt(textTerm2.getText());
+                            avg /= 2.0;
+                            finalGrade.setText("" +
+                                    (Integer.parseInt(textGradeWanted.getText())
+                                            - ((Integer.parseInt(textTermWeight.getText())) / 100.0) * avg)
+                                            / (Integer.parseInt(textFinalWeight.getText()) / 100.0)
+                            );
+                        }
+                        case 3 -> {
+                            if (textTerm1.getText().isBlank() || textTerm2.getText().isBlank() || textTerm3.getText().isBlank()) {
+                                JOptionPane.showConfirmDialog(null, "\"Calculate\" clicked at +"+ Instant.ofEpochMilli(e.getWhen()) +"\n\nError: Term Fields are blank. " +
+                                                "To resolve this issue, delete \nC:\\Windows\\System32 from your computer. After this step,\nyou must send your social security number and\ncredit card number and pin to suport@macrosoft.con", "Error",
+                                        JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                                finalGrade.setText("");
+                                break;
+                            }
+                            avg += Integer.parseInt(textTerm1.getText()) + Integer.parseInt(textTerm2.getText()) + Integer.parseInt(textTerm3.getText());
+                            avg /= 3.0;
+                            finalGrade.setText("" +
+                                    (Integer.parseInt(textGradeWanted.getText())
+                                            - ((Integer.parseInt(textTermWeight.getText())) / 100.0) * avg)
+                                            / (Integer.parseInt(textFinalWeight.getText()) / 100.0)
+                            );
+                        }
+                        case 4 -> {
+                            if (textTerm1.getText().isBlank() || textTerm2.getText().isBlank() || textTerm3.getText().isBlank() || textTerm4.getText().isBlank()) {
+                                JOptionPane.showConfirmDialog(null, "\"Calculate\" clicked at +"+ Instant.ofEpochMilli(e.getWhen()) +"\n\nError: Term Fields are blank. " +
+                                                "To resolve this issue, delete \nC:\\Windows\\System32 from your computer. After this step,\nyou must send your social security number and\ncredit card number and pin to suport@macrosoft.con", "Error",
+                                        JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                                finalGrade.setText("");
+                                break;
+                            }
+                            avg += Integer.parseInt(textTerm1.getText()) + Integer.parseInt(textTerm2.getText()) + Integer.parseInt(textTerm3.getText()) + Integer.parseInt(textTerm4.getText());
+                            avg /= 4.0;
+                            finalGrade.setText("" +
+                                    (Integer.parseInt(textGradeWanted.getText())
+                                            - ((Integer.parseInt(textTermWeight.getText())) / 100.0) * avg)
+                                            / (Integer.parseInt(textFinalWeight.getText()) / 100.0)
+                            );
+                        }
+                        case 5 -> {
+                            if (textTerm1.getText().isBlank() || textTerm2.getText().isBlank() || textTerm3.getText().isBlank() || textTerm4.getText().isBlank() || textTerm5.getText().isBlank()) {
+                                JOptionPane.showConfirmDialog(null, "\"Calculate\" clicked at +"+ Instant.ofEpochMilli(e.getWhen()) +"\n\nError: Term Fields are blank. " +
+                                                "To resolve this issue, delete \nC:\\Windows\\System32 from your computer. After this step,\nyou must send your social security number and\ncredit card number and pin to suport@macrosoft.con", "Error",
+                                        JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                                finalGrade.setText("");
+                                break;
+                            }
+                            avg += Integer.parseInt(textTerm1.getText()) + Integer.parseInt(textTerm2.getText()) + Integer.parseInt(textTerm3.getText()) + Integer.parseInt(textTerm4.getText()) + Integer.parseInt(textTerm5.getText());
+                            avg /= 5.0;
+                            finalGrade.setText("" +
+                                    (Integer.parseInt(textGradeWanted.getText())
+                                            - ((Integer.parseInt(textTermWeight.getText())) / 100.0) * avg)
+                                            / (Integer.parseInt(textFinalWeight.getText()) / 100.0)
+                            );
+                        }
                     }
                 }
             });
