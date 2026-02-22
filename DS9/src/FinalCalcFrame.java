@@ -306,16 +306,14 @@ public class FinalCalcFrame extends JFrame {
             calc.addActionListener(e -> {
                 int avg = 0;
                 if (Integer.parseInt(textTermWeight.getText())+Integer.parseInt(textFinalWeight.getText())!=100) {
-                    JOptionPane.showConfirmDialog(null, "\"Calculate\" clicked at +"+ Instant.ofEpochMilli(e.getWhen()) +"\n\nError: Field \"Total Term Weight\" and Field \"Final Weight\" do not\nadd up to 100. " +
-                            "To resolve this issue, delete C:\\Windows\\System32\nfrom your computer. After this step, you must send your social\nsecurity number and credit card number and pin to\nsuport@macrosoft.con", "Error",
+                    JOptionPane.showConfirmDialog(null, "Error: Field \"Total Term Weight\" and Field \"Final Weight\" do not\nadd up to 100.", "Error",
                             JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                     finalGrade.setText("");
                 } else {
                     switch ((int) comboTerms.getSelectedItem()) {
                         case 1 -> {
                             if (textTerm1.getText().isBlank()) {
-                                JOptionPane.showConfirmDialog(null, "\"Calculate\" clicked at +"+ Instant.ofEpochMilli(e.getWhen()) +"\n\nError: Term Fields are blank. " +
-                                                "To resolve this issue, delete \nC:\\Windows\\System32 from your computer. After this step,\nyou must send your social security number and\ncredit card number and pin to suport@macrosoft.con", "Error",
+                                JOptionPane.showConfirmDialog(null, "Error: Term Fields are blank. ", "Error",
                                         JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                                 finalGrade.setText("");
                                 break;
