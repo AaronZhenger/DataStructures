@@ -304,12 +304,27 @@ public class FinalCalcFrame extends JFrame {
             calc.setBounds(30, 610, 540, 40);
             calc.setFont(font);
             calc.addActionListener(e -> {
-                int avg = 0;
-                if (Integer.parseInt(textTermWeight.getText())+Integer.parseInt(textFinalWeight.getText())!=100) {
-                    JOptionPane.showConfirmDialog(null, "Error: Field \"Total Term Weight\" and Field \"Final Weight\" do not\nadd up to 100.", "Error",
+                double avg = 0;
+                if (textTermWeight.getText().isBlank() || textFinalWeight.getText().isBlank() || textGradeWanted.getText().isBlank()) {
+                    JOptionPane.showConfirmDialog(null, "Error: Description Fields are blank. ", "Error",
                             JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                     finalGrade.setText("");
-                } else {
+                }
+                else if (Integer.parseInt(textTermWeight.getText())+Integer.parseInt(textFinalWeight.getText())!=100) {
+                    JOptionPane.showConfirmDialog(null, "Error: Field \"Total Term Weight\" and Field \"Final Weight\" do not\nadd up to 100. ", "Error",
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                    finalGrade.setText("");
+                } else if (textFinalWeight.getText().equals("0")) {
+                    JOptionPane.showConfirmDialog(null, "Error: Your final must have an effect on your final grade. ", "Error",
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                    finalGrade.setText("");
+                }
+//                else if (Integer.parseInt(textGradeWanted.getText())<20) {
+//                    JOptionPane.showConfirmDialog(null, "Confusing: In WHAT world are you trying to get a grade so low. ", "Confusing",
+//                            JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE);
+//                    finalGrade.setText("");
+//                }
+                else {
                     switch ((int) comboTerms.getSelectedItem()) {
                         case 1 -> {
                             if (textTerm1.getText().isBlank()) {
@@ -328,14 +343,14 @@ public class FinalCalcFrame extends JFrame {
                         }
                         case 2 -> {
                             if (textTerm1.getText().isBlank() || textTerm2.getText().isBlank()) {
-                                JOptionPane.showConfirmDialog(null, "\"Calculate\" clicked at +"+ Instant.ofEpochMilli(e.getWhen()) +"\n\nError: Term Fields are blank. " +
-                                                "To resolve this issue, delete \nC:\\Windows\\System32 from your computer. After this step,\nyou must send your social security number and\ncredit card number and pin to suport@macrosoft.con", "Error",
+                                JOptionPane.showConfirmDialog(null, "Error: Term Fields are blank. ", "Error",
                                         JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                                 finalGrade.setText("");
                                 break;
                             }
                             avg += Integer.parseInt(textTerm1.getText()) + Integer.parseInt(textTerm2.getText());
                             avg /= 2.0;
+                            System.out.println(avg);
                             finalGrade.setText("" +
                                     (Integer.parseInt(textGradeWanted.getText())
                                             - ((Integer.parseInt(textTermWeight.getText())) / 100.0) * avg)
@@ -344,8 +359,7 @@ public class FinalCalcFrame extends JFrame {
                         }
                         case 3 -> {
                             if (textTerm1.getText().isBlank() || textTerm2.getText().isBlank() || textTerm3.getText().isBlank()) {
-                                JOptionPane.showConfirmDialog(null, "\"Calculate\" clicked at +"+ Instant.ofEpochMilli(e.getWhen()) +"\n\nError: Term Fields are blank. " +
-                                                "To resolve this issue, delete \nC:\\Windows\\System32 from your computer. After this step,\nyou must send your social security number and\ncredit card number and pin to suport@macrosoft.con", "Error",
+                                JOptionPane.showConfirmDialog(null, "Error: Term Fields are blank. ", "Error",
                                         JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                                 finalGrade.setText("");
                                 break;
@@ -360,8 +374,7 @@ public class FinalCalcFrame extends JFrame {
                         }
                         case 4 -> {
                             if (textTerm1.getText().isBlank() || textTerm2.getText().isBlank() || textTerm3.getText().isBlank() || textTerm4.getText().isBlank()) {
-                                JOptionPane.showConfirmDialog(null, "\"Calculate\" clicked at +"+ Instant.ofEpochMilli(e.getWhen()) +"\n\nError: Term Fields are blank. " +
-                                                "To resolve this issue, delete \nC:\\Windows\\System32 from your computer. After this step,\nyou must send your social security number and\ncredit card number and pin to suport@macrosoft.con", "Error",
+                                JOptionPane.showConfirmDialog(null, "Error: Term Fields are blank. ", "Error",
                                         JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                                 finalGrade.setText("");
                                 break;
@@ -376,8 +389,7 @@ public class FinalCalcFrame extends JFrame {
                         }
                         case 5 -> {
                             if (textTerm1.getText().isBlank() || textTerm2.getText().isBlank() || textTerm3.getText().isBlank() || textTerm4.getText().isBlank() || textTerm5.getText().isBlank()) {
-                                JOptionPane.showConfirmDialog(null, "\"Calculate\" clicked at +"+ Instant.ofEpochMilli(e.getWhen()) +"\n\nError: Term Fields are blank. " +
-                                                "To resolve this issue, delete \nC:\\Windows\\System32 from your computer. After this step,\nyou must send your social security number and\ncredit card number and pin to suport@macrosoft.con", "Error",
+                                JOptionPane.showConfirmDialog(null, "Error: Term Fields are blank. ", "Error",
                                         JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                                 finalGrade.setText("");
                                 break;
@@ -401,14 +413,15 @@ public class FinalCalcFrame extends JFrame {
             clear.setText("Clear");
             clear.setFont(font);
             clear.addActionListener(e -> {
-                term1.setText("");
-                term2.setText("");
-                term3.setText("");
-                term4.setText("");
-                term5.setText("");
+                textTerm1.setText("");
+                textTerm2.setText("");
+                textTerm3.setText("");
+                textTerm4.setText("");
+                textTerm5.setText("");
+                finalGrade.setText("");
             });
             clear.setHorizontalAlignment(JLabel.CENTER);
-            add(info);
+            add(clear);
         } //Clear
 
         {
