@@ -1,10 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
-/*I'm in your walls*/
+
 public class ContactListFrame extends JFrame {
     public ContactListFrame() throws IOException {
         super("Rolodex");
@@ -12,7 +14,6 @@ public class ContactListFrame extends JFrame {
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        Font large = new Font("Dialog", Font.BOLD, 36);
         Font medium = new Font("Dialog", Font.BOLD, 28);
         Font small = new Font("Dialog", Font.PLAIN, 18);
         JLabel contacts = new JLabel("Contacts:");
@@ -28,6 +29,7 @@ public class ContactListFrame extends JFrame {
         JButton kNew = new JButton("New");
         JButton kSaveContact = new JButton("Save Contact");
         JButton kDeleteContact = new JButton("Delete Contact");
+        JButton kClear = new JButton("Clear Selection");
         JList<Person> list = new JList<>();
         JScrollPane scroll = new JScrollPane(list);
         ArrayList<Person> array = new ArrayList<>();
@@ -54,19 +56,19 @@ public class ContactListFrame extends JFrame {
                 }
             }
         }
-        System.out.println(array);
 
         contacts.setFont(medium);
         contacts.setBounds(20, 20, 300, 30);
         add(contacts);
 
         scroll.setBounds(20, 60, 300, 400);
-        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         list.addListSelectionListener(e -> {
             if (list.getSelectedIndex()==-1) {
                 kSave.setVisible(true);
                 kNew.setVisible(true);
+                kSaveContact.setVisible(false);
+                kDeleteContact.setVisible(false);
+                kClear.setEnabled(false);
                 textFirstName.setText("");
                 textLastName.setText("");
                 textPhoneNumber.setText("");
@@ -74,9 +76,12 @@ public class ContactListFrame extends JFrame {
             } else {
                 kSave.setVisible(false);
                 kNew.setVisible(false);
+                kSaveContact.setVisible(true);
+                kDeleteContact.setVisible(true);
+                kClear.setEnabled(true);
                 textFirstName.setText(array.get(list.getSelectedIndex()).getF());
                 textLastName.setText(array.get(list.getSelectedIndex()).getL());
-                textPhoneNumber.setText(""+array.get(list.getSelectedIndex()).getN());
+                textPhoneNumber.setText(array.get(list.getSelectedIndex()).getN()==Long.MAX_VALUE ? "" : ""+array.get(list.getSelectedIndex()).getN());
                 textAddress.setText(array.get(list.getSelectedIndex()).getA());
             }
         });
@@ -110,6 +115,13 @@ public class ContactListFrame extends JFrame {
 
         textPhoneNumber.setBounds(640, 210, 300, 30);
         textPhoneNumber.setFont(small);
+        textPhoneNumber.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (!Character.isDigit(e.getKeyChar()))
+                    e.consume();
+            }
+        });
         add(textPhoneNumber);
 
         textAddress.setBounds(640, 270, 300, 30);
@@ -117,7 +129,7 @@ public class ContactListFrame extends JFrame {
         add(textAddress);
 
         kSave.setFont(medium);
-        kSave.setBounds(540, 360, 120, 40);
+        kSave.setBounds(540, 340, 120, 40);
         kSave.addActionListener(e -> {
             if (textFirstName.getText().isBlank()||textLastName.getText().isBlank()) {
                 JOptionPane.showMessageDialog(this, "You must enter a first and last name", "Error", JOptionPane.ERROR_MESSAGE);
@@ -146,9 +158,13 @@ public class ContactListFrame extends JFrame {
         add(kSave);
 
         kNew.setFont(medium);
-        kNew.setBounds(680, 360, 120, 40);
+        kNew.setBounds(680, 340, 120, 40);
         kNew.addActionListener(e -> {
             array.clear();
+            textFirstName.setText("");
+            textLastName.setText("");
+            textPhoneNumber.setText("");
+            textAddress.setText("");
             list.setListData(array.toArray(new Person[0]));
             try {
                 printTxt(array);
@@ -157,6 +173,58 @@ public class ContactListFrame extends JFrame {
             }
         });
         add(kNew);
+
+        kSaveContact.setFont(medium);
+        kSaveContact.setBounds(550, 390, 240, 40);
+        kSaveContact.setVisible(false);
+        kSaveContact.addActionListener(e -> {
+            if (textFirstName.getText().isBlank()||textLastName.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "You must enter a first and last name", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                if (textPhoneNumber.getText().isBlank())
+                    if (textAddress.getText().isBlank())
+                        array.set(list.getSelectedIndex(), new Person(textFirstName.getText(), textLastName.getText()));
+                    else array.set(list.getSelectedIndex(), new Person(textFirstName.getText(), textLastName.getText(), textAddress.getText()));
+                else if (textAddress.getText().isBlank())
+                    array.set(list.getSelectedIndex(), new Person(textFirstName.getText(), textLastName.getText(), Long.parseLong(textPhoneNumber.getText())));
+                else array.set(list.getSelectedIndex(), new Person(textFirstName.getText(), textLastName.getText(), Long.parseLong(textPhoneNumber.getText()), textAddress.getText()));
+
+                textFirstName.setText("");
+                textLastName.setText("");
+                textPhoneNumber.setText("");
+                textAddress.setText("");
+                Collections.sort(array);
+                list.setListData(array.toArray(new Person[0]));
+                try {
+                    printTxt(array);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+        add(kSaveContact);
+
+        kDeleteContact.setFont(medium);
+        kDeleteContact.setBounds(550, 440, 240, 40);
+        kDeleteContact.setVisible(false);
+        kDeleteContact.addActionListener(e -> {
+            array.remove(list.getSelectedIndex());
+            list.setListData(array.toArray(new Person[0]));
+            try {
+                printTxt(array);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        add(kDeleteContact);
+
+        kClear.setFont(medium);
+        kClear.setBounds(20, 480, 300, 40);
+        kClear.setEnabled(false);
+        kClear.addActionListener(e -> {
+            list.clearSelection();
+        });
+        add(kClear);
 
         setVisible(true);
     }
