@@ -1,11 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.*;
 
 public class ContactListFrame extends JFrame {
     public ContactListFrame() throws IOException {
@@ -118,7 +115,7 @@ public class ContactListFrame extends JFrame {
         textPhoneNumber.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if (!Character.isDigit(e.getKeyChar()))
+                if (!Character.isDigit(e.getKeyChar()) || textPhoneNumber.getText().length()>=18)
                     e.consume();
             }
         });
