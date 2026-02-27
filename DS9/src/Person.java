@@ -1,7 +1,7 @@
-public class Person {
+public class Person implements Comparable<Person> {
     private String f;
     private String l;
-    private long n;
+    private long n = Long.MAX_VALUE;
     private String a;
 
     public Person(String f, String l) {
@@ -63,5 +63,11 @@ public class Person {
     @Override
     public String toString() {
         return l+", "+f;
+    }
+
+
+    @Override
+    public int compareTo(Person o) {
+        return getL().compareTo(o.getL());
     }
 }
