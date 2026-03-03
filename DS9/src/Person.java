@@ -65,9 +65,8 @@ public class Person implements Comparable<Person> {
         return l+", "+f;
     }
 
-
     @Override
     public int compareTo(Person o) {
-        return getL().compareTo(o.getL());
+        return getL().compareTo(o.getL())!=0?getL().compareTo(o.getL()):getF().compareTo(o.getF());
     }
 }

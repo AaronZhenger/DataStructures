@@ -36,7 +36,7 @@ public class ContactListFrame extends JFrame {
         else {
             Scanner sc = new Scanner(save);
             while (sc.hasNextLine()) {
-                Scanner scl = new Scanner(sc.nextLine());
+                Scanner scl = new Scanner(sc.nextLine()).useDelimiter("%");
                 switch (Integer.parseInt(scl.next())) {
                     case 1 :
                         array.add(new Person(scl.next(), scl.next()));
@@ -104,10 +104,24 @@ public class ContactListFrame extends JFrame {
 
         textFirstName.setBounds(640, 90, 300, 30);
         textFirstName.setFont(small);
+        textFirstName.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if ("#$%^&+=\\:;<>?~`".contains(""+e.getKeyChar()))
+                    e.consume();
+            }
+        });
         add(textFirstName);
 
         textLastName.setBounds(640, 150, 300, 30);
         textLastName.setFont(small);
+        textLastName.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if ("#$%^&+=\\:;<>?~`".contains(""+e.getKeyChar()))
+                    e.consume();
+            }
+        });
         add(textLastName);
 
         textPhoneNumber.setBounds(640, 210, 300, 30);
@@ -157,17 +171,10 @@ public class ContactListFrame extends JFrame {
         kNew.setFont(medium);
         kNew.setBounds(680, 340, 120, 40);
         kNew.addActionListener(e -> {
-            array.clear();
             textFirstName.setText("");
             textLastName.setText("");
             textPhoneNumber.setText("");
             textAddress.setText("");
-            list.setListData(array.toArray(new Person[0]));
-            try {
-                printTxt(array);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
         });
         add(kNew);
 
@@ -233,13 +240,13 @@ public class ContactListFrame extends JFrame {
         for (Person person : array) {
             if (person.getN()==Long.MAX_VALUE)
                 if (person.getA()==null)
-                    pw.println("1 "+person.getF()+" "+person.getL());
+                    pw.println("1%"+person.getF()+"%"+person.getL());
                 else
-                    pw.println("3 "+person.getF()+" "+person.getL()+" "+person.getA());
+                    pw.println("3%"+person.getF()+"%"+person.getL()+"%"+person.getA());
             else if (person.getA()==null)
-                pw.println("2 "+person.getF()+" "+person.getL()+" "+person.getN());
+                pw.println("2%"+person.getF()+"%"+person.getL()+"%"+person.getN());
             else
-                pw.println("4 "+person.getF()+" "+person.getL()+" "+person.getN()+" "+person.getA());
+                pw.println("4%"+person.getF()+"%"+person.getL()+"%"+person.getN()+"%"+person.getA());
         }
 
         fw.close();
