@@ -1,8 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Enumeration;
 
 public class IceCreamFrame extends JFrame {
+    JTable tbl;
     public IceCreamFrame() {
         super("Ice Cream Shop");
         setSize(1200, 1000);
@@ -39,13 +41,18 @@ public class IceCreamFrame extends JFrame {
         JCheckBox cbChC = new JCheckBox("Chocolate Chip ($1.00)");
         JCheckBox cbS = new JCheckBox("Sprinkles ($0.75)");
 
+        JButton update = new JButton("Add");
+        JButton delete = new JButton("Delete");
+
         ArrayList<String> arr = new ArrayList<>();
         arr.add("Container Type");
         arr.add("Flavor");
         arr.add("Number of Scoops");
         arr.add("Toppings");
-        JTable tbl = new JTable(new String[0][4], arr.toArray());
+        tbl = new JTable(new String[0][4], arr.toArray());
         JScrollPane scr = new JScrollPane(tbl);
+
+        ArrayList<IceCream> order = new ArrayList<>();
 
         {
             shopName.setFont(large);
@@ -126,7 +133,49 @@ public class IceCreamFrame extends JFrame {
         }//Toppings
 
         {
-            scr.setBounds(360, 80, 800, 580);
+            update.setFont(medium);
+            update.setBounds(40, 670, 300, 30);
+            update.addActionListener(e -> {
+                ArrayList<String> topings = new ArrayList<>();
+                String selectedRadio = "Bowl";
+                for (Enumeration<AbstractButton> b = containerGroup.getElements(); b.hasMoreElements();) {
+                    AbstractButton bu = b.nextElement();
+                    if (bu.isSelected()) selectedRadio = bu.getText();
+                }
+
+                topings.add("sdfjksl");
+                order.add(new IceCream(selectedRadio, flav.getSelectedItem().toString(), num.getSelectedItem().toString(), topings));
+                String[][] data = new String[order.size()][4];
+                for (int i = 0; i < order.size(); i++) {
+                    data[i][0] = order.get(i).getC();
+                    data[i][1] = order.get(i).getF();
+                    data[i][2] = order.get(i).getN();
+                    data[i][3] = order.get(i).getT().toString();
+                }
+                scr.remove(tbl);
+                tbl = new JTable(data, arr.toArray()) {
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                };
+                scr.setViewportView(tbl);
+                scr.revalidate();
+            });
+            add(update);
+        }//Add/Save
+
+        {
+            delete.setFont(medium);
+            delete.setBounds(40, 710, 300, 30);
+            delete.addActionListener(e -> {
+
+            });
+            add(delete);
+        }//Add/Save
+
+        {
+            scr.setBounds(360, 80, 800, 660);
             scr.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
             add(scr);
         }//Display
