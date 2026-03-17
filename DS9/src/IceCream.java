@@ -27,12 +27,14 @@ public class IceCream {
     private String f;
     private String n;
     private ArrayList<String> t;
+    private double m;
 
-    public IceCream(String c, String f, String n, ArrayList<String> t) {
+    public IceCream(String c, String f, String n, ArrayList<String> t, double m) {
         this.c = c;
         this.f = f;
         this.n = n;
         this.t = t;
+        this.m = m;
     }
 
     public String getC() {
@@ -65,5 +67,13 @@ public class IceCream {
 
     public void setT(ArrayList<String> t) {
         this.t = t;
+    }
+
+    public double getM() {
+        return m;
+    }
+
+    public void setM(double m) {
+        this.m = m;
     }
 }
