@@ -91,7 +91,7 @@ public class TextEditorFrame extends JFrame {
 
                     paths.add(f.getAbsolutePath());
                     arr.add(text);
-                }
+                }//
             }
         });
         file.add(open);
