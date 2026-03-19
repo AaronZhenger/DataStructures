@@ -1,11 +1,9 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class TextEditorFrame extends JFrame {
     private static JTabbedPane tabs = new JTabbedPane();
@@ -22,6 +20,7 @@ public class TextEditorFrame extends JFrame {
     private static JMenuItem replace = new JMenuItem("Replace");
     private static JMenuItem wordCount = new JMenuItem("Word Count");
     private static ArrayList<JTextArea> arr = new ArrayList<>();
+    private static ArrayList<String> paths = new ArrayList<>();
 
     public TextEditorFrame() {
         super("Text Editor");
@@ -52,7 +51,7 @@ public class TextEditorFrame extends JFrame {
             }
             File f = new File("src\\Saves\\"+title+".txt");
             if (!f.exists()) {
-                try {f.createNewFile();} catch (IOException ex) {throw new RuntimeException(ex);}
+                try {f.createNewFile(); paths.add(f.getAbsolutePath());} catch (IOException ex) {throw new RuntimeException(ex);}
             }
 
             arr.add(text);
@@ -79,8 +78,18 @@ public class TextEditorFrame extends JFrame {
                     JScrollPane textScroll = new JScrollPane(text);
                     text.setLineWrap(true);
                     textScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                    try {
+                        Scanner fs = new Scanner(f);
+                        while (fs.hasNextLine()) {
+                            text.append(fs.nextLine()+"\n");
+                        }
+                    } catch (FileNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
                     tabs.add(f.getName().substring(0, f.getName().length()-4), textScroll);
 
+                    paths.add(f.getAbsolutePath());
                     arr.add(text);
                 }
             }
@@ -99,7 +108,16 @@ public class TextEditorFrame extends JFrame {
                         pw.println(arr.get(tabs.getSelectedIndex()).getText());
                         fw.close();
                         pw.close();
-                        tabs.setTitleAt(tabs.getSelectedIndex(), f.getName().substring(0, f.getName().length()-4));
+                        String adjName = f.getName().substring(0, f.getName().length() - 4);
+                        if (!adjName.equals(tabs.getTitleAt(tabs.getSelectedIndex()))) {
+                            if (tabs.indexOfTab(adjName) != -1) {
+                                arr.remove(tabs.indexOfTab(adjName));
+                                paths.remove(f.getAbsolutePath());
+                                tabs.remove(tabs.indexOfTab(adjName));
+                            }
+                            tabs.setTitleAt(tabs.getSelectedIndex(), adjName);
+                            paths.set(tabs.getSelectedIndex(), f.getAbsolutePath());
+                        }
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -107,6 +125,18 @@ public class TextEditorFrame extends JFrame {
         });
         saveAs.setEnabled(false);
         file.add(saveAs);
+        save.addActionListener(e -> {
+                File f = new File(paths.get(tabs.getSelectedIndex()));
+                try {
+                    FileWriter fw = new FileWriter(f);
+                    PrintWriter pw = new PrintWriter(fw);
+                    pw.println(arr.get(tabs.getSelectedIndex()).getText());
+                    fw.close();
+                    pw.close();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+        });
         save.setEnabled(false);
         file.add(save);
         close.setEnabled(false);
