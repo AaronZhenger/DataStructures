@@ -91,7 +91,7 @@ public class TextEditorFrame extends JFrame {
 
                     paths.add(f.getAbsolutePath());
                     arr.add(text);
-                }//
+                }
             }
         });
         file.add(open);
@@ -102,22 +102,22 @@ public class TextEditorFrame extends JFrame {
             int r = fc.showOpenDialog(this);
             if (r == JFileChooser.APPROVE_OPTION) {
                 File f = fc.getSelectedFile();
-                    try {
-                        FileWriter fw = new FileWriter(f);
-                        PrintWriter pw = new PrintWriter(fw);
-                        pw.println(arr.get(tabs.getSelectedIndex()).getText());
-                        fw.close();
-                        pw.close();
-                        String adjName = f.getName().substring(0, f.getName().length() - 4);
-                        if (!adjName.equals(tabs.getTitleAt(tabs.getSelectedIndex()))) {
-                            if (tabs.indexOfTab(adjName) != -1) {
-                                arr.remove(tabs.indexOfTab(adjName));
-                                paths.remove(f.getAbsolutePath());
-                                tabs.remove(tabs.indexOfTab(adjName));
-                            }
-                            tabs.setTitleAt(tabs.getSelectedIndex(), adjName);
-                            paths.set(tabs.getSelectedIndex(), f.getAbsolutePath());
+                try {
+                    FileWriter fw = new FileWriter(f);
+                    PrintWriter pw = new PrintWriter(fw);
+                    pw.println(arr.get(tabs.getSelectedIndex()).getText());
+                    fw.close();
+                    pw.close();
+                    String adjName = f.getName().substring(0, f.getName().length() - 4);
+                    if (!adjName.equals(tabs.getTitleAt(tabs.getSelectedIndex()))) {
+                        if (tabs.indexOfTab(adjName) != -1) {
+                            arr.remove(tabs.indexOfTab(adjName));
+                            paths.remove(f.getAbsolutePath());
+                            tabs.remove(tabs.indexOfTab(adjName));
                         }
+                        tabs.setTitleAt(tabs.getSelectedIndex(), adjName);
+                        paths.set(tabs.getSelectedIndex(), f.getAbsolutePath());
+                    }
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -139,6 +139,25 @@ public class TextEditorFrame extends JFrame {
         });
         save.setEnabled(false);
         file.add(save);
+        close.addActionListener(e -> {
+            try {
+                Scanner fs = new Scanner(new File(paths.get(tabs.getSelectedIndex())));
+                StringBuilder sb = new StringBuilder();
+                while (fs.hasNextLine()) {
+                    Scanner ls = new Scanner(fs.nextLine());
+                    sb.append(ls.nextLine()).append("\n");
+                }
+                JTextArea jta = arr.get(tabs.getSelectedIndex());
+                if (jta.getText().contentEquals(sb)) {
+                    tabs.remove(tabs.getSelectedIndex());
+                } else {
+                    JOptionPane warning = new JOptionPane("Unsaved data will be lost. Are you sure you want to close this file?", JOptionPane.WARNING_MESSAGE, JOptionPane.YES_NO_OPTION);
+                    warning.createDialog("Warning");
+                }
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         close.setEnabled(false);
         file.add(close);
         exit.addActionListener(e -> {
