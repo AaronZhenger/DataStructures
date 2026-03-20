@@ -21,6 +21,7 @@ public class TextEditorFrame extends JFrame {
     private static JMenuItem wordCount = new JMenuItem("Word Count");
     private static ArrayList<JTextArea> arr = new ArrayList<>();
     private static ArrayList<String> paths = new ArrayList<>();
+    private static ArrayList<Boolean> unsaved = new ArrayList<>();
 
     public TextEditorFrame() {
         super("Text Editor");
@@ -55,6 +56,7 @@ public class TextEditorFrame extends JFrame {
             }
 
             arr.add(text);
+            unsaved.add(false);
 
             tabs.add(title, textScroll);
         });
@@ -92,6 +94,7 @@ public class TextEditorFrame extends JFrame {
 
                     paths.add(f.getAbsolutePath());
                     arr.add(text);
+                    unsaved.add(false);
                 }
             }
         });
@@ -114,10 +117,12 @@ public class TextEditorFrame extends JFrame {
                         if (tabs.indexOfTab(adjName) != -1) {
                             arr.remove(tabs.indexOfTab(adjName));
                             paths.remove(f.getAbsolutePath());
+                            unsaved.remove(tabs.indexOfTab(adjName));
                             tabs.remove(tabs.indexOfTab(adjName));
                         }
                         tabs.setTitleAt(tabs.getSelectedIndex(), adjName);
                         paths.set(tabs.getSelectedIndex(), f.getAbsolutePath());
+                        unsaved.set(tabs.indexOfTab(adjName), false);
                     }
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -196,6 +201,9 @@ public class TextEditorFrame extends JFrame {
         file.add(exit);
         mb.add(file);
 
+        font.addActionListener(e -> {
+            new TextEditorFontFrame();
+        });
         font.setEnabled(false);
         edit.add(font);
         replace.setEnabled(false);
