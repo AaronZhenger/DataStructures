@@ -1,9 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.List;
 
 public class TextEditorReplaceFrame extends JFrame {
     public static JLabel replace = new JLabel("Replace:");
@@ -13,7 +10,7 @@ public class TextEditorReplaceFrame extends JFrame {
     JButton save = new JButton("Replace");
     JButton cancel = new JButton("Cancel");
 
-    public TextEditorReplaceFrame(JTextArea ta, ArrayList<Boolean> unsaved, int index) {
+    public TextEditorReplaceFrame(JTextArea ta, ArrayList<Boolean> us, int index) {
         super("Replace");
         setSize(200, 300);
         setLayout(null);
@@ -31,7 +28,9 @@ public class TextEditorReplaceFrame extends JFrame {
 
         save.addActionListener(e -> {
             ta.setText(ta.getText().replace(tReplace.getText(), tReplacement.getText()));
-            unsaved.set(index, true);
+            us.set(index, true);
+            System.out.println(us.get(index));
+            TextEditorFrame.updateTabTitle(index);
             dispose();
         });
         save.setBounds(20, 160, 140, 30);

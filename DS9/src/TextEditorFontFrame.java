@@ -14,7 +14,7 @@ public class TextEditorFontFrame extends JFrame {
     JButton save = new JButton("Save");
     JButton cancel = new JButton("Cancel");
 
-    public TextEditorFontFrame(JTextArea ta, ArrayList<Boolean> unsaved, int index) {
+    public TextEditorFontFrame(JTextArea ta, ArrayList<Boolean> us, int index) {
         super("Font");
         setSize(200, 300);
         setLayout(null);
@@ -40,7 +40,9 @@ public class TextEditorFontFrame extends JFrame {
 
         save.addActionListener(e -> {
             ta.setFont(new Font(arr[fonts.getSelectedIndex()], Font.PLAIN, Integer.parseInt(size.getText())));
-            unsaved.set(index, true);
+            us.set(index, true);
+            System.out.println(us.get(index));
+            TextEditorFrame.updateTabTitle(index);
             dispose();
         });
         save.setBounds(20, 160, 140, 30);

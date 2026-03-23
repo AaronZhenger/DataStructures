@@ -5,26 +5,25 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class TextEditorFrame extends JFrame {
-    private static JTabbedPane tabs = new JTabbedPane();
-    private static JMenuBar mb = new JMenuBar();
-    private static JMenu file = new JMenu("File");
-    private static JMenu edit = new JMenu("Edit");
-    private static JMenuItem create = new JMenuItem("Create");
-    private static JMenuItem open = new JMenuItem("Open");
-    private static JMenuItem saveAs = new JMenuItem("Save As");
-    private static JMenuItem save = new JMenuItem("Save");
-    private static JMenuItem close = new JMenuItem("Close");
-    private static JMenuItem exit = new JMenuItem("Exit");
-    private static JMenuItem font = new JMenuItem("Font");
-    private static JMenuItem replace = new JMenuItem("Replace");
-    private static JMenuItem wordCount = new JMenuItem("Word Count");
-    private static ArrayList<JTextArea> arr = new ArrayList<>();
-    private static ArrayList<String> paths = new ArrayList<>();
-    private static ArrayList<Boolean> unsaved = new ArrayList<>();
+    private static final JTabbedPane tabs = new JTabbedPane();
+    private static final JMenuBar mb = new JMenuBar();
+    private static final JMenu file = new JMenu("File");
+    private static final JMenu edit = new JMenu("Edit");
+    private static final JMenuItem create = new JMenuItem("Create");
+    private static final JMenuItem open = new JMenuItem("Open");
+    private static final JMenuItem saveAs = new JMenuItem("Save As");
+    private static final JMenuItem save = new JMenuItem("Save");
+    private static final JMenuItem close = new JMenuItem("Close");
+    private static final JMenuItem exit = new JMenuItem("Exit");
+    private static final JMenuItem font = new JMenuItem("Font");
+    private static final JMenuItem replace = new JMenuItem("Replace");
+    private static final JMenuItem wordCount = new JMenuItem("Word Count");
+    private static final ArrayList<JTextArea> arr = new ArrayList<>();
+    private static final ArrayList<String> paths = new ArrayList<>();
+    private static final ArrayList<Boolean> unsaved = new ArrayList<>();
 
     public TextEditorFrame() {
         super("Text Editor");
@@ -51,36 +50,26 @@ public class TextEditorFrame extends JFrame {
                 foundSpot = true;
                 if (new File("src\\Saves\\"+title+".txt").exists()) {
                     foundSpot = false;
-                    title = title.substring(0, title.length()-1)+(Integer.parseInt(title.substring(title.length()-1))+1);
+                    title = title.substring(0, 8)+(Integer.parseInt(title.substring(8))+1);
                 }
                 for (int i = 0; i < tabs.getTabCount(); i++) {
-                    if (tabs.getTitleAt(i).equals(title)) {
+                    if (tabs.getTitleAt(i).equals(title) || tabs.getTitleAt(i).equals(title+"*")) {
                         foundSpot = false;
-                        title = title.substring(0, title.length()-1)+(Integer.parseInt(title.substring(title.length()-1))+1);
+                        title = title.substring(0, 8)+(Integer.parseInt(title.substring(8))+1);
                         break;
                     }
                 }
             }
             File f = new File("src\\Saves\\"+title+".txt");
-            if (!f.exists()) {
-                try {
-                    f.createNewFile();
-                    paths.add(f.getAbsolutePath());
-                    FileWriter fw = new FileWriter(f);
-                    PrintWriter pw = new PrintWriter(fw);
-                    pw.println("Dialog 12");
-                    fw.close();
-                    pw.close();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
+            paths.add(f.getAbsolutePath());
 
             arr.add(text);
-            unsaved.add(false);
+            unsaved.add(true);
 
             tabs.add(title, textScroll);
             tabs.setSelectedIndex(tabs.getTabCount()-1);
+
+            updateTabTitle(tabs.getSelectedIndex());
         });
         file.add(create);
         open.addActionListener(e -> {
@@ -92,7 +81,7 @@ public class TextEditorFrame extends JFrame {
                 File f = fc.getSelectedFile();
                 boolean foundSpot = true;
                 for (int i = 0; i < tabs.getTabCount(); i++) {
-                    if ((tabs.getTitleAt(i)+".txt").equals(f.getName())) {
+                    if ((tabs.getTitleAt(i)+".txt").equals(f.getName()) || (tabs.getTitleAt(i).substring(0, tabs.getTitleAt(i).length()-1)+".txt").equals(f.getName())) {
                         foundSpot = false;
                         break;
                     }
@@ -141,6 +130,9 @@ public class TextEditorFrame extends JFrame {
             int r = fc.showSaveDialog(this);
             if (r == JFileChooser.APPROVE_OPTION) {
                 File f = fc.getSelectedFile();
+                if (!f.getName().endsWith(".txt")) {
+                    f = new File(f.getAbsolutePath()+".txt");
+                }
                 try {
                     FileWriter fw = new FileWriter(f);
                     PrintWriter pw = new PrintWriter(fw);
@@ -174,6 +166,9 @@ public class TextEditorFrame extends JFrame {
         save.addActionListener(e -> {
                 File f = new File(paths.get(tabs.getSelectedIndex()));
                 try {
+                    if (!f.exists()) {
+                        f.createNewFile();
+                    }
                     FileWriter fw = new FileWriter(f);
                     PrintWriter pw = new PrintWriter(fw);
                     pw.println(arr.get(tabs.getSelectedIndex()).getFont().getName()+" "+arr.get(tabs.getSelectedIndex()).getFont().getSize());
@@ -189,21 +184,15 @@ public class TextEditorFrame extends JFrame {
         save.setEnabled(false);
         file.add(save);
         close.addActionListener(e -> {
-            try {
-                Scanner fs = new Scanner(new File(paths.get(tabs.getSelectedIndex())));
-                StringBuilder sb = new StringBuilder();
-                if (!unsaved.get(tabs.getSelectedIndex())) {
+            if (!unsaved.get(tabs.getSelectedIndex())) {
+                tabs.remove(tabs.getSelectedIndex());
+            } else {
+                int selection = JOptionPane.showConfirmDialog(this, "Unsaved data will be lost. Are you sure you want to close this file?", "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (selection==0) {
+                    arr.remove(tabs.getSelectedIndex());
+                    paths.remove(tabs.getSelectedIndex());
                     tabs.remove(tabs.getSelectedIndex());
-                } else {
-                    int selection = JOptionPane.showConfirmDialog(this, "Unsaved data will be lost. Are you sure you want to close this file?", "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-                    if (selection==0) {
-                        arr.remove(tabs.getSelectedIndex());
-                        paths.remove(tabs.getSelectedIndex());
-                        tabs.remove(tabs.getSelectedIndex());
-                    }
                 }
-            } catch (FileNotFoundException ex) {
-                throw new RuntimeException(ex);
             }
         });
         close.setEnabled(false);
@@ -229,6 +218,7 @@ public class TextEditorFrame extends JFrame {
         edit.add(font);
         replace.addActionListener(e -> {
             new TextEditorReplaceFrame(arr.get(tabs.getSelectedIndex()), unsaved, tabs.getSelectedIndex());
+            System.out.println(unsaved.get(tabs.getSelectedIndex()));
             updateTabTitle(tabs.getSelectedIndex());
         });
         replace.setEnabled(false);
@@ -266,7 +256,7 @@ public class TextEditorFrame extends JFrame {
         setVisible(true);
     }
 
-    private void updateTabTitle(int index) {
+    public static void updateTabTitle(int index) {
         String title = tabs.getTitleAt(index);
 
         if (title.endsWith("*")) {
