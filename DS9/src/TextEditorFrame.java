@@ -235,7 +235,7 @@ public class TextEditorFrame extends JFrame {
         edit.add(replace);
         wordCount.addActionListener(e -> {
             String text = arr.get(tabs.getSelectedIndex()).getText();
-            JOptionPane.showMessageDialog(this, "Word Count: "+ text.split("[\n ]+").length);
+            JOptionPane.showMessageDialog(this, "Word Count: "+ (text.isBlank() ? 0 : text.split("[\n ]+").length));
         });
         wordCount.setEnabled(false);
         edit.add(wordCount);
