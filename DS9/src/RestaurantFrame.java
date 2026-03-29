@@ -605,7 +605,7 @@ public class RestaurantFrame extends JFrame {
                 });
                 p_hs.add(r_hs);
                 p_entrees.add(p_hs);
-            } // 4 Meat Delicacy
+            } // Hoop Samoa
 
             p_entrees.add(l_entrees);
 
