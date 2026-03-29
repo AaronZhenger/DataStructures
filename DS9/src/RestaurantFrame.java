@@ -1,7 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class RestaurantFrame extends JFrame {
+
+    public static final Color white = Color.WHITE;
+    public static final Color gray = new Color(230, 230, 230);
+
     public static final Font large = new Font(Font.DIALOG, Font.BOLD, 36);
     public static final Font medium = new Font(Font.DIALOG, Font.BOLD, 24);
     public static final Font small = new Font(Font.DIALOG, Font.PLAIN, 18);
@@ -18,135 +25,42 @@ public class RestaurantFrame extends JFrame {
     public static final JPanel p_appetizers = new JPanel();
     public static final JPanel p_entrees = new JPanel();
     public static final JPanel p_desserts = new JPanel();
+    public static final JPanel p_cart = new JPanel();
+
+    public static JTable t_cart;
+    public static final ArrayList<String> l_cart = new ArrayList<>();
 
     public static final JScrollPane s_appetizers = new JScrollPane(p_appetizers);
     public static final JScrollPane s_entrees = new JScrollPane(p_entrees);
     public static final JScrollPane s_desserts = new JScrollPane(p_desserts);
+    public static JScrollPane s_cart;
 
     public static final JLabel l_appetizers = new JLabel("Appetizers");
     public static final JLabel l_entrees = new JLabel("Entrees");
     public static final JLabel l_desserts = new JLabel("Desserts");
 
-    public static final JPanel p_wildBread = new JPanel();
-    public static final JLabel l_wildBread = new JLabel("Wild Bread® ($3.98)");
-    public static final JLabel d_wildBread = new JLabel("<html>Eight margarine garlic flavored bread sticks, sprinkled with cheddar cheese and served with Wild Sauce®</html>");
-    public static final ImageIcon ic_wildBread = new ImageIcon(new ImageIcon("src\\Images\\wildBread.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
-    public static final JLabel i_wildBread = new JLabel(ic_wildBread);
-    public static final JTextField n_wildBread = new JTextField("0");
-    public static final JButton a_wildBread = new JButton("+");
-    public static final JButton r_wildBread = new JButton("-");
+    public static final JLabel l_typical = new JLabel("Typical Pizzas");
+    public static final JLabel l_evf = new JLabel("EXTRAVERYFINEST® Pizzas");
+    public static final JLabel l_attenuate = new JLabel("Attenuate Pizzas");
+    public static final JLabel l_other = new JLabel("Other Pizzas");
 
-    public static final JPanel p_spanishQB = new JPanel();
-    public static final JLabel l_spanishQB = new JLabel("Spanish Queso Bread ($6.48)");
-    public static final JLabel d_spanishQB = new JLabel("<html>Ten pieces of freshly baked bread with a crispy edge, topped with buttery-garlic flavored drizzle, covered with queso, and finished with Spanish spices.</html>");
-    public static final ImageIcon ic_spanishQB = new ImageIcon(new ImageIcon("src\\Images\\sqb.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
-    public static final JLabel i_spanishQB = new JLabel(ic_spanishQB);
-    public static final JTextField n_spanishQB = new JTextField("0");
-    public static final JButton a_spanishQB = new JButton("+");
-    public static final JButton r_spanishQB = new JButton("-");
+    public static final JLabel l_tipPercentage = new JLabel("Tip %:");
+    public static final JLabel l_subtotal = new JLabel("Subtotal:");
+    public static final JLabel l_tax = new JLabel("Tax:");
+    public static final JLabel l_tip = new JLabel("Tip:");
+    public static final JLabel l_total = new JLabel("Total:");
+    public static final JTextField t_tipPercentage = new JTextField();
+    public static final JTextField t_subtotal = new JTextField("$0.00");
+    public static final JTextField t_tax = new JTextField("$0.00");
+    public static final JTextField t_tip = new JTextField("$0.00");
+    public static final JTextField t_total = new JTextField("$0.00");
 
-    public static final JPanel p_juliusWings = new JPanel();
-    public static final JLabel l_juliusWings = new JLabel("Julius Wings® ($8.98)");
-    public static final JLabel d_juliusWings = new JLabel("<html>Untraditionally seasoned oven roasted wings</html>");
-    public static final ImageIcon ic_juliusWings = new ImageIcon(new ImageIcon("src\\Images\\jw.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
-    public static final JLabel i_juliusWings = new JLabel(ic_juliusWings);
-    public static final JTextField n_juliusWings = new JTextField("0");
-    public static final JButton a_juliusWings = new JButton("+");
-    public static final JButton r_juliusWings = new JButton("-");
-
-    public static final JPanel p_wildSauce = new JPanel();
-    public static final JLabel l_wildSauce = new JLabel("Wild Sauce® ($0.99)");
-    public static final JLabel d_wildSauce = new JLabel("<html>Tomato dipping dip with a special blend of tasty herbs and spices</html>");
-    public static final ImageIcon ic_wildSauce = new ImageIcon(new ImageIcon("src\\Images\\ws.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
-    public static final JLabel i_wildSauce = new JLabel(ic_wildSauce);
-    public static final JTextField n_wildSauce = new JTextField("0");
-    public static final JButton a_wildSauce = new JButton("+");
-    public static final JButton r_wildSauce = new JButton("-");
-
-    public static final JPanel p_juliusDips = new JPanel();
-    public static final JLabel l_juliusDips = new JLabel("Julius Dips® ($0.98)");
-    public static final JLabel d_juliusDips = new JLabel("<html>Butter and garlic flavored dipping dip</html>");
-    public static final ImageIcon ic_juliusDips = new ImageIcon(new ImageIcon("src\\Images\\jd.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
-    public static final JLabel i_juliusDips = new JLabel(ic_juliusDips);
-    public static final JTextField n_juliusDips = new JTextField("0");
-    public static final JButton a_juliusDips = new JButton("+");
-    public static final JButton r_juliusDips = new JButton("-");
-
-    public static final JPanel p_sqb = new JPanel();
-    public static final JLabel l_sqb = new JLabel("Salami Queso Bread ($6.48)");
-    public static final JLabel d_sqb = new JLabel("<html>Ten pieces of freshly baked bread with crispy edge, covered with queso, salami and sprinkled with cheddar cheese</html>");
-    public static final ImageIcon ic_sqb = new ImageIcon(new ImageIcon("src\\Images\\sqbs.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
-    public static final JLabel i_sqb = new JLabel(ic_sqb);
-    public static final JTextField n_sqb = new JTextField("0");
-    public static final JButton a_sqb = new JButton("+");
-    public static final JButton r_sqb = new JButton("-");
-
-    public static final JPanel p_nwfs = new JPanel();
-    public static final JLabel l_nwfs = new JLabel("New World Fancerami Salami™ ($10.98)");
-    public static final JLabel d_nwfs = new JLabel("<html>A large Salami pizza topped with over 101 crispy new world Salamis all the way to the edge and a crispy, caramelized crust.</html>");
-    public static final ImageIcon ic_nwfs = new ImageIcon(new ImageIcon("src\\Images\\nwfs.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
-    public static final JLabel i_nwfs = new JLabel(ic_nwfs);
-    public static final JTextField n_nwfs = new JTextField("0");
-    public static final JButton a_nwfs = new JButton("+");
-    public static final JButton r_nwfs = new JButton("-");
-
-    public static final JPanel p_cnt = new JPanel();
-    public static final JLabel l_cnt = new JLabel("Cuts-N-Twigs® ($8.98)");
-    public static final JLabel d_cnt = new JLabel("<html>Four slices of Salami pizza combined with eight Spanish Queso Twigs, plus Wild Dip®</html>");
-    public static final ImageIcon ic_cnt = new ImageIcon(new ImageIcon("src\\Images\\cnt.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
-    public static final JLabel i_cnt = new JLabel(ic_cnt);
-    public static final JTextField n_cnt = new JTextField("0");
-    public static final JButton a_cnt = new JButton("+");
-    public static final JButton r_cnt = new JButton("-");
-
-    public static final JPanel p_acs = new JPanel();
-    public static final JLabel l_acs = new JLabel("Attenuate Crust Salami ($8.48)");
-    public static final JLabel d_acs = new JLabel("<html>Large attenuate crust pizza topped right to the edge with Salami and Queso.</html>");
-    public static final ImageIcon ic_acs = new ImageIcon(new ImageIcon("src\\Images\\acs.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
-    public static final JLabel i_acs = new JLabel(ic_acs);
-    public static final JTextField n_acs = new JTextField("0");
-    public static final JButton a_acs = new JButton("+");
-    public static final JButton r_acs = new JButton("-");
-
-    public static final JPanel p_acq = new JPanel();
-    public static final JLabel l_acq = new JLabel("Attenuate Crust Queso ($8.48)");
-    public static final JLabel d_acq = new JLabel("<html>Large attenuate crust pizza topped right to the edge with Queso.</html>");
-    public static final ImageIcon ic_acq = new ImageIcon(new ImageIcon("src\\Images\\acq.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
-    public static final JLabel i_acq = new JLabel(ic_acq);
-    public static final JTextField n_acq = new JTextField("0");
-    public static final JButton a_acq = new JButton("+");
-    public static final JButton r_acq = new JButton("-");
-
-    public static final JPanel p_ps = new JPanel();
-    public static final JLabel l_ps = new JLabel("Paramount Superior ($13.99)");
-    public static final JLabel d_ps = new JLabel("<html>Large round pizza with Salami, German Wurst, Fungi, Onions, and Red Peppers</html>");
-    public static final ImageIcon ic_ps = new ImageIcon(new ImageIcon("src\\Images\\ps.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
-    public static final JLabel i_ps = new JLabel(ic_ps);
-    public static final JTextField n_ps = new JTextField("0");
-    public static final JButton a_ps = new JButton("+");
-    public static final JButton r_ps = new JButton("-");
-
-    public static final JPanel p_fmd = new JPanel();
-    public static final JLabel l_fmd = new JLabel("4 Meat Delicacy® ($13.99)");
-    public static final JLabel d_fmd = new JLabel("<html>Large round <strong>pizza</strong> topped with Pepperoni, Italian Sausage and Bacon</html>");
-    public static final ImageIcon ic_fmd = new ImageIcon(new ImageIcon("src\\Images\\fmd.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
-    public static final JLabel i_fmd = new JLabel(ic_fmd);
-    public static final JTextField n_fmd = new JTextField("0");
-    public static final JButton a_fmd = new JButton("+");
-    public static final JButton r_fmd = new JButton("-");
-
-    public static final JPanel p_hs = new JPanel();
-    public static final JLabel l_hs = new JLabel("Hoop Samoa® ($11.99)");
-    public static final JLabel d_hs = new JLabel("<html>WILD!WILD!™ AMOUNTS OF TOPPINGS AT THE COUNTRY'S BEST PRICE** Large round pizza with Smoky Turkey and Pineapple Pens</html>");
-    public static final ImageIcon ic_hs = new ImageIcon(new ImageIcon("src\\Images\\hs.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
-    public static final JLabel i_hs = new JLabel(ic_hs);
-    public static final JTextField n_hs = new JTextField("0");
-    public static final JButton a_hs = new JButton("+");
-    public static final JButton r_hs = new JButton("-");
+    public static final ArrayList<RestaurantItem> order = new ArrayList<>();
 
     public RestaurantFrame() {
         super("Big Julius'");
         setSize(620, 400);
+        setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         {
@@ -154,6 +68,7 @@ public class RestaurantFrame extends JFrame {
                 s_appetizers.setVisible(true);
                 s_entrees.setVisible(false);
                 s_desserts.setVisible(false);
+                p_cart.setVisible(false);
                 revalidate();
                 repaint();
             });
@@ -162,6 +77,7 @@ public class RestaurantFrame extends JFrame {
                 s_entrees.setVisible(true);
                 s_appetizers.setVisible(false);
                 s_desserts.setVisible(false);
+                p_cart.setVisible(false);
                 revalidate();
                 repaint();
             });
@@ -170,449 +86,495 @@ public class RestaurantFrame extends JFrame {
                 s_desserts.setVisible(true);
                 s_entrees.setVisible(false);
                 s_appetizers.setVisible(false);
+                p_cart.setVisible(false);
                 revalidate();
                 repaint();
             });
             m_menu.add(mi_desserts);
             mb.add(m_menu);
+            mi_viewCart.addActionListener(e -> {
+                s_desserts.setVisible(false);
+                s_entrees.setVisible(false);
+                s_appetizers.setVisible(false);
+                p_cart.setVisible(true);
+                revalidate();
+                repaint();
+            });
             m_checkOut.add(mi_viewCart);
             mb.add(m_checkOut);
             setJMenuBar(mb);
         } // Menu
 
         {
+            s_appetizers.setBounds(0, 0, 606, 340);
+            s_appetizers.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            s_appetizers.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+            s_appetizers.getVerticalScrollBar().setUnitIncrement(10);
+
             p_appetizers.setLayout(null);
-            p_appetizers.setPreferredSize(new Dimension(600, 1300));
+            p_appetizers.setPreferredSize(new Dimension(600, 1335));
+
             l_appetizers.setFont(large);
             l_appetizers.setBounds(0, 0, 600, 40);
             l_appetizers.setHorizontalAlignment(JLabel.CENTER);
-            s_appetizers.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-            s_appetizers.getVerticalScrollBar().setUnitIncrement(200);
-
-            {
-                p_wildBread.setBackground(Color.WHITE);
-                p_wildBread.setLayout(null);
-                p_wildBread.setBounds(20, 50, 560, 180);
-                l_wildBread.setBounds(20, 20, 520, 30);
-                l_wildBread.setFont(medium);
-                p_wildBread.add(l_wildBread);
-                i_wildBread.setBounds(20, 60, 100, 100);
-                p_wildBread.add(i_wildBread);
-                d_wildBread.setBounds(140, 60, 320, 100);
-                p_wildBread.add(d_wildBread);
-                n_wildBread.setBounds(438, 20, 46, 46);
-                n_wildBread.setEnabled(false);
-                n_wildBread.setHorizontalAlignment(JTextField.CENTER);
-                p_wildBread.add(n_wildBread);
-                a_wildBread.setBounds(494, 20, 46, 46);
-                a_wildBread.addActionListener(e -> {
-                    n_wildBread.setText("" + (Integer.parseInt(n_wildBread.getText()) + 1));
-                    if (Integer.parseInt(n_wildBread.getText()) > 0) r_wildBread.setEnabled(true);
-                });
-                p_wildBread.add(a_wildBread);
-                r_wildBread.setBounds(382, 20, 46, 46);
-                r_wildBread.setEnabled(false);
-                r_wildBread.addActionListener(e -> {
-                    n_wildBread.setText("" + (Integer.parseInt(n_wildBread.getText()) - 1));
-                    if (Integer.parseInt(n_wildBread.getText()) <= 0) r_wildBread.setEnabled(false);
-                });
-                p_wildBread.add(r_wildBread);
-                p_appetizers.add(p_wildBread);
-            } // Wild Bread
-
-            {
-                p_spanishQB.setBackground(new Color(230, 230, 230));
-                p_spanishQB.setLayout(null);
-                p_spanishQB.setBounds(20, 250, 560, 180);
-                l_spanishQB.setBounds(20, 20, 520, 30);
-                l_spanishQB.setFont(medium);
-                p_spanishQB.add(l_spanishQB);
-                i_spanishQB.setBounds(20, 60, 100, 100);
-                p_spanishQB.add(i_spanishQB);
-                d_spanishQB.setBounds(140, 60, 320, 100);
-                p_spanishQB.add(d_spanishQB);
-                n_spanishQB.setBounds(438, 20, 46, 46);
-                n_spanishQB.setEnabled(false);
-                n_spanishQB.setHorizontalAlignment(JTextField.CENTER);
-                p_spanishQB.add(n_spanishQB);
-                a_spanishQB.setBounds(494, 20, 46, 46);
-                a_spanishQB.addActionListener(e -> {
-                    n_spanishQB.setText("" + (Integer.parseInt(n_spanishQB.getText()) + 1));
-                    if (Integer.parseInt(n_spanishQB.getText()) > 0) r_spanishQB.setEnabled(true);
-                });
-                p_spanishQB.add(a_spanishQB);
-                r_spanishQB.setBounds(382, 20, 46, 46);
-                r_spanishQB.setEnabled(false);
-                r_spanishQB.addActionListener(e -> {
-                    n_spanishQB.setText("" + (Integer.parseInt(n_spanishQB.getText()) - 1));
-                    if (Integer.parseInt(n_spanishQB.getText()) <= 0) r_spanishQB.setEnabled(false);
-                });
-                p_spanishQB.add(r_spanishQB);
-                p_appetizers.add(p_spanishQB);
-            } // Spanish Queso Bread
-
-            {
-                p_juliusWings.setBackground(Color.WHITE);
-                p_juliusWings.setLayout(null);
-                p_juliusWings.setBounds(20, 450, 560, 180);
-                l_juliusWings.setBounds(20, 20, 520, 30);
-                l_juliusWings.setFont(medium);
-                p_juliusWings.add(l_juliusWings);
-                i_juliusWings.setBounds(20, 60, 100, 100);
-                p_juliusWings.add(i_juliusWings);
-                d_juliusWings.setBounds(140, 60, 320, 100);
-                p_juliusWings.add(d_juliusWings);
-                n_juliusWings.setBounds(438, 20, 46, 46);
-                n_juliusWings.setEnabled(false);
-                n_juliusWings.setHorizontalAlignment(JTextField.CENTER);
-                p_juliusWings.add(n_juliusWings);
-                a_juliusWings.setBounds(494, 20, 46, 46);
-                a_juliusWings.addActionListener(e -> {
-                    n_juliusWings.setText("" + (Integer.parseInt(n_juliusWings.getText()) + 1));
-                    if (Integer.parseInt(n_juliusWings.getText()) > 0) r_juliusWings.setEnabled(true);
-                });
-                p_juliusWings.add(a_juliusWings);
-                r_juliusWings.setBounds(382, 20, 46, 46);
-                r_juliusWings.setEnabled(false);
-                r_juliusWings.addActionListener(e -> {
-                    n_juliusWings.setText("" + (Integer.parseInt(n_juliusWings.getText()) - 1));
-                    if (Integer.parseInt(n_juliusWings.getText()) <= 0) r_juliusWings.setEnabled(false);
-                });
-                p_juliusWings.add(r_juliusWings);
-                p_appetizers.add(p_juliusWings);
-            } // Julius Wings
-
-            {
-                p_wildSauce.setBackground(new Color(230, 230, 230));
-                p_wildSauce.setLayout(null);
-                p_wildSauce.setBounds(20, 650, 560, 180);
-                l_wildSauce.setBounds(20, 20, 520, 30);
-                l_wildSauce.setFont(medium);
-                p_wildSauce.add(l_wildSauce);
-                i_wildSauce.setBounds(20, 60, 100, 100);
-                p_wildSauce.add(i_wildSauce);
-                d_wildSauce.setBounds(140, 60, 320, 100);
-                p_wildSauce.add(d_wildSauce);
-                n_wildSauce.setBounds(438, 20, 46, 46);
-                n_wildSauce.setEnabled(false);
-                n_wildSauce.setHorizontalAlignment(JTextField.CENTER);
-                p_wildSauce.add(n_wildSauce);
-                a_wildSauce.setBounds(494, 20, 46, 46);
-                a_wildSauce.addActionListener(e -> {
-                    n_wildSauce.setText("" + (Integer.parseInt(n_wildSauce.getText()) + 1));
-                    if (Integer.parseInt(n_wildSauce.getText()) > 0) r_wildSauce.setEnabled(true);
-                });
-                p_wildSauce.add(a_wildSauce);
-                r_wildSauce.setBounds(382, 20, 46, 46);
-                r_wildSauce.setEnabled(false);
-                r_wildSauce.addActionListener(e -> {
-                    n_wildSauce.setText("" + (Integer.parseInt(n_wildSauce.getText()) - 1));
-                    if (Integer.parseInt(n_wildSauce.getText()) <= 0) r_wildSauce.setEnabled(false);
-                });
-                p_wildSauce.add(r_wildSauce);
-                p_appetizers.add(p_wildSauce);
-            } // Wild Sauce
-
-            {
-                p_juliusDips.setBackground(Color.WHITE);
-                p_juliusDips.setLayout(null);
-                p_juliusDips.setBounds(20, 850, 560, 180);
-                l_juliusDips.setBounds(20, 20, 520, 30);
-                l_juliusDips.setFont(medium);
-                p_juliusDips.add(l_juliusDips);
-                i_juliusDips.setBounds(20, 60, 100, 100);
-                p_juliusDips.add(i_juliusDips);
-                d_juliusDips.setBounds(140, 60, 320, 100);
-                p_juliusDips.add(d_juliusDips);
-                n_juliusDips.setBounds(438, 20, 46, 46);
-                n_juliusDips.setEnabled(false);
-                n_juliusDips.setHorizontalAlignment(JTextField.CENTER);
-                p_juliusDips.add(n_juliusDips);
-                a_juliusDips.setBounds(494, 20, 46, 46);
-                a_juliusDips.addActionListener(e -> {
-                    n_juliusDips.setText("" + (Integer.parseInt(n_juliusDips.getText()) + 1));
-                    if (Integer.parseInt(n_juliusDips.getText()) > 0) r_juliusDips.setEnabled(true);
-                });
-                p_juliusDips.add(a_juliusDips);
-                r_juliusDips.setBounds(382, 20, 46, 46);
-                r_juliusDips.setEnabled(false);
-                r_juliusDips.addActionListener(e -> {
-                    n_juliusDips.setText("" + (Integer.parseInt(n_juliusDips.getText()) - 1));
-                    if (Integer.parseInt(n_juliusDips.getText()) <= 0) r_juliusDips.setEnabled(false);
-                });
-                p_juliusDips.add(r_juliusDips);
-                p_appetizers.add(p_juliusDips);
-            } // Julius Dips
-
-            {
-                p_sqb.setBackground(new Color(230, 230, 230));
-                p_sqb.setLayout(null);
-                p_sqb.setBounds(20, 1050, 560, 180);
-                l_sqb.setBounds(20, 20, 520, 30);
-                l_sqb.setFont(medium);
-                p_sqb.add(l_sqb);
-                i_sqb.setBounds(20, 60, 100, 100);
-                p_sqb.add(i_sqb);
-                d_sqb.setBounds(140, 60, 320, 100);
-                p_sqb.add(d_sqb);
-                n_sqb.setBounds(438, 20, 46, 46);
-                n_sqb.setEnabled(false);
-                n_sqb.setHorizontalAlignment(JTextField.CENTER);
-                p_sqb.add(n_sqb);
-                a_sqb.setBounds(494, 20, 46, 46);
-                a_sqb.addActionListener(e -> {
-                    n_sqb.setText("" + (Integer.parseInt(n_sqb.getText()) + 1));
-                    if (Integer.parseInt(n_sqb.getText()) > 0) r_sqb.setEnabled(true);
-                });
-                p_sqb.add(a_sqb);
-                r_sqb.setBounds(382, 20, 46, 46);
-                r_sqb.setEnabled(false);
-                r_sqb.addActionListener(e -> {
-                    n_sqb.setText("" + (Integer.parseInt(n_sqb.getText()) - 1));
-                    if (Integer.parseInt(n_sqb.getText()) <= 0) r_sqb.setEnabled(false);
-                });
-                p_sqb.add(r_sqb);
-                p_appetizers.add(p_sqb);
-            } // Salami Queso Bread
-
             p_appetizers.add(l_appetizers);
 
-            s_appetizers.setVisible(true);
+            p_appetizers.add(createItem(
+                    "Wild Bread®",
+                    "Eight margarine garlic flavored bread sticks, sprinkled with cheddar queso and served with Wild Sauce®",
+                    "src\\Images\\wildBread.jpg",
+                    3.98,
+                    50,
+                    white
+            ));
+            p_appetizers.add(createItem(
+                    "Salami Wild Bread",
+                    "Eight margarine garlic flavored bread sticks, sprinkled with cheddar queso, filled with Salami and served with Wild Sauce®",
+                    "src\\Images\\pwb.jpg",
+                    3.98,
+                    250,
+                    gray
+            ));
+            p_appetizers.add(createItem(
+                    "Filled Wild Bread®",
+                    "Three pieces of our famous Wild Bread® filled with Queso, plus Wild Sauce®",
+                    "src\\Images\\swb.jpg",
+                    3.48,
+                    450,
+                    white
+            ));
+            p_appetizers.add(createItem(
+                    "Julius Wings®",
+                    "Untraditionally dressed oven roasted wings",
+                    "src\\Images\\jw.jpg",
+                    0.99,
+                    650,
+                    gray
+            ));
+            p_appetizers.add(createItem(
+                    "Wild Sauce®",
+                    "Tomato dipping dip with a special blend of tasty herbs and spices",
+                    "src\\Images\\ws.jpg",
+                    8.98,
+                    850,
+                    white
+            ));
+            p_appetizers.add(createItem(
+                    "Julius Dips®",
+                    "Butter and garlic flavored dipping dip",
+                    "src\\Images\\jd.jpg",
+                    0.98,
+                    1050,
+                    gray
+            ));
+            s_appetizers.setVisible(false);
             add(s_appetizers);
-        } // Appetizers
+        } //Appetizers
 
         {
+            s_entrees.setBounds(0, 0, 606, 340);
+            s_entrees.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            s_entrees.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+            s_entrees.getVerticalScrollBar().setUnitIncrement(10);
+
             p_entrees.setLayout(null);
-            p_entrees.setPreferredSize(new Dimension(600, 1500));
+            p_entrees.setPreferredSize(new Dimension(600, 2655));
+
             l_entrees.setFont(large);
             l_entrees.setBounds(0, 0, 600, 40);
             l_entrees.setHorizontalAlignment(JLabel.CENTER);
-            s_entrees.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-            s_entrees.getVerticalScrollBar().setUnitIncrement(200);
-
-            {
-                p_nwfs.setBackground(Color.WHITE);
-                p_nwfs.setLayout(null);
-                p_nwfs.setBounds(20, 50, 560, 180);
-                l_nwfs.setBounds(20, 20, 520, 30);
-                l_nwfs.setFont(small_bold);
-                p_nwfs.add(l_nwfs);
-                i_nwfs.setBounds(20, 60, 100, 100);
-                p_nwfs.add(i_nwfs);
-                d_nwfs.setBounds(140, 60, 320, 100);
-                p_nwfs.add(d_nwfs);
-                n_nwfs.setBounds(438, 20, 46, 46);
-                n_nwfs.setEnabled(false);
-                n_nwfs.setHorizontalAlignment(JTextField.CENTER);
-                p_nwfs.add(n_nwfs);
-                a_nwfs.setBounds(494, 20, 46, 46);
-                a_nwfs.addActionListener(e -> {
-                    n_nwfs.setText("" + (Integer.parseInt(n_nwfs.getText()) + 1));
-                    if (Integer.parseInt(n_nwfs.getText()) > 0) r_nwfs.setEnabled(true);
-                });
-                p_nwfs.add(a_nwfs);
-                r_nwfs.setBounds(382, 20, 46, 46);
-                r_nwfs.setEnabled(false);
-                r_nwfs.addActionListener(e -> {
-                    n_nwfs.setText("" + (Integer.parseInt(n_nwfs.getText()) - 1));
-                    if (Integer.parseInt(n_nwfs.getText()) <= 0) r_nwfs.setEnabled(false);
-                });
-                p_nwfs.add(r_nwfs);
-                p_entrees.add(p_nwfs);
-            } // New World Fancerami Salami
-
-            {
-                p_cnt.setBackground(new Color(230, 230, 230));
-                p_cnt.setLayout(null);
-                p_cnt.setBounds(20, 250, 560, 180);
-                l_cnt.setBounds(20, 20, 520, 30);
-                l_cnt.setFont(medium);
-                p_cnt.add(l_cnt);
-                i_cnt.setBounds(20, 60, 100, 100);
-                p_cnt.add(i_cnt);
-                d_cnt.setBounds(140, 60, 320, 100);
-                p_cnt.add(d_cnt);
-                n_cnt.setBounds(438, 20, 46, 46);
-                n_cnt.setEnabled(false);
-                n_cnt.setHorizontalAlignment(JTextField.CENTER);
-                p_cnt.add(n_cnt);
-                a_cnt.setBounds(494, 20, 46, 46);
-                a_cnt.addActionListener(e -> {
-                    n_cnt.setText("" + (Integer.parseInt(n_cnt.getText()) + 1));
-                    if (Integer.parseInt(n_cnt.getText()) > 0) r_cnt.setEnabled(true);
-                });
-                p_cnt.add(a_cnt);
-                r_cnt.setBounds(382, 20, 46, 46);
-                r_cnt.setEnabled(false);
-                r_cnt.addActionListener(e -> {
-                    n_cnt.setText("" + (Integer.parseInt(n_cnt.getText()) - 1));
-                    if (Integer.parseInt(n_cnt.getText()) <= 0) r_cnt.setEnabled(false);
-                });
-                p_cnt.add(r_cnt);
-                p_entrees.add(p_cnt);
-            } // Cuts-N-Twigs
-
-            {
-                p_acs.setBackground(Color.WHITE);
-                p_acs.setLayout(null);
-                p_acs.setBounds(20, 450, 560, 180);
-                l_acs.setBounds(20, 20, 520, 30);
-                l_acs.setFont(medium);
-                p_acs.add(l_acs);
-                i_acs.setBounds(20, 60, 100, 100);
-                p_acs.add(i_acs);
-                d_acs.setBounds(140, 60, 320, 100);
-                p_acs.add(d_acs);
-                n_acs.setBounds(438, 20, 46, 46);
-                n_acs.setEnabled(false);
-                n_acs.setHorizontalAlignment(JTextField.CENTER);
-                p_acs.add(n_acs);
-                a_acs.setBounds(494, 20, 46, 46);
-                a_acs.addActionListener(e -> {
-                    n_acs.setText("" + (Integer.parseInt(n_acs.getText()) + 1));
-                    if (Integer.parseInt(n_acs.getText()) > 0) r_acs.setEnabled(true);
-                });
-                p_acs.add(a_acs);
-                r_acs.setBounds(382, 20, 46, 46);
-                r_acs.setEnabled(false);
-                r_acs.addActionListener(e -> {
-                    n_acs.setText("" + (Integer.parseInt(n_acs.getText()) - 1));
-                    if (Integer.parseInt(n_acs.getText()) <= 0) r_acs.setEnabled(false);
-                });
-                p_acs.add(r_acs);
-                p_entrees.add(p_acs);
-            } // Attenuate Crust Salami
-
-            {
-                p_acq.setBackground(Color.WHITE);
-                p_acq.setLayout(null);
-                p_acq.setBounds(20, 650, 560, 180);
-                l_acq.setBounds(20, 20, 520, 30);
-                l_acq.setFont(medium);
-                p_acq.add(l_acq);
-                i_acq.setBounds(20, 60, 100, 100);
-                p_acq.add(i_acq);
-                d_acq.setBounds(140, 60, 320, 100);
-                p_acq.add(d_acq);
-                n_acq.setBounds(438, 20, 46, 46);
-                n_acq.setEnabled(false);
-                n_acq.setHorizontalAlignment(JTextField.CENTER);
-                p_acq.add(n_acq);
-                a_acq.setBounds(494, 20, 46, 46);
-                a_acq.addActionListener(e -> {
-                    n_acq.setText("" + (Integer.parseInt(n_acq.getText()) + 1));
-                    if (Integer.parseInt(n_acq.getText()) > 0) r_acq.setEnabled(true);
-                });
-                p_acq.add(a_acq);
-                r_acq.setBounds(382, 20, 46, 46);
-                r_acq.setEnabled(false);
-                r_acq.addActionListener(e -> {
-                    n_acq.setText("" + (Integer.parseInt(n_acq.getText()) - 1));
-                    if (Integer.parseInt(n_acq.getText()) <= 0) r_acq.setEnabled(false);
-                });
-                p_acq.add(r_acq);
-                p_entrees.add(p_acq);
-            } // Attenuate Crust Queso
-
-            {
-                p_ps.setBackground(Color.WHITE);
-                p_ps.setLayout(null);
-                p_ps.setBounds(20, 850, 560, 180);
-                l_ps.setBounds(20, 20, 520, 30);
-                l_ps.setFont(medium);
-                p_ps.add(l_ps);
-                i_ps.setBounds(20, 60, 100, 100);
-                p_ps.add(i_ps);
-                d_ps.setBounds(140, 60, 320, 100);
-                p_ps.add(d_ps);
-                n_ps.setBounds(438, 20, 46, 46);
-                n_ps.setEnabled(false);
-                n_ps.setHorizontalAlignment(JTextField.CENTER);
-                p_ps.add(n_ps);
-                a_ps.setBounds(494, 20, 46, 46);
-                a_ps.addActionListener(e -> {
-                    n_ps.setText("" + (Integer.parseInt(n_ps.getText()) + 1));
-                    if (Integer.parseInt(n_ps.getText()) > 0) r_ps.setEnabled(true);
-                });
-                p_ps.add(a_ps);
-                r_ps.setBounds(382, 20, 46, 46);
-                r_ps.setEnabled(false);
-                r_ps.addActionListener(e -> {
-                    n_ps.setText("" + (Integer.parseInt(n_ps.getText()) - 1));
-                    if (Integer.parseInt(n_ps.getText()) <= 0) r_ps.setEnabled(false);
-                });
-                p_ps.add(r_ps);
-                p_entrees.add(p_ps);
-            } // Paramount Superior
-
-            {
-                p_fmd.setBackground(Color.WHITE);
-                p_fmd.setLayout(null);
-                p_fmd.setBounds(20, 1050, 560, 180);
-                l_fmd.setBounds(20, 20, 520, 30);
-                l_fmd.setFont(medium);
-                p_fmd.add(l_fmd);
-                i_fmd.setBounds(20, 60, 100, 100);
-                p_fmd.add(i_fmd);
-                d_fmd.setBounds(140, 60, 320, 100);
-                p_fmd.add(d_fmd);
-                n_fmd.setBounds(438, 20, 46, 46);
-                n_fmd.setEnabled(false);
-                n_fmd.setHorizontalAlignment(JTextField.CENTER);
-                p_fmd.add(n_fmd);
-                a_fmd.setBounds(494, 20, 46, 46);
-                a_fmd.addActionListener(e -> {
-                    n_fmd.setText("" + (Integer.parseInt(n_fmd.getText()) + 1));
-                    if (Integer.parseInt(n_fmd.getText()) > 0) r_fmd.setEnabled(true);
-                });
-                p_fmd.add(a_fmd);
-                r_fmd.setBounds(382, 20, 46, 46);
-                r_fmd.setEnabled(false);
-                r_fmd.addActionListener(e -> {
-                    n_fmd.setText("" + (Integer.parseInt(n_fmd.getText()) - 1));
-                    if (Integer.parseInt(n_fmd.getText()) <= 0) r_fmd.setEnabled(false);
-                });
-                p_fmd.add(r_fmd);
-                p_entrees.add(p_fmd);
-            } // 4 Meat Delicacy
-
-            {
-                p_hs.setBackground(Color.WHITE);
-                p_hs.setLayout(null);
-                p_hs.setBounds(20, 1250, 560, 180);
-                l_hs.setBounds(20, 20, 520, 30);
-                l_hs.setFont(medium);
-                p_hs.add(l_hs);
-                i_hs.setBounds(20, 60, 100, 100);
-                p_hs.add(i_hs);
-                d_hs.setBounds(140, 60, 320, 100);
-                p_hs.add(d_hs);
-                n_hs.setBounds(438, 20, 46, 46);
-                n_hs.setEnabled(false);
-                n_hs.setHorizontalAlignment(JTextField.CENTER);
-                p_hs.add(n_hs);
-                a_hs.setBounds(494, 20, 46, 46);
-                a_hs.addActionListener(e -> {
-                    n_hs.setText("" + (Integer.parseInt(n_hs.getText()) + 1));
-                    if (Integer.parseInt(n_hs.getText()) > 0) r_hs.setEnabled(true);
-                });
-                p_hs.add(a_hs);
-                r_hs.setBounds(382, 20, 46, 46);
-                r_hs.setEnabled(false);
-                r_hs.addActionListener(e -> {
-                    n_hs.setText("" + (Integer.parseInt(n_hs.getText()) - 1));
-                    if (Integer.parseInt(n_hs.getText()) <= 0) r_hs.setEnabled(false);
-                });
-                p_hs.add(r_hs);
-                p_entrees.add(p_hs);
-            } // Hoop Samoa
-
             p_entrees.add(l_entrees);
+
+            l_typical.setFont(medium);
+            l_typical.setBounds(40, 50, 520, 40);
+            p_entrees.add(l_typical);
+            p_entrees.add(createItem(
+                    "Large Typical Queso",
+                    "Large round pizza with Queso",
+                    "src\\Images\\ltq.jpg",
+                    5.98,
+                    90,
+                    white
+            ));
+            p_entrees.add(createItem(
+                    "Large Typical Salami",
+                    "Large round pizza with Salami",
+                    "src\\Images\\lts.jpg",
+                    5.98,
+                    290,
+                    gray
+            ));
+            l_evf.setFont(medium);
+            l_evf.setBounds(40, 490, 520, 40);
+            p_entrees.add(l_evf);
+            p_entrees.add(createItem(
+                    "EXTRAVERYFINESTEST® Queso",
+                    "Large round pizza with more Queso than our Typical pizza.",
+                    "src\\Images\\evpq.jpg",
+                    6.98,
+                    530,
+                    white
+            ));
+            p_entrees.add(createItem(
+                    "EXTRAVERYFINESTEST® Salami",
+                    "Large round pizza with more Salami and Queso than our Typical pizza.",
+                    "src\\Images\\evps.jpg",
+                    6.98,
+                    730,
+                    gray
+            ));
+            l_attenuate.setFont(medium);
+            l_attenuate.setBounds(40, 930, 520, 40);
+            p_entrees.add(l_attenuate);
+            p_entrees.add(createItem(
+                    "Attenuate Crust Salami",
+                    "Large attenuate crust pizza topped right to the edge with Salami and Queso.",
+                    "src\\Images\\acs.jpg",
+                    8.48,
+                    970,
+                    white
+            ));
+            p_entrees.add(createItem(
+                    "Attenuate Crust Queso",
+                    "Large attenuate crust pizza topped right to the edge with Queso.",
+                    "src\\Images\\acq.jpg",
+                    8.48,
+                    1170,
+                    gray
+            ));
+            l_other.setFont(medium);
+            l_other.setBounds(40, 1370, 520, 40);
+            p_entrees.add(l_other);
+            p_entrees.add(createItem(
+                    "New World Fancerami Salami™",
+                    "A large Salami pizza topped with over 101 crispy new world Salamis all the way to the edge and a crispy, caramelized crust.",
+                    "src\\Images\\nwfs.jpg",
+                    10.98,
+                    1410,
+                    white
+            ));
+            p_entrees.add(createItem(
+                    "Cuts-N-Twigs®",
+                    "Four slices of Salami pizza combined with eight Spanish Queso Twigs, plus Wild Dip®",
+                    "src\\Images\\cnt.jpg",
+                    8.98,
+                    1610,
+                    gray
+            ));
+            p_entrees.add(createItem(
+                    "Paramount Superior",
+                    "Large round pizza with Salami, German Wurst, Fungi, Onions, and Red Peppers",
+                    "src\\Images\\ps.jpg",
+                    13.99,
+                    1810,
+                    white
+            ));
+            p_entrees.add(createItem(
+                    "4 Meat Delicacy®",
+                    "Large round <strong>pizza</strong> topped with Pepperoni, Italian Sausage and Bacon",
+                    "src\\Images\\fmd.jpg",
+                    13.99,
+                    2010,
+                    gray
+            ));
+            p_entrees.add(createItem(
+                    "Hoop Samoa®",
+                    "WILD!WILD!™ AMOUNTS OF TOPPINGS AT THE COUNTRY'S BEST PRICE** Large round pizza with Smoky Turkey and Pineapple Pens",
+                    "src\\Images\\nwfs.jpg",
+                    11.99,
+                    2210,
+                    white
+            ));
+            p_entrees.add(createItem(
+                    "Veggo",
+                    "WILD!WILD!™ AMOUNTS OF TOPPINGS AT THE COUNTRY'S BEST PRICE** Large round pizza with Red Peppers, Onions, Fungi, Artichokes and Spanish Dressing",
+                    "src\\Images\\v.jpg",
+                    10.49,
+                    2410,
+                    gray
+            ));
 
             s_entrees.setVisible(false);
             add(s_entrees);
-        } // Entrees
+        } //Entrees
+
+        {
+            s_desserts.setBounds(0, 0, 606, 340);
+            s_desserts.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            s_desserts.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+            s_desserts.getVerticalScrollBar().setUnitIncrement(10);
+
+            p_desserts.setLayout(null);
+            p_desserts.setPreferredSize(new Dimension(600, 935));
+
+            l_desserts.setFont(large);
+            l_desserts.setBounds(0, 0, 600, 40);
+            l_desserts.setHorizontalAlignment(JLabel.CENTER);
+            p_desserts.add(l_desserts);
+
+            p_desserts.add(createItem(
+                    "Salami Wild Puffs®",
+                    "Four hand-held pizzas with Cheddar Queso, Salami and pizza dip topped with a buttery-garlic flavored drizzle, Spanish Herb and Parmesan Dressing",
+                    "src\\Images\\swp.jpg",
+                    3.98,
+                    50,
+                    white
+            ));
+            p_desserts.add(createItem(
+                    "Queso Wild Puffs®",
+                    "Four hand-held pizzas made with pule, monster, cheddar and parmesan quesos, pizza dip, and topped with a buttery-garlic flavored drizzle and Spanish herb dressing",
+                    "src\\Images\\qwp.jpg",
+                    3.98,
+                    250,
+                    gray
+            ));
+            p_desserts.add(createItem(
+                    "KitKat® Cookie Brownie",
+                    "Brownie topped with Cookie Dough Frosting and KitKat® Cookie Bar Pieces | 4-piece order",
+                    "src\\Images\\kitkat.jpg",
+                    4.88,
+                    450,
+                    white
+            ));
+            p_desserts.add(createItem(
+                    "Smarties® Cookie Brownie",
+                    "Brownie topped with Cookie Dough Frosting and Smarties® Chocolate Candies | 4-piece order",
+                    "src\\Images\\smarties.jpg",
+                    4.88,
+                    650,
+                    gray
+            ));
+
+            s_desserts.setVisible(false);
+            add(s_desserts);
+        } //Desserts
+
+        {
+            l_cart.add("Item Name");
+            l_cart.add("Quantity");
+            l_cart.add("Cost");
+            l_cart.add("Extended Cost");
+            t_cart = new JTable(new String[0][4], l_cart.toArray()) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            s_cart = new JScrollPane(t_cart);
+
+            s_cart.setBounds(20, 20, 560, 240);
+            s_cart.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            p_cart.setBounds(0, 0, 606, 340);
+            p_cart.setLayout(null);
+            p_cart.add(s_cart);
+
+            l_tipPercentage.setBounds(20, 270, 40, 20);
+            t_tipPercentage.setBounds(60, 270, 40, 20);
+            t_tipPercentage.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+                    if (!Character.isDigit(e.getKeyChar()))
+                        e.consume();
+                    else updateTbl(e.getKeyChar());
+                }
+            });
+            p_cart.add(l_tipPercentage);
+            p_cart.add(t_tipPercentage);
+
+            l_subtotal.setBounds(20, 300, 60, 20);
+            t_subtotal.setBounds(80, 300, 60, 20);
+            t_subtotal.setEnabled(false);
+            p_cart.add(l_subtotal);
+            p_cart.add(t_subtotal);
+
+            l_tax.setBounds(170, 300, 60, 20);
+            t_tax.setBounds(210, 300, 60, 20);
+            t_tax.setEnabled(false);
+            p_cart.add(l_tax);
+            p_cart.add(t_tax);
+
+            l_tip.setBounds(320, 300, 60, 20);
+            t_tip.setBounds(360, 300, 60, 20);
+            t_tip.setEnabled(false);
+            p_cart.add(l_tip);
+            p_cart.add(t_tip);
+
+            l_total.setBounds(470, 300, 60, 20);
+            t_total.setBounds(510, 300, 60, 20);
+            t_total.setEnabled(false);
+            p_cart.add(l_total);
+            p_cart.add(t_total);
+
+            t_cart.setCellSelectionEnabled(false);
+            t_cart.setRowSelectionAllowed(true);
+
+            p_cart.setVisible(false);
+            add(p_cart);
+        }//View Cart
 
         setVisible(true);
+    }
+
+    private JPanel createItem(
+            String title,
+            String description,
+            String imagePath,
+            double price,
+            int y,
+            Color bgColor
+    ) {
+        JPanel panel = new JPanel();
+        panel.setLayout(null);
+        panel.setBackground(bgColor);
+        panel.setBounds(20, y, 560, 180);
+
+        JLabel l_title = new JLabel(title + " ($" + price + ")");
+        l_title.setBounds(20, 20, 520, 30);
+        l_title.setFont(small_bold);
+        panel.add(l_title);
+
+        ImageIcon icon = new ImageIcon(
+                new ImageIcon(imagePath)
+                        .getImage()
+                        .getScaledInstance(100, 100, Image.SCALE_DEFAULT)
+        );
+        JLabel image = new JLabel(icon);
+        image.setBounds(20, 60, 100, 100);
+        panel.add(image);
+
+        JLabel desc = new JLabel("<html>" + description + "</html>");
+        desc.setBounds(140, 60, 320, 100);
+        panel.add(desc);
+
+        JTextField quantity = new JTextField("0");
+        quantity.setBounds(438, 20, 46, 46);
+        quantity.setEnabled(false);
+        quantity.setHorizontalAlignment(JTextField.CENTER);
+        panel.add(quantity);
+
+        JButton add = new JButton("+");
+        add.setBounds(494, 20, 46, 46);
+        panel.add(add);
+
+        JButton remove = new JButton("-");
+        remove.setBounds(382, 20, 46, 46);
+        remove.setEnabled(false);
+        panel.add(remove);
+
+        add.addActionListener(e -> {
+            int val = Integer.parseInt(quantity.getText()) + 1;
+            quantity.setText("" + val);
+            remove.setEnabled(true);
+            if (val > 1) {
+                System.out.println("check1");
+                for (RestaurantItem item : order) {
+                    if (item.getN().equals(title)) {
+                        item.setQ(val);
+                        updateTbl();
+                        break;
+                    }
+                }
+            }
+            if (val==1) {
+                System.out.println("check0");
+                order.add(new RestaurantItem(title, price, 1));
+                updateTbl();
+            }
+        });
+
+        remove.addActionListener(e -> {
+            int val = Integer.parseInt(quantity.getText()) - 1;
+            quantity.setText("" + val);
+            if (val <= 0) {
+                for (RestaurantItem item : order) {
+                    if (item.getN().equals(title)) {
+                        order.remove(item);
+                        updateTbl();
+                        break;
+                    }
+                }
+                remove.setEnabled(false);
+            } else {
+                for (RestaurantItem item : order) {
+                    if (item.getN().equals(title)) {
+                        item.setQ(val);
+                        updateTbl();
+                        break;
+                    }
+                }
+            }
+        });
+
+        return panel;
+    }
+
+    public static void updateTbl(char e) {
+        double s = 0.0;
+
+        String[][] data = new String[order.size()][4];
+        for (int i = 0; i < order.size(); i++) {
+            data[i][0] = order.get(i).getN();
+            data[i][1] = ""+order.get(i).getQ();
+            data[i][2] = String.format("$%.2f", order.get(i).getC());
+            data[i][3] = String.format("$%.2f", (order.get(i).getC()*order.get(i).getQ()));
+            s+=order.get(i).getC()*order.get(i).getQ();
+        }
+        s_cart.remove(t_cart);
+        t_cart = new JTable(data, l_cart.toArray()) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        s_cart.setViewportView(t_cart);
+        s_cart.revalidate();
+
+        double tipPercent = Integer.parseInt(t_tipPercentage.getText()+e) / 100.0;
+        System.out.println(tipPercent);
+
+        double tax = s * 0.0825;
+        double tip = s * tipPercent;
+        double total = s + tax + tip;
+
+        t_subtotal.setText(String.format("$%.2f", s));
+        t_tax.setText(String.format("$%.2f", tax));
+        t_tip.setText(String.format("$%.2f", tip));
+        t_total.setText(String.format("$%.2f", total));
+    }
+
+    public static void updateTbl() {
+        double s = 0.0;
+
+        String[][] data = new String[order.size()][4];
+        for (int i = 0; i < order.size(); i++) {
+            data[i][0] = order.get(i).getN();
+            data[i][1] = ""+order.get(i).getQ();
+            data[i][2] = String.format("$%.2f", order.get(i).getC());
+            data[i][3] = String.format("$%.2f", (order.get(i).getC()*order.get(i).getQ()));
+            s+=order.get(i).getC()*order.get(i).getQ();
+        }
+        s_cart.remove(t_cart);
+        t_cart = new JTable(data, l_cart.toArray()) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        s_cart.setViewportView(t_cart);
+        s_cart.revalidate();
+
+        double tipPercent = 0.0;
+        if (!t_tipPercentage.getText().isBlank()) {
+            tipPercent = Integer.parseInt(t_tipPercentage.getText()) / 100.0;
+        }
+
+        double tax = s * 0.0825;
+        double tip = s * tipPercent;
+        double total = s + tax + tip;
+
+        t_subtotal.setText(String.format("$%.2f", s));
+        t_tax.setText(String.format("$%.2f", tax));
+        t_tip.setText(String.format("$%.2f", tip));
+        t_total.setText(String.format("$%.2f", total));
     }
 }
