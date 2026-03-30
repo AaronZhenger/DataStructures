@@ -109,7 +109,7 @@ public class RestaurantFrame extends JFrame {
             s_appetizers.setBounds(0, 0, 606, 340);
             s_appetizers.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
             s_appetizers.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-            s_appetizers.getVerticalScrollBar().setUnitIncrement(10);
+            s_appetizers.getVerticalScrollBar().setUnitIncrement(16);
 
             p_appetizers.setLayout(null);
             p_appetizers.setPreferredSize(new Dimension(600, 1335));
@@ -175,7 +175,7 @@ public class RestaurantFrame extends JFrame {
             s_entrees.setBounds(0, 0, 606, 340);
             s_entrees.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
             s_entrees.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-            s_entrees.getVerticalScrollBar().setUnitIncrement(10);
+            s_entrees.getVerticalScrollBar().setUnitIncrement(16);
 
             p_entrees.setLayout(null);
             p_entrees.setPreferredSize(new Dimension(600, 2655));
@@ -302,7 +302,7 @@ public class RestaurantFrame extends JFrame {
             s_desserts.setBounds(0, 0, 606, 340);
             s_desserts.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
             s_desserts.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-            s_desserts.getVerticalScrollBar().setUnitIncrement(10);
+            s_desserts.getVerticalScrollBar().setUnitIncrement(16);
 
             p_desserts.setLayout(null);
             p_desserts.setPreferredSize(new Dimension(600, 935));
@@ -373,8 +373,10 @@ public class RestaurantFrame extends JFrame {
             t_tipPercentage.addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyTyped(KeyEvent e) {
-                    if (!Character.isDigit(e.getKeyChar()))
+                    if (!Character.isDigit(e.getKeyChar())) {
                         e.consume();
+                        updateTbl();
+                    }
                     else updateTbl(e.getKeyChar());
                 }
             });
