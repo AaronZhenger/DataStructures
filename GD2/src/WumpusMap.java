@@ -20,6 +20,7 @@ public class WumpusMap {
 
         int numPits = 0;
         while (numPits<10) {
+            System.out.print("e");
             int posX = (int) (NUM_COLUMNS*Math.random());
             int posY = (int) (NUM_ROWS*Math.random());
             if (!grid[posY][posX].getPit()) {
@@ -30,6 +31,7 @@ public class WumpusMap {
 
         boolean ladderPlaced = false;
         while (!ladderPlaced) {
+            System.out.print("e");
             int ladderPosX = (int) (NUM_COLUMNS * Math.random());
             int ladderPosY = (int) (NUM_ROWS * Math.random());
             if (!grid[ladderPosY][ladderPosX].getPit()) {
@@ -42,6 +44,7 @@ public class WumpusMap {
 
         boolean wumpusPlaced = false;
         while (!wumpusPlaced) {
+            System.out.print("e");
             int wumpusPosX = (int) (NUM_COLUMNS * Math.random());
             int wumpusPosY = (int) (NUM_ROWS * Math.random());
             if (!grid[wumpusPosY][wumpusPosX].getPit()
@@ -53,6 +56,7 @@ public class WumpusMap {
 
         boolean goldPlaced = false;
         while (!goldPlaced) {
+            System.out.print("e");
             int goldPosX = (int) (NUM_COLUMNS * Math.random());
             int goldPosY = (int) (NUM_ROWS * Math.random());
             if (!grid[goldPosY][goldPosX].getPit()
@@ -85,6 +89,10 @@ public class WumpusMap {
 
     public int getLadderR() {
         return ladderR;
+    }
+
+    public WumpusSquare getSquare(int col, int row) {
+        return grid[row][col];
     }
 
     @Override
