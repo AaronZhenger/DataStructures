@@ -11,6 +11,8 @@ public class WumpusPanel extends JPanel implements KeyListener {
     public static final int DEAD = 1;
     public static final int WON = 2;
 
+    private static JPanel p_inv = new JPanel();
+
     private int status;
     private WumpusPlayer player;
     private WumpusMap map;
@@ -33,8 +35,15 @@ public class WumpusPanel extends JPanel implements KeyListener {
 
     private boolean cheat = false;
 
+    private int wumpusRow;
+    private int wumpusCol;
+
+    private boolean kill;
+
     public WumpusPanel() {
-        setSize(621, 700);
+        setSize(621, 800);
+        this.setOpaque(true);
+        this.setBackground(Color.GRAY);
         addKeyListener(this);
 
         buffer = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
@@ -57,6 +66,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
             e.printStackTrace();
         }
 
+        setVisible(true);
         reset();
     }
 
@@ -65,6 +75,8 @@ public class WumpusPanel extends JPanel implements KeyListener {
         map = new WumpusMap();
         map.createMap();
         System.out.println(map);
+        wumpusCol=map.getWumpusPosX();
+        wumpusRow=map.getWumpusPosY();
         player = new WumpusPlayer();
         player.setColPosition(map.getLadderC());
         player.setRowPosition(map.getLadderR());
@@ -74,10 +86,12 @@ public class WumpusPanel extends JPanel implements KeyListener {
     public void paint(Graphics g) {
         map.getSquare(map.getLadderC(), map.getLadderR()).setVisited(true);
         Graphics bg = buffer.getGraphics();
+        bg.setColor(Color.GRAY);
+        bg.fillRect(0, 0, getWidth(), getHeight());
         for (int i = 0; i < WumpusMap.NUM_ROWS; i++)
             for (int j = 0; j < WumpusMap.NUM_COLUMNS; j++) {
-                int x = j*50;
-                int y = i*50;
+                int x = j*50+50;
+                int y = i*50+50;
                 WumpusSquare tile = map.getSquare(j, i);
                 if (!cheat && !tile.getVisited()) {
                     bg.drawImage(fog, x, y, null);
@@ -109,10 +123,57 @@ public class WumpusPanel extends JPanel implements KeyListener {
                     case WumpusPlayer.SOUTH -> playerDirection = playerDown;
                     case WumpusPlayer.WEST -> playerDirection = playerLeft;
                 }
-                bg.drawImage(playerDirection, player.getColPosition()*50, player.getRowPosition()*50, null);
+                bg.drawImage(playerDirection, player.getColPosition()*50+50, player.getRowPosition()*50+50, null);
+
+                bg.setColor(Color.BLACK);
+                bg.fillRect(0, 580, 180, 180);
+                bg.fillRect(190, 580, getWidth()-190, 180);
+                bg.setColor(Color.RED);
+                bg.setFont(new Font(Font.DIALOG_INPUT, Font.PLAIN, 25));
+                bg.drawString("Inventory:", 10, 615);
+                bg.drawString("Messages:", 200, 615);
+                WumpusSquare currentSquare = map.getSquare(player.getColPosition(), player.getRowPosition());
+                if (player.getArrow())
+                    bg.drawImage(arrow, 20, 660, null);
+                if (player.getGold())
+                    bg.drawImage(gold, 110, 660, null);
+                int messageY = 650;
+                bg.setColor(Color.CYAN);
+                bg.setFont(new Font(Font.DIALOG_INPUT, Font.PLAIN, 20));
+                if (status==WON) {
+                    bg.drawString("You win!", 200, messageY);
+                } else {
+                    if (currentSquare.getBreeze()) {
+                        bg.drawString("You feel a breeze", 200, messageY);
+                        messageY += 25;
+                    }
+                    if (currentSquare.getStench()||currentSquare.getDeadWumpus()) {
+                        bg.drawString("You smell a stench", 200, messageY);
+                        messageY += 25;
+                    }
+                    if (currentSquare.getGold()) {
+                        bg.drawString("You see a glimmer", 200, messageY);
+                        messageY += 25;
+                    }
+                    if (currentSquare.getLadder()) {
+                        bg.drawString("You bump into a ladder", 200, messageY);
+                        messageY += 25;
+                    }
+                    if (currentSquare.getPit()) {
+                        bg.drawString("You fell down a pit to your death", 200, messageY);
+                        messageY += 25;
+                    }
+                    if (currentSquare.getWumpus()) {
+                        bg.drawString("You feel a breeze", 200, messageY);
+                        messageY += 25;
+                    }
+                    if (kill) {
+                        bg.drawString("You hear a scream", 200, messageY);
+                    }
+                }
             }
 
-        g.drawImage(buffer, 50, 50, null);
+        g.drawImage(buffer, 0, 0, null);
     }
 
     @Override
@@ -127,27 +188,77 @@ public class WumpusPanel extends JPanel implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        if (e.getKeyChar()=='w' && player.getRowPosition()>0) {
-            player.setRowPosition(player.getRowPosition()-1);
-            player.setDirection(WumpusPlayer.NORTH);
-        }
 
-        if (e.getKeyChar()=='a' && player.getColPosition()>0) {
-            player.setColPosition(player.getColPosition()-1);
-            player.setDirection(WumpusPlayer.WEST);
-        }
+        if (status==PLAYING) {
+            if (e.getKeyChar() == 'w' && player.getRowPosition() > 0) {
+                player.setRowPosition(player.getRowPosition() - 1);
+                player.setDirection(WumpusPlayer.NORTH);
+            }
 
-        if (e.getKeyChar()=='s' && player.getRowPosition()<WumpusMap.NUM_ROWS-1) {
-            player.setRowPosition(player.getRowPosition()+1);
-            player.setDirection(WumpusPlayer.SOUTH);
-        }
+            if (e.getKeyChar() == 'a' && player.getColPosition() > 0) {
+                player.setColPosition(player.getColPosition() - 1);
+                player.setDirection(WumpusPlayer.WEST);
+            }
 
-        if (e.getKeyChar()=='d' && player.getColPosition()<WumpusMap.NUM_COLUMNS-1) {
-            player.setColPosition(player.getColPosition()+1);
-            player.setDirection(WumpusPlayer.EAST);
-        }
+            if (e.getKeyChar() == 's' && player.getRowPosition() < WumpusMap.NUM_ROWS - 1) {
+                player.setRowPosition(player.getRowPosition() + 1);
+                player.setDirection(WumpusPlayer.SOUTH);
+            }
 
-        map.getSquare(player.getColPosition(), player.getRowPosition()).setVisited(true);
+            if (e.getKeyChar() == 'd' && player.getColPosition() < WumpusMap.NUM_COLUMNS - 1) {
+                player.setColPosition(player.getColPosition() + 1);
+                player.setDirection(WumpusPlayer.EAST);
+            }
+            kill = false;
+            if (e.getKeyChar() == 'i' && player.getArrow()) {
+                player.setArrow(false);
+                if (player.getRowPosition() > wumpusRow && player.getColPosition() == wumpusCol) {
+                    map.getSquare(wumpusCol, wumpusRow).setWumpus(false);
+                    map.getSquare(wumpusCol, wumpusRow).setDeadWumpus(true);
+                    kill = true;
+                }
+            }
+            if (e.getKeyChar() == 'j' && player.getArrow()) {
+                player.setArrow(false);
+                if (player.getRowPosition() == wumpusRow && player.getColPosition() > wumpusCol) {
+                    map.getSquare(wumpusCol, wumpusRow).setWumpus(false);
+                    map.getSquare(wumpusCol, wumpusRow).setDeadWumpus(true);
+                    kill = true;
+                }
+            }
+            if (e.getKeyChar() == 'l' && player.getArrow()) {
+                player.setArrow(false);
+                if (player.getRowPosition() == wumpusRow && player.getColPosition() < wumpusCol) {
+                    map.getSquare(wumpusCol, wumpusRow).setWumpus(false);
+                    map.getSquare(wumpusCol, wumpusRow).setDeadWumpus(true);
+                    kill = true;
+                }
+            }
+            if (e.getKeyChar() == 'k' && player.getArrow()) {
+                player.setArrow(false);
+                if (player.getRowPosition() < wumpusRow && player.getColPosition() == wumpusCol) {
+                    map.getSquare(wumpusCol, wumpusRow).setWumpus(false);
+                    map.getSquare(wumpusCol, wumpusRow).setDeadWumpus(true);
+                    kill = true;
+                }
+            }
+            WumpusSquare currentSquare = map.getSquare(player.getColPosition(), player.getRowPosition());
+            currentSquare.setVisited(true);
+            if (currentSquare.getLadder() && player.getGold() && e.getKeyChar()=='c')
+                status=WON;
+            if (currentSquare.getGold() && e.getKeyChar()=='p') {
+                player.setGold(true);
+                currentSquare.setGold(false);
+            }
+            if (currentSquare.getPit())
+                status=DEAD;
+            if (currentSquare.getWumpus())
+                status=DEAD;
+        }
+        else {
+            if (e.getKeyChar()=='n')
+                reset();
+        }
 
         if (e.getKeyChar()=='*')
             cheat = !cheat;

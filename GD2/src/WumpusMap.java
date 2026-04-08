@@ -1,3 +1,8 @@
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
 public class WumpusMap {
     public static final int NUM_ROWS = 10;
     public static final int NUM_COLUMNS = 10;
@@ -6,6 +11,9 @@ public class WumpusMap {
     private WumpusSquare[][] grid;
     private int ladderC;
     private int ladderR;
+
+    private int wumpusPosX;
+    private int wumpusPosY;
 
     public WumpusMap() {
         createMap();
@@ -20,7 +28,6 @@ public class WumpusMap {
 
         int numPits = 0;
         while (numPits<10) {
-            System.out.print("e");
             int posX = (int) (NUM_COLUMNS*Math.random());
             int posY = (int) (NUM_ROWS*Math.random());
             if (!grid[posY][posX].getPit()) {
@@ -31,7 +38,6 @@ public class WumpusMap {
 
         boolean ladderPlaced = false;
         while (!ladderPlaced) {
-            System.out.print("e");
             int ladderPosX = (int) (NUM_COLUMNS * Math.random());
             int ladderPosY = (int) (NUM_ROWS * Math.random());
             if (!grid[ladderPosY][ladderPosX].getPit()) {
@@ -44,9 +50,8 @@ public class WumpusMap {
 
         boolean wumpusPlaced = false;
         while (!wumpusPlaced) {
-            System.out.print("e");
-            int wumpusPosX = (int) (NUM_COLUMNS * Math.random());
-            int wumpusPosY = (int) (NUM_ROWS * Math.random());
+            wumpusPosX = (int) (NUM_COLUMNS * Math.random());
+            wumpusPosY = (int) (NUM_ROWS * Math.random());
             if (!grid[wumpusPosY][wumpusPosX].getPit()
                     && !grid[wumpusPosY][wumpusPosX].getLadder()) {
                 grid[wumpusPosY][wumpusPosX].setWumpus(true);
@@ -56,7 +61,6 @@ public class WumpusMap {
 
         boolean goldPlaced = false;
         while (!goldPlaced) {
-            System.out.print("e");
             int goldPosX = (int) (NUM_COLUMNS * Math.random());
             int goldPosY = (int) (NUM_ROWS * Math.random());
             if (!grid[goldPosY][goldPosX].getPit()
@@ -81,6 +85,13 @@ public class WumpusMap {
                             || (j < grid[0].length - 1 && grid[i][j + 1].getWumpus()))
                         grid[i][j].setStench(true);
                 }
+
+        char[][] charGrid = new char[NUM_ROWS][NUM_COLUMNS];
+        for (int i = 0; i < NUM_ROWS; i++)
+            for (int j = 0; j < NUM_COLUMNS; j++)
+                charGrid[i][j] = grid[i][j].toString().charAt(0);
+        if (breadthFirstSearch(charGrid)==-1)
+            createMap();
     }
 
     public int getLadderC() {
@@ -105,4 +116,140 @@ public class WumpusMap {
         }
         return result.toString();
     }
+
+    public int getWumpusPosX() {
+        return wumpusPosX;
+    }
+
+    public int getWumpusPosY() {
+        return wumpusPosY;
+    }
+
+    private int breadthFirstSearch(char[][] maze) {
+        boolean[][] visited = new boolean[maze.length][maze[0].length];
+        Point location = new Point();
+        Point end = new Point();
+        for(int i = 0; i < maze.length; i++)
+            for(int j = 0; j < maze[0].length; j++) {
+                if (maze[i][j] == 'L') {
+                    location.setLocation(i, j);
+                    visited[i][j] = true;
+                }
+                else if (maze[i][j]=='G')
+                    end.setLocation(i, j);
+            }
+        DS8_Queue<Point[]> queue = new DS8_Queue<>();
+        queue.offer(new Point[]{location});
+        while (!queue.isEmpty()) {
+            Point[] path = queue.poll();
+            location = path[path.length-1];
+            if (location.equals(end)) return path.length-1;
+            Point[] newPath = new Point[path.length+1];
+            for (int i = 0; i<path.length; i++)
+                newPath[i] = path[i];
+            if (location.x>0 && maze[location.x-1][location.y]!='P' && !visited[location.x-1][location.y]) {
+                newPath[newPath.length-1] = new Point(location.x-1, location.y);
+                queue.offer(newPath.clone());
+                visited[location.x-1][location.y]=true;
+            }
+            if (location.y>0 && maze[location.x][location.y-1]!='P' && !visited[location.x][location.y-1]) {
+                newPath[newPath.length-1] = new Point(location.x, location.y-1);
+                queue.offer(newPath.clone());
+                visited[location.x][location.y-1]=true;
+            }
+            if (location.x< maze.length-1 && maze[location.x+1][location.y]!='P' && !visited[location.x+1][location.y]) {
+                newPath[newPath.length-1] = new Point(location.x+1, location.y);
+                queue.offer(newPath.clone());
+                visited[location.x+1][location.y]=true;
+            }
+            if (location.y<maze[0].length-1 && maze[location.x][location.y+1]!='P' && !visited[location.x][location.y+1]) {
+                newPath[newPath.length-1] = new Point(location.x, location.y+1);
+                queue.offer(newPath.clone());
+                visited[location.x][location.y+1]=true;
+            }
+            newPath[newPath.length - 1] = location;
+        }
+        return -1;
+    }
+
+    private class DS8_Queue<E>
+    {
+        private ArrayList<E> queue;
+
+        public DS8_Queue()
+        {
+            queue=new ArrayList();
+        }
+        public boolean add(E o)
+        {
+            if(offer(o))
+                return true;
+            else
+                throw new IllegalStateException("Queue Full");
+        }
+        public boolean offer(E o)
+        {
+            return queue.add(o);
+        }
+        public E peek()
+        {
+            return isEmpty() ? null:get(0);
+        }
+        public E element()
+        {
+            return get(0);
+        }
+        public E poll()
+        {
+            if(isEmpty())
+                return null;
+            else
+            {
+                E head=peek();
+                queue.remove(0);
+                return head;
+            }
+        }
+        public E remove()
+        {
+            if(isEmpty())
+                return null;
+            else
+            {
+                E head=peek();
+                queue.remove(0);
+                return head;
+            }
+        }
+        public boolean isEmpty()
+        {
+            return (size()==0);
+        }
+        public int size()
+        {
+            int size=0;
+            for(E item:queue)
+                size++;
+            return size;
+        }
+        public E get(int x)
+        {
+            if(isEmpty())
+                return null;
+            else if(x>size())
+                throw new ArrayIndexOutOfBoundsException("Invalid value");
+            else
+                return queue.get(x);
+        }
+        public void clear(){
+            queue.clear();
+        }
+
+        public String toString()
+        {
+            return queue.toString();
+        }
+
+    }
+
 }
