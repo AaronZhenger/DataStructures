@@ -34,6 +34,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
     private BufferedImage buffer;
 
     private boolean cheat = false;
+    private boolean showInfo = true;
 
     private int wumpusRow;
     private int wumpusCol;
@@ -41,9 +42,8 @@ public class WumpusPanel extends JPanel implements KeyListener {
     private boolean kill;
 
     public WumpusPanel() {
-        setSize(621, 800);
-        this.setOpaque(true);
-        this.setBackground(Color.GRAY);
+        setSize(10000, 10000);
+
         addKeyListener(this);
 
         buffer = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
@@ -125,50 +125,52 @@ public class WumpusPanel extends JPanel implements KeyListener {
                 }
                 bg.drawImage(playerDirection, player.getColPosition()*50+50, player.getRowPosition()*50+50, null);
 
-                bg.setColor(Color.BLACK);
-                bg.fillRect(0, 580, 180, 180);
-                bg.fillRect(190, 580, getWidth()-190, 180);
-                bg.setColor(Color.RED);
-                bg.setFont(new Font(Font.DIALOG_INPUT, Font.PLAIN, 25));
-                bg.drawString("Inventory:", 10, 615);
-                bg.drawString("Messages:", 200, 615);
-                WumpusSquare currentSquare = map.getSquare(player.getColPosition(), player.getRowPosition());
-                if (player.getArrow())
-                    bg.drawImage(arrow, 20, 660, null);
-                if (player.getGold())
-                    bg.drawImage(gold, 110, 660, null);
-                int messageY = 650;
-                bg.setColor(Color.CYAN);
-                bg.setFont(new Font(Font.DIALOG_INPUT, Font.PLAIN, 20));
-                if (status==WON) {
-                    bg.drawString("You win!", 200, messageY);
-                } else {
-                    if (currentSquare.getBreeze()) {
-                        bg.drawString("You feel a breeze", 200, messageY);
-                        messageY += 25;
-                    }
-                    if (currentSquare.getStench()||currentSquare.getDeadWumpus()) {
-                        bg.drawString("You smell a stench", 200, messageY);
-                        messageY += 25;
-                    }
-                    if (currentSquare.getGold()) {
-                        bg.drawString("You see a glimmer", 200, messageY);
-                        messageY += 25;
-                    }
-                    if (currentSquare.getLadder()) {
-                        bg.drawString("You bump into a ladder", 200, messageY);
-                        messageY += 25;
-                    }
-                    if (currentSquare.getPit()) {
-                        bg.drawString("You fell down a pit to your death", 200, messageY);
-                        messageY += 25;
-                    }
-                    if (currentSquare.getWumpus()) {
-                        bg.drawString("You feel a breeze", 200, messageY);
-                        messageY += 25;
-                    }
-                    if (kill) {
-                        bg.drawString("You hear a scream", 200, messageY);
+                if (showInfo) {
+                    bg.setColor(Color.BLACK);
+                    bg.fillRect(0, 580, 180, 180);
+                    bg.fillRect(190, 580, getWidth() - 190, 180);
+                    bg.setColor(Color.RED);
+                    bg.setFont(new Font(Font.DIALOG_INPUT, Font.PLAIN, 25));
+                    bg.drawString("Inventory:", 10, 615);
+                    bg.drawString("Messages:", 200, 615);
+                    WumpusSquare currentSquare = map.getSquare(player.getColPosition(), player.getRowPosition());
+                    if (player.getArrow())
+                        bg.drawImage(arrow, 20, 660, null);
+                    if (player.getGold())
+                        bg.drawImage(gold, 110, 660, null);
+                    int messageY = 650;
+                    bg.setColor(Color.CYAN);
+                    bg.setFont(new Font(Font.DIALOG_INPUT, Font.PLAIN, 20));
+                    if (status == WON) {
+                        bg.drawString("You win!", 200, messageY);
+                    } else {
+                        if (currentSquare.getBreeze()) {
+                            bg.drawString("You feel a breeze", 200, messageY);
+                            messageY += 25;
+                        }
+                        if (currentSquare.getStench() || currentSquare.getDeadWumpus()) {
+                            bg.drawString("You smell a stench", 200, messageY);
+                            messageY += 25;
+                        }
+                        if (currentSquare.getGold()) {
+                            bg.drawString("You see a glimmer", 200, messageY);
+                            messageY += 25;
+                        }
+                        if (currentSquare.getLadder()) {
+                            bg.drawString("You bump into a ladder", 200, messageY);
+                            messageY += 25;
+                        }
+                        if (currentSquare.getPit()) {
+                            bg.drawString("You fell down a pit to your death", 200, messageY);
+                            messageY += 25;
+                        }
+                        if (currentSquare.getWumpus()) {
+                            bg.drawString("You feel a breeze", 200, messageY);
+                            messageY += 25;
+                        }
+                        if (kill) {
+                            bg.drawString("You hear a scream", 200, messageY);
+                        }
                     }
                 }
             }
@@ -262,6 +264,8 @@ public class WumpusPanel extends JPanel implements KeyListener {
 
         if (e.getKeyChar()=='*')
             cheat = !cheat;
+        if (e.getKeyChar()=='&')
+            showInfo = !showInfo;
         paint(getGraphics());
     }
 

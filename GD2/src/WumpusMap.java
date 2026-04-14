@@ -27,7 +27,7 @@ public class WumpusMap {
                 grid[i][j] = new WumpusSquare();
 
         int numPits = 0;
-        while (numPits<10) {
+        while (numPits<NUM_PITS) {
             int posX = (int) (NUM_COLUMNS*Math.random());
             int posY = (int) (NUM_ROWS*Math.random());
             if (!grid[posY][posX].getPit()) {
