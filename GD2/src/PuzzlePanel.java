@@ -34,39 +34,10 @@ public class PuzzlePanel extends JPanel implements MouseListener {
         buffer = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
         reset();
 
-        setVisible(true);
-    }
-
-    private void reset() {
-        moves = 0;
-        status = PLAYING;
-        arr = new int[][]{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, -1}};
-        missingI = 3;
-        missingJ = 3;
-        for (int i = 0; i < 500; i++) {
-            int kI = (int)(Math.random()*4);
-            int kJ = (int)(Math.random()*4);
-            if ((kI == missingI - 1 && kJ == missingJ) || (kI == missingI + 1 && kJ == missingJ) || (kJ == missingJ + 1 && kI == missingI) || (kJ == missingJ - 1 && kI == missingI)) {
-                arr[missingI][missingJ] = arr[kI][kJ];
-                arr[kI][kJ] = -1;
-                missingI = kI;
-                missingJ = kJ;
-            }
-        }
-    }
-
-    @Override
-    public void paint(Graphics g) {
-        Graphics bg = buffer.getGraphics();
-        bg.setColor(new Color(30, 30, 30));
-        bg.fillRect(0, 0, getWidth(), getHeight());
-
-        boolean solved = true;
-
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 try {
-                    BufferedImage img = ImageIO.read(new File("src/Images/job.png"));
+                    BufferedImage img = ImageIO.read(new File("src/Images/puzzle.jpg"));
                     Image tmp = img.getScaledInstance(400, 400, Image.SCALE_SMOOTH);
                     BufferedImage full = new BufferedImage(400, 400, BufferedImage.TYPE_INT_ARGB);
 
@@ -80,6 +51,36 @@ public class PuzzlePanel extends JPanel implements MouseListener {
                 }
             }
         }
+
+        setVisible(true);
+    }
+
+    private void reset() {
+        moves = 0;
+        status = PLAYING;
+        arr = new int[][]{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, -1}};
+        missingI = 3;
+        missingJ = 3;
+        for (int i = 0; i < 500;) {
+            int kI = (int)(Math.random()*4);
+            int kJ = (int)(Math.random()*4);
+            if ((kI == missingI - 1 && kJ == missingJ) || (kI == missingI + 1 && kJ == missingJ) || (kJ == missingJ + 1 && kI == missingI) || (kJ == missingJ - 1 && kI == missingI)) {
+                arr[missingI][missingJ] = arr[kI][kJ];
+                arr[kI][kJ] = -1;
+                missingI = kI;
+                missingJ = kJ;
+                i++;
+            }
+        }
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        Graphics bg = buffer.getGraphics();
+        bg.setColor(new Color(30, 30, 30));
+        bg.fillRect(0, 0, getWidth(), getHeight());
+
+        boolean solved = true;
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
@@ -100,15 +101,25 @@ public class PuzzlePanel extends JPanel implements MouseListener {
             }
         }
 
-        bg.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 28));
+        bg.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 24));
         bg.drawRect(100, 120, 160, 70);
         bg.drawString("New Game", 110, 165);
         bg.drawRect(330, 120, 160, 70);
-        bg.drawString("Moves: "+moves, 350, 165);
+        bg.drawString("Moves: "+moves, 345, 165);
         bg.drawRect(330, 40, 160, 70);
-        bg.drawString("Mode", 380, 85);
+        bg.drawString( images ? "Numbers" : "Images", 345, 85);
 
         if (solved) status = WON;
+
+        if (status == WON) {
+            bg.setColor(new Color(80, 80, 80));
+            bg.fillRect(0, 600, getWidth(), 200);
+            bg.setColor(Color.WHITE);
+            bg.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 50));
+            bg.drawString("You Win!", 190, 690);
+            bg.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
+            bg.drawString("("+moves+" moves)", 245, 720);
+        }
 
         g.drawImage(buffer, 0, 0, null);
     }
@@ -132,24 +143,16 @@ public class PuzzlePanel extends JPanel implements MouseListener {
                 j = (e.getX() / 100) - 1;
             if (e.getY() >= 200 && e.getY() < 600)
                 i = (e.getY() / 100) - 2;
-            System.out.println(i+" "+j);
             if ((i == missingI - 1 && j == missingJ) || (i == missingI + 1 && j == missingJ) || (j == missingJ + 1 && i == missingI) || (j == missingJ - 1 && i == missingI)) {
                 arr[missingI][missingJ] = arr[i][j];
                 arr[i][j] = -1;
                 moves++;
             }
-        } else {
-            System.out.println("WON");
-
         }
 
         if (e.getX()>=100 && e.getX()<=260 && e.getY()<=190 && e.getY()>=120) reset();
 
         if (e.getX()>=330 && e.getX()<=490 && e.getY()<=110 && e.getY()>=40) images = !images;
-
-        System.out.println("Mouse X: "+ e.getX());
-        System.out.println("Mouse Y: "+ e.getY());
-
 
         paint(getGraphics());
     }
@@ -170,3 +173,20 @@ public class PuzzlePanel extends JPanel implements MouseListener {
         requestFocus();
     }
 }
+
+class PuzzleFrame extends JFrame {
+    public PuzzleFrame() {
+        super("Puzzle");
+        setSize(600, 800);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        add(new PuzzlePanel());
+        setVisible(true);
+    }
+}
+
+class PuzzleMain {
+    public static void main(String[] args) {
+        new PuzzleFrame();
+    }
+}
+
