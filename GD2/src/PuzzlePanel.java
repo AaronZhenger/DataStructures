@@ -27,7 +27,7 @@ public class PuzzlePanel extends JPanel implements MouseListener {
 
     public static final int[][] complete = {{1,2,3,4}, {5,6,7,8}, {9,10,11,12}, {13,14,15,-1}};
 
-    public PuzzlePanel() {
+    public PuzzlePanel() throws IOException {
         setSize(600, 800);
         addMouseListener(this);
 
@@ -37,7 +37,7 @@ public class PuzzlePanel extends JPanel implements MouseListener {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 try {
-                    BufferedImage img = ImageIO.read(new File("src/Images/puzzle.jpg"));
+                    BufferedImage img = ImageIO.read(new File("src/Images/triplet.png"));
                     Image tmp = img.getScaledInstance(400, 400, Image.SCALE_SMOOTH);
                     BufferedImage full = new BufferedImage(400, 400, BufferedImage.TYPE_INT_ARGB);
 
@@ -136,21 +136,22 @@ public class PuzzlePanel extends JPanel implements MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if (status == PLAYING) {
-            int i = -1;
-            int j = -1;
-            if (e.getX() >= 100 && e.getX() < 500)
-                j = (e.getX() / 100) - 1;
-            if (e.getY() >= 200 && e.getY() < 600)
-                i = (e.getY() / 100) - 2;
-            if ((i == missingI - 1 && j == missingJ) || (i == missingI + 1 && j == missingJ) || (j == missingJ + 1 && i == missingI) || (j == missingJ - 1 && i == missingI)) {
-                arr[missingI][missingJ] = arr[i][j];
-                arr[i][j] = -1;
-                moves++;
+        if (e.getX()>=100 && e.getX()<=260 && e.getY()<=190 && e.getY()>=120) reset();
+        else {
+            if (status == PLAYING) {
+                int i = -1;
+                int j = -1;
+                if (e.getX() >= 100 && e.getX() < 500)
+                    j = (e.getX() / 100) - 1;
+                if (e.getY() >= 200 && e.getY() < 600)
+                    i = (e.getY() / 100) - 2;
+                if (i!=-1 && j!=-1 && ((i == missingI - 1 && j == missingJ) || (i == missingI + 1 && j == missingJ) || (j == missingJ + 1 && i == missingI) || (j == missingJ - 1 && i == missingI))) {
+                    arr[missingI][missingJ] = arr[i][j];
+                    arr[i][j] = -1;
+                    moves++;
+                }
             }
         }
-
-        if (e.getX()>=100 && e.getX()<=260 && e.getY()<=190 && e.getY()>=120) reset();
 
         if (e.getX()>=330 && e.getX()<=490 && e.getY()<=110 && e.getY()>=40) images = !images;
 
@@ -175,7 +176,7 @@ public class PuzzlePanel extends JPanel implements MouseListener {
 }
 
 class PuzzleFrame extends JFrame {
-    public PuzzleFrame() {
+    public PuzzleFrame() throws IOException {
         super("Puzzle");
         setSize(600, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -185,7 +186,7 @@ class PuzzleFrame extends JFrame {
 }
 
 class PuzzleMain {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         new PuzzleFrame();
     }
 }
