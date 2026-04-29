@@ -51,10 +51,10 @@ VALUES
 
 INSERT INTO Members(member_id, first_name, last_name, email, join_date)
 VALUES
-(101, 'Alice', 'Johnson', 'alice.johnson@email.com', 2024-01-15),
-(102, 'Brian', 'Smith', 'brian.smith@email.com', 2024-02-10),
-(103, 'Carla', 'Gomez', 'carla.gomez@email.com', 2024-03-05),
-(104, 'David', 'Lee', 'david.lee@email.com', 2024-03-20);
+(101, 'Alice', 'Johnson', 'alice.johnson@email.com', '2024-01-15'),
+(102, 'Brian', 'Smith', 'brian.smith@email.com', '2024-02-10'),
+(103, 'Carla', 'Gomez', 'carla.gomez@email.com', '2024-03-05'),
+(104, 'David', 'Lee', 'david.lee@email.com', '2024-03-20');
 
 INSERT INTO Books(book_id, title, author_id, genre, publish_year, copies_total, copies_available)
 VALUES
@@ -64,9 +64,9 @@ VALUES
 (204, 'The Great Gatsby', 4, 'Fiction', 1925, 3, 1),
 (205, 'Frankenstein', 5, 'Horror', 1818, 2, 2);
 
-INSERT INTO Loans(member_id, first_name, last_name, email, join_date)
+INSERT INTO Loans(loan_id, member_id, book_id, loan_date, due_date, return_date)
 VALUES
-(301, 101, 201, 2026-01-10, 2026-01-24, 2026-01-20),
-(302, 102, 202, 2026-02-01, 2026-02-15, NULL),
-(303, 103, 204, 2026-02-08, 2026-02-22, NULL),
-(304, 101, 203, 2026-02-11, 2026-02-25, 2026-02-18);
+(301, 101, 201, '2026-01-10', '2026-01-24', '2026-01-20'),
+(302, 102, 202, '2026-02-01', '2026-02-15', NULL),
+(303, 103, 204, '2026-02-08', '2026-02-22', NULL),
+(304, 101, 203, '2026-02-11', '2026-02-25', '2026-02-18');
