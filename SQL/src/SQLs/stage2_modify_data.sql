@@ -2,7 +2,7 @@ USE library_management;
 
 ALTER TABLE Members CHANGE COLUMN email email_address VARCHAR(60);
 
-ALTER TABLE Books DROP COLUMN genre;
+ALTER TABLE Books DROP genre;
 
 ALTER TABLE Books ADD COLUMN shelf_location VARCHAR(10);
 
@@ -10,4 +10,23 @@ ALTER TABLE Members ADD COLUMN membership_level VARCHAR(20);
 
 ALTER TABLE Loans ADD COLUMN loan_status VARCHAR(20);
 
-SELECT * FROM Members;
+UPDATE Members SET membership_level = 'Premium' WHERE member_id = 101 OR member_id = 103;
+UPDATE Members SET membership_level = 'Standard' WHERE member_id = 102 OR member_id = 104;
+
+UPDATE Books SET shelf_location = 'A1' WHERE book_id = 201;
+UPDATE Books SET shelf_location = 'B2' WHERE book_id = 202;
+UPDATE Books SET shelf_location = 'C3' WHERE book_id = 203;
+UPDATE Books SET shelf_location = 'B1' WHERE book_id = 204;
+UPDATE Books SET shelf_location = 'D4' WHERE book_id = 205;
+
+UPDATE Loans SET loan_status = 'Checked Out' WHERE return_date IS NULL AND member_id <> 0;
+UPDATE Loans SET loan_status = 'Returned' WHERE return_date IS NOT NULL AND member_id <> 0;
+
+UPDATE Members SET last_name = 'Lewis' WHERE member_id = 104;
+UPDATE Books SET title = 'Frankenstein' WHERE book_id = 205;
+UPDATE Books SET copies_total = 5 WHERE book_id = 204;
+UPDATE Books SET copies_available = 3 WHERE book_id = 205;
+
+DELETE FROM Loans WHERE loan_id = 302 OR loan_id = 303;
+DELETE FROM Members WHERE member_id = 102;
+DELETE FROM Books WHERE book_id = 204;
