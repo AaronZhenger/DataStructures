@@ -1,6 +1,11 @@
 CREATE DATABASE IF NOT EXISTS library_management;
 USE library_management;
 
+DROP TABLE IF EXISTS Loans;
+DROP TABLE IF EXISTS Books;
+DROP TABLE IF EXISTS Authors;
+DROP TABLE IF EXISTS Members;
+
 CREATE TABLE IF NOT EXISTS Authors(
 		author_id INT PRIMARY KEY,
         first_name VARCHAR(30) NOT NULL,
