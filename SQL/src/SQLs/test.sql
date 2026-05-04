@@ -12,6 +12,8 @@ describe student;
 -- Shows Table
 Select * from student;
 
+SHOW TABLES
+
 -- Deletes Students
 -- DELETE FROM student where id>=0
 

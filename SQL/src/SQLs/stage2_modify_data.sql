@@ -30,3 +30,18 @@ UPDATE Books SET copies_available = 3 WHERE book_id = 205;
 DELETE FROM Loans WHERE loan_id = 302 OR loan_id = 303;
 DELETE FROM Members WHERE member_id = 102;
 DELETE FROM Books WHERE book_id = 204;
+
+DESCRIBE Members;
+DESCRIBE Books;
+DESCRIBE Loans;
+
+SELECT * FROM Members;
+SELECT * FROM Books;
+SELECT * FROM Loans;
+
+SELECT * FROM Members WHERE member_id = 102;
+SELECT * FROM Books WHERE book_id = 204;
+
+SELECT member_id, membership_level FROM Members;
+SELECT book_id, shelf_location FROM Books;
+SELECT loan_id, loan_status FROM Loans;

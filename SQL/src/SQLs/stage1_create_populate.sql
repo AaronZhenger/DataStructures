@@ -70,3 +70,20 @@ VALUES
 (302, 102, 202, '2026-02-01', '2026-02-15', NULL),
 (303, 103, 204, '2026-02-08', '2026-02-22', NULL),
 (304, 101, 203, '2026-02-11', '2026-02-25', '2026-02-18');
+
+SELECT * FROM Authors;
+SELECT * FROM Members;
+SELECT * FROM Books;
+SELECT * FROM Loans;
+
+SELECT COUNT(*) FROM Authors;
+SELECT COUNT(*) FROM Members;
+SELECT COUNT(*) FROM Books;
+SELECT COUNT(*) FROM Loans;
+
+SELECT Books.title, Authors.last_name
+FROM Books
+JOIN Authors ON Books.author_id = Authors.author_id;
+
+SELECT loan_id, member_id, book_id
+FROM Loans;
