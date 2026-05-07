@@ -51,6 +51,98 @@ public class TeamRosterManager {
                                 "VALUES" +
                                 "('" +t+"', '"+c+"');");
                     }
+                    case 2 -> {
+                        System.out.print("Enter team ID: ");
+                        int t = sc.nextInt();
+                        System.out.print("Enter first name: ");
+                        sc.nextLine();
+                        String f = sc.nextLine();
+                        System.out.print("Enter last name: ");
+                        String l = sc.nextLine();
+                        System.out.println("\nPlayer added.\n");
+                        statement.executeUpdate("INSERT INTO player(team_id, first_name, last_name)" +
+                                "VALUES" +
+                                "("+t+", '" +f+"', '"+l+"');");
+                    }
+                    case 3 -> {
+                        System.out.print("Enter team 1 ID: ");
+                        int i = sc.nextInt();
+                        System.out.print("Enter team 2 ID: ");
+                        int d = sc.nextInt();
+                        System.out.print("Enter team 1 score: ");
+                        int x = sc.nextInt();
+                        System.out.print("Enter team 2 score: ");
+                        int y = sc.nextInt();
+                        System.out.println("\nGame added.\n");
+                        statement.executeUpdate("INSERT INTO game(team1_id, team2_id, team1_score, team2_score)" +
+                                "VALUES" +
+                                "("+i+", " +d+", "+x+", "+y+");");
+                    }
+                    case 4 -> {
+                        System.out.print("Enter player ID: ");
+                        int i = sc.nextInt();
+                        System.out.print("Enter new jersey number: ");
+                        int n = sc.nextInt();
+                        System.out.println("\nPlayer updated.\n");
+                        statement.executeUpdate("UPDATE player SET jersey_number = "+n +
+                                " WHERE player_id = "+i+";");
+                    }
+                    case 5 -> {
+                        System.out.print("Enter player ID: ");
+                        int i = sc.nextInt();
+                        System.out.println("\nPlayer removed.\n");
+                        statement.executeUpdate("DELETE FROM player " +
+                                "WHERE player_id = "+i+";");
+                    }
+                    case 6 -> {
+                        ResultSet rs = statement.executeQuery("SELECT * FROM team");
+                        System.out.println("\nTeams:");
+                        System.out.println("ID   Team Name   Coach");
+                        while (rs.next()) {
+                            System.out.printf("%-5d%-12s%s\n", rs.getInt(1), rs.getString(2), rs.getString(3));
+                        }
+                        System.out.println();
+                    }
+                    case 7 -> {
+                        ResultSet rs = statement.executeQuery(
+                                "SELECT p.player_id, p.first_name, p.last_name, p.jersey_number, t.team_name FROM player p\n" +
+                                        "LEFT JOIN team t\n" +
+                                        "ON p.team_id = t.team_id;");
+                        System.out.println("\nPlayers:");
+                        System.out.println("ID   Player Name       Jersey   Team");
+                        while (rs.next()) {
+                            System.out.printf("%-5d%-18s%-9d%s\n", rs.getInt(1), rs.getString(2)+" "+rs.getString(3), rs.getInt(4), rs.getString(5));
+                        }
+                        System.out.println();
+                    }
+                    case 8 -> {
+                        ResultSet rs = statement.executeQuery(
+                                "SELECT g.game_id, a.team_name, b.team_name, g.team1_score, g.team2_score FROM game g\n" +
+                                        "LEFT JOIN team a\n" +
+                                        "ON g.team1_id = a.team_id\n" +
+                                        "LEFT JOIN team b\n" +
+                                        "ON g.team2_id = b.team_id;");
+                        System.out.println("\nGames:");
+                        System.out.println("ID   Game");
+                        while (rs.next()) {
+                            System.out.printf("%-5d%s\n", rs.getInt(1), rs.getString(2)+"-"+rs.getInt(4)+" vs "+rs.getString(3)+"-"+rs.getInt(5));
+                        }
+                        System.out.println();
+                    }
+                    case 9 -> {
+                        ResultSet rs = statement.executeQuery(
+                                "SELECT g.game_id, a.team_name, b.team_name, g.team1_score, g.team2_score FROM game g\n" +
+                                        "LEFT JOIN team a\n" +
+                                        "ON g.team1_id = a.team_id\n" +
+                                        "LEFT JOIN team b\n" +
+                                        "ON g.team2_id = b.team_id;");
+                        System.out.println("\nTigers:");
+                        System.out.println("ID   Game");
+                        while (rs.next()) {
+                            System.out.printf("%-5d%s\n", rs.getInt(1), rs.getString(2)+"-"+rs.getInt(4)+" vs "+rs.getString(3)+"-"+rs.getInt(5));
+                        }
+                        System.out.println();
+                    }
                     default -> {
 
                     }

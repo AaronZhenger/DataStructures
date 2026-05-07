@@ -1,4 +1,6 @@
 -- Pruges all tables
+SET SQL_SAFE_UPDATES = 0;
+
 DELETE FROM game;
 DELETE FROM player;
 DELETE FROM team;
