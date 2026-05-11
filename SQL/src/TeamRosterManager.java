@@ -130,18 +130,53 @@ public class TeamRosterManager {
                         System.out.println();
                     }
                     case 9 -> {
+                        System.out.print("Enter team ID: ");
+                        int i = sc.nextInt();
                         ResultSet rs = statement.executeQuery(
-                                "SELECT g.game_id, a.team_name, b.team_name, g.team1_score, g.team2_score FROM game g\n" +
+                                "SELECT t.team_name, t.coach_name, p.jersey_number, p.first_name, p.last_name FROM player p\n" +
+                                        "RIGHT JOIN team t\n" +
+                                        "ON t.team_id = p.team_id\n" +
+                                        "WHERE t.team_id = "+i+";");
+                        rs.next();
+                        System.out.println("\nTeam Report: "+rs.getString(1));
+                        System.out.println("Coach: "+rs.getString(2));
+                        System.out.println("\nPlayers: ");
+                        do {
+                            System.out.printf("%-5d%s %s\n", rs.getInt(3), rs.getString(4), rs.getString(5));
+                        } while (rs.next());
+                        System.out.println("\nGame Results: ");
+                        rs = statement.executeQuery(
+                                "SELECT a.team_id, b.team_id, a.team_name, b.team_name, g.team1_score, g.team2_score FROM game g\n" +
                                         "LEFT JOIN team a\n" +
                                         "ON g.team1_id = a.team_id\n" +
                                         "LEFT JOIN team b\n" +
-                                        "ON g.team2_id = b.team_id;");
-                        System.out.println("\nTigers:");
-                        System.out.println("ID   Game");
+                                        "ON g.team2_id = b.team_id\n" +
+                                        "WHERE g.team1_id = "+i+" OR g.team2_id = "+i+";");
+                        double tot = 0;
+                        double gp = 0;
+                        int wins = 0;
+                        int losses = 0;
                         while (rs.next()) {
-                            System.out.printf("%-5d%s\n", rs.getInt(1), rs.getString(2)+"-"+rs.getInt(4)+" vs "+rs.getString(3)+"-"+rs.getInt(5));
+                            int aId = rs.getInt(1);
+                            gp++;
+                            boolean won;
+                            if (aId == i) {
+                                tot += rs.getInt(5);
+                                won = rs.getInt(5)>rs.getInt(6);
+                                String result = won ? "W" : "L";
+                                System.out.printf("vs %-9s%s   %d-%d\n", rs.getString(4), result, rs.getInt(5), rs.getInt(6));
+                            } else {
+                                tot += rs.getInt(6);
+                                won = rs.getInt(6)>rs.getInt(5);
+                                String result = won ? "W" : "L";
+                                System.out.printf("vs %-9s%s   %d-%d\n", rs.getString(3), result, rs.getInt(6), rs.getInt(5));
+                            }
+                            switch (won) {
+                                case true : wins++;
+                                case false : losses++;
+                            }
                         }
-                        System.out.println();
+                        System.out.printf("Record: %d-%d\nAverage Points Scored: %.2f\n\n", wins, losses, tot/gp);
                     }
                     default -> {
 
